@@ -653,7 +653,7 @@
   }, {
     "metadata" : { },
     "cell_type" : "markdown",
-    "source" : "Here is how Java typically lays out objects in memory. Note the references to small, discontiguous chunks of memory, each of which eventually becomes garbage to manage. A"
+    "source" : "Here is how Java typically lays out objects in memory. Note the references to small, discontiguous chunks of memory, each of which eventually becomes garbage to manage. Also, there is poor CPU cache efficiency here."
   }, {
     "metadata" : { },
     "cell_type" : "markdown",
