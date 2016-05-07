@@ -657,7 +657,7 @@
   }, {
     "metadata" : { },
     "cell_type" : "markdown",
-    "source" : "![Typical Java Object Layout](file:///Users/deanwampler/Documents/Typesafe/Conferences/scala-for-data-science/notebooks/images/JavaMemory.jpg)"
+    "source" : "![Typical Java Object Layout](images/JavaMemory.jpg)"
   }, {
     "metadata" : { },
     "cell_type" : "markdown",
@@ -665,7 +665,7 @@
   }, {
     "metadata" : { },
     "cell_type" : "markdown",
-    "source" : "![Tungsten Object Layout](file:///Users/deanwampler/Documents/Typesafe/Conferences/scala-for-data-science/notebooks/images/TungstenMemory.jpg)"
+    "source" : "![Tungsten Object Layout](images/TungstenMemory.jpg)"
   }, {
     "metadata" : { },
     "cell_type" : "markdown",
