@@ -10,7 +10,7 @@ $SPARK_NOTEBOOK_HOME/bin/spark-notebook -Dmanager.notebooks.dir=$PWD/notebooks
 
 For Windows, use the following:
 ```
-%SPARK_NOTEBOOK_HOME%\bin\spark-notebook -Dmanager.notebooks.dir=$CD\notebooks
+%SPARK_NOTEBOOK_HOME%\bin\spark-notebook -Dmanager.notebooks.dir=%CD%\notebooks
 ```
 
 Then open the notebooks (e.g., _WhyScala_). To evaluate all the cells in a notebook, use the _Cell > Run All_ menu item.
