@@ -17,3 +17,6 @@ set NOTEBOOKS_DIR=%CD%\notebooks
 
 Then open the notebooks (e.g., _WhyScala_). To evaluate all the cells in a notebook, use the _Cell > Run All_ menu item.
 
+Grab the slides [here](https://docs.google.com/a/data-fellas.guru/presentation/d/1d7vT3mgo4ppHXHtKRQjcVW8SsMs3PeRAkq3PHRgWKaQ/edit?usp=sharing).
+
+
