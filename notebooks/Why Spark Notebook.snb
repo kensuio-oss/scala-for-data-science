@@ -1,0 +1,358 @@
+{
+  "metadata" : {
+    "name" : "Why Spark Notebook",
+    "user_save_timestamp" : "1970-01-01T01:00:00.000Z",
+    "auto_save_timestamp" : "1970-01-01T01:00:00.000Z",
+    "language_info" : {
+      "name" : "scala",
+      "file_extension" : "scala",
+      "codemirror_mode" : "text/x-scala"
+    },
+    "trusted" : true,
+    "customLocalRepo" : null,
+    "customRepos" : null,
+    "customDeps" : [ "org.apache.spark %% spark-streaming-kafka % _", "com.datastax.spark %% spark-cassandra-connector-java % 1.6.0-M1", "- org.scala-lang % _ % _" ],
+    "customImports" : null,
+    "customArgs" : null,
+    "customSparkConf" : {
+      "spark.default.parallelism" : "4"
+    }
+  },
+  "cells" : [ {
+    "metadata" : {
+      "id" : "7EDB55950A0C4BA585619E38C5D106FB"
+    },
+    "cell_type" : "markdown",
+    "source" : "# Spark Notebook fills the gap"
+  }, {
+    "metadata" : {
+      "id" : "64E3FE37D1AC4D078CFFA1B5898A73FC"
+    },
+    "cell_type" : "markdown",
+    "source" : "TODO"
+  }, {
+    "metadata" : {
+      "id" : "CD77ADBE58414C2BA53D7A3017F4D501"
+    },
+    "cell_type" : "markdown",
+    "source" : "* graph chart\n* geo chart\n* radar, pivot and parallel chart\n* flow chart (beta)\n* reactivity\n* synchronization\n* create new chart type live from js\n* sh, markdown (incl $\\LaTeX$), javascript contexts with interpolation\n* scala generation\n* number of stars (from github)\n* gitter (number of participants from gitter)"
+  }, {
+    "metadata" : {
+      "id" : "ADA0BB6570A04F9A832BC2A4A1827441"
+    },
+    "cell_type" : "markdown",
+    "source" : "## Multiple Spark Contexts"
+  }, {
+    "metadata" : {
+      "id" : "24F6BEA80211494580BE0C17D62C995E"
+    },
+    "cell_type" : "markdown",
+    "source" : "One of the top most feature brought by the spark notebook is its separation of the running notebooks.\n\nIndeed, each started notebook will spawn a new JVM with its own `SparkContext` instance. This allows a maximal flexibility for:\n* dependencies without clashes\n* access different clusters\n* tune differently each notebook\n* external scheduling (on the roadmap)"
+  }, {
+    "metadata" : {
+      "id" : "E092B8282D04469697399B855136522D"
+    },
+    "cell_type" : "markdown",
+    "source" : "You can recognize easily the spawned processes using `ps` (*unix* only) and search for the main class `ChildProcessMain` and verify that the process contains the name of the started notebooks."
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "presentation" : {
+        "tabs_state" : "{\n  \"tab_id\": \"#tab1216778342-0\"\n}",
+        "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
+      },
+      "id" : "8BCC90AE74CF4C00811E64FD82287703"
+    },
+    "cell_type" : "code",
+    "source" : "import sys.process._\nimport scala.language.postfixOps\n\"ps aux\" #| \"grep ChildProcessMain\" lines_!",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "3638F8A33FBB4FD28408513DCBA49F75"
+    },
+    "cell_type" : "markdown",
+    "source" : "So this notebook contains a variable `sparkContext` and its alias `sc`."
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "presentation" : {
+        "tabs_state" : "{\n  \"tab_id\": \"#tab53254654-0\"\n}",
+        "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
+      },
+      "id" : "22D8EFAF7D8C4463A064B8C90F720F63"
+    },
+    "cell_type" : "code",
+    "source" : "val context = List(sparkContext, sc)",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "6D96AEA2A64E48E383FCEF609B635966"
+    },
+    "cell_type" : "markdown",
+    "source" : "## Metadata"
+  }, {
+    "metadata" : {
+      "id" : "1B7ACC1DDB8348688F7FF4D7895727B3"
+    },
+    "cell_type" : "markdown",
+    "source" : "A notebook has a context enricheded via its metadata, here are a few important ones."
+  }, {
+    "metadata" : {
+      "id" : "22E00CB49C524B559F3D04E871023582"
+    },
+    "cell_type" : "markdown",
+    "source" : "### Spark Configuration"
+  }, {
+    "metadata" : {
+      "id" : "E12EF4FE0D6B4BED84C15ADEAA087968"
+    },
+    "cell_type" : "markdown",
+    "source" : "The metadata can define a JSON object (String to String!) to declare extra configuration for spark."
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "D96B3008B9E440408F5200F325A4FADA"
+    },
+    "cell_type" : "code",
+    "source" : ":javascript \nalert(JSON.stringify(IPython.notebook.metadata.customSparkConf, null, 2))",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "79A7AA0CF09B446B883FB07360684127"
+    },
+    "cell_type" : "code",
+    "source" : "sparkContext.getConf.get(\"spark.default.parallelism\")",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "99E5DFFCBA0A4110AE870FE3482667FD"
+    },
+    "cell_type" : "markdown",
+    "source" : "### Dependencies"
+  }, {
+    "metadata" : {
+      "id" : "286794277F8848CB8CFF763AD90DBD84"
+    },
+    "cell_type" : "markdown",
+    "source" : "This notebook has injected a few dependencies from the [datastax cassandra connector](https://github.com/datastax/spark-cassandra-connector/)."
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "215600D86BCB41669835C288F4FFC9CB"
+    },
+    "cell_type" : "code",
+    "source" : ":javascript \nalert(JSON.stringify(IPython.notebook.metadata.customDeps, null, 2))",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "113E0EC89B7E40198DF7AE174D067328"
+    },
+    "cell_type" : "markdown",
+    "source" : "Hence, this code compiles."
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "1BE83A0B7B6744FF83D8513BECC55DB9"
+    },
+    "cell_type" : "code",
+    "source" : "import com.datastax.spark.connector._                                    ",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "14FF64D0BFD44D00816058D236828C39"
+    },
+    "cell_type" : "markdown",
+    "source" : "Also it includes the kafka external modules for the current scala version (using `%%`) and the current spark version (using `_`)"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "E5CABC64B14B442D8A824994EC18C4EA"
+    },
+    "cell_type" : "code",
+    "source" : "import org.apache.spark.streaming.kafka",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "15A133EFC2AF4EE0A3E160E468961066"
+    },
+    "cell_type" : "markdown",
+    "source" : "We can also see that we can remove dependencies by prepending `-` to the definition. So we avoid downloading any extra libraries from the scala language."
+  }, {
+    "metadata" : {
+      "id" : "A7EABF28DB654A27800804D88C1DC546"
+    },
+    "cell_type" : "markdown",
+    "source" : "### Change the metadata"
+  }, {
+    "metadata" : {
+      "id" : "82F81FDC8E9B473D94A7B3479E7BB550"
+    },
+    "cell_type" : "markdown",
+    "source" : "There are a few metadata available and you can configure them from the editor in the menu: _Edit > Edit Notebook Metadata_."
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "75D9790EC99F4F23ADE7434CE9DC72EC"
+    },
+    "cell_type" : "code",
+    "source" : ":javascript \nIPython.notebook.edit_metadata()",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "7F3F63814584413E817A6AE5B56C0FAD"
+    },
+    "cell_type" : "markdown",
+    "source" : "## Logs"
+  }, {
+    "metadata" : {
+      "id" : "D4B5803CA95D4E6B9497CA86DE6C866F"
+    },
+    "cell_type" : "markdown",
+    "source" : "Checking logs is always painful when using a notebook since this is simply a web client on the remote REPL in the server. \n\nHence the logs are quite far, or even worse inaccessible!\n\nSo, the spark notebook will forwards **all logs using slf4j** to the browser console → go check it, use the `F12` key and open the _console_ tab!"
+  }, {
+    "metadata" : {
+      "id" : "A187C1B705A644B794DDEDB33AE7B223"
+    },
+    "cell_type" : "markdown",
+    "source" : "## Side pane"
+  }, {
+    "metadata" : {
+      "id" : "9870E3C823B048CC8D558F2B538CC83F"
+    },
+    "cell_type" : "markdown",
+    "source" : "In the **View** menu, you'll can open the side pane which contains many interesting panels:\n* terms: a table listing the defined _functions_, _variables_ and _types_ !\n* error logs: displaying and bringing back any errors thrown in the server\n* chat room: a fancy chat room available for the current notebook (see below in the synchronized section)"
+  }, {
+    "metadata" : {
+      "id" : "3F098E2A54C446E486EE544C75C756F9"
+    },
+    "cell_type" : "markdown",
+    "source" : "## Plotting"
+  }, {
+    "metadata" : {
+      "id" : "39F23F6B83C6465D8DE2CD5BD18C2C41"
+    },
+    "cell_type" : "markdown",
+    "source" : "There exist many predefined `Chart` that you can use directly on any kind of **Scala** container that can be iterated."
+  }, {
+    "metadata" : {
+      "id" : "099B21AF5E2B468E8C7A65C4DD2AAC66"
+    },
+    "cell_type" : "markdown",
+    "source" : "If the last statement of a cell isn't an assignment or a definition, then the spark notebook will try to plot it the best way it can automatically."
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "3B03DFAD401D44B08D0C8592C5246AF0"
+    },
+    "cell_type" : "code",
+    "source" : "case class Example(id:Int, category:String, value:Long, advanced:Boolean)\nimport scala.util.Random\nimport scala.util.Random._\nval categories = List.fill(5)(List.fill(10)(nextPrintableChar).mkString)\ndef category:String = shuffle(categories).head\nval examples = List.fill(100)(Example(nextInt(200), category, nextLong, nextBoolean))",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "9B375D9DBD51403E8BE8E838F1734300"
+    },
+    "cell_type" : "markdown",
+    "source" : "The above cell doesn't plot anything since it terminates with a assignement."
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "presentation" : {
+        "tabs_state" : "{\n  \"tab_id\": \"#tab230764484-0\"\n}",
+        "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
+      },
+      "id" : "2E61401D7F6B4DCEA0D5F52DE96FB973"
+    },
+    "cell_type" : "code",
+    "source" : "examples",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "0B51A8C208074B7C9ABADED8494A61F5"
+    },
+    "cell_type" : "markdown",
+    "source" : "Now we have a `TableChart` and a `PivotChart` tabs for the data, which we can use to have a better feeling of the data."
+  }, {
+    "metadata" : {
+      "id" : "9588CA4E38C74D1C8BD20F16CB218D55"
+    },
+    "cell_type" : "markdown",
+    "source" : "We can of course create them ourselves:"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "presentation" : {
+        "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
+      },
+      "id" : "595E9615FC9A410AA16F64B33FF80912"
+    },
+    "cell_type" : "code",
+    "source" : "PivotChart(examples)",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "670BE2E3168D47298CC6B17A30A4FF41"
+    },
+    "cell_type" : "markdown",
+    "source" : "### Grouping plots"
+  }, {
+    "metadata" : {
+      "id" : "D2895E0887E14A588731F1FAB389B875"
+    },
+    "cell_type" : "markdown",
+    "source" : "Among available charts, you have for instance the pretty common ones like:\n* `LineChart`\n* `ScatterChart`\n* `BarChart`\n\nWhich accept at least two other parameters: \n* `fields`: the two field names to use to plot \n* `groupField`: the field used to group the data"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "A993AFEA7F2945A184B760EE6251EBAE"
+    },
+    "cell_type" : "code",
+    "source" : "LineChart(examples, fields=Some((\"id\", \"value\")), groupField=Some(\"advanced\"))",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "A993AFEA7F2945A184B760EE6251EBAE"
+    },
+    "cell_type" : "code",
+    "source" : "ScatterChart(examples, fields=Some((\"id\", \"value\")), groupField=Some(\"advanced\"))",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "A993AFEA7F2945A184B760EE6251EBAE"
+    },
+    "cell_type" : "code",
+    "source" : "BarChart(examples, fields=Some((\"id\", \"value\")), groupField=Some(\"advanced\"))",
+    "outputs" : [ ]
+  } ],
+  "nbformat" : 4
+}
