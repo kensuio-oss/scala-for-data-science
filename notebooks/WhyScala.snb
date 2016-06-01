@@ -27,7 +27,7 @@
       "id" : "A032770187B947768ADE83D1C76C6D8B"
     },
     "cell_type" : "markdown",
-    "source" : " **Andy Petrella**<br/>[noootsab@data-fellas.guru](mailto:noootsab@data-fellas.guru)<br/>\n **Dean Wampler**<br/>[dean.wampler@lightbend.com](mailto:dean.wampler@lightbend.com)\n\nScala Days NYC, May 5th, 2016\n\nStrata London, June 3rd, 2016\n\nThis notebook available at [github.com/data-fellas/scala-for-data-science](https://github.com/data-fellas/scala-for-data-science)."
+    "source" : " **Andy Petrella**<br/>[noootsab@data-fellas.guru](mailto:noootsab@data-fellas.guru)<br/>\n **Dean Wampler**<br/>[dean.wampler@lightbend.com](mailto:dean.wampler@lightbend.com)\n\n* Scala Days NYC, May 5th, 2016\n* GOTO Chicago, May 24, 2016\n* Strata + Hadoop World London, June 3, 2016\n* Scala Days Berlin, June 16th, 2016\n\nThis notebook available at [github.com/data-fellas/scala-for-data-science](https://github.com/data-fellas/scala-for-data-science)."
   }, {
     "metadata" : {
       "id" : "89E60F5356A24745AD7FFC3ED747D7E4"
@@ -39,7 +39,7 @@
       "id" : "3B4411F9D439469AB4992A6E8D178757"
     },
     "cell_type" : "markdown",
-    "source" : "While Python and R are traditional languages of choice for Data Science, [Spark](http://spark.apache.org) also supports Scala (the language in which it's written) and Java.\n\nHowever, using one language for all work has advantages like simplifying the software development process, such as build and deployment tools, coding conventions, etc.\n\nSo, what are the advantages, as well as disadvantages of Scala?"
+    "source" : "While Python and R are traditional languages of choice for Data Science, [Spark](http://spark.apache.org) also supports Scala (the language in which it's written) and Java.\n\nHowever, using one language for all work has advantages like simplifying the software development process, such as build and deployment tools, coding conventions, etc.\n\nIf you want a thorough introduction to Scala, see [Dean's book](http://shop.oreilly.com/product/0636920033073.do).\n\nSo, what are the advantages, as well as disadvantages of Scala?"
   }, {
     "metadata" : {
       "id" : "058C9660033E42EAB7089F7B95B9441A"
@@ -75,7 +75,7 @@
       "id" : "DC6C322EAB2244B9844CB0FDABCE6BA3"
     },
     "cell_type" : "markdown",
-    "source" : "### 1b. Java Streams\nWhen you use the Java 8 collections, you can convert the the tradition collections to a \"stream\", which is lazy and gives you more functional operations. However, sometimes, the conversions back and forth can be tedious, e.g., converting to a stream for functional processing, then converting pass them to older APIs, etc. Scala collections are more consistently functional."
+    "source" : "### 1b. Java Streams\nWhen you use the Java 8 collections, you can convert the traditional collections to a \"stream\", which is lazy and gives you more functional operations. However, sometimes, the conversions back and forth can be tedious, e.g., converting to a stream for functional processing, then converting pass them to older APIs, etc. Scala collections are more consistently functional."
   }, {
     "metadata" : {
       "id" : "E706C1FC94B34C5E86C25040BDF9263C"
@@ -215,7 +215,7 @@
       "id" : "DA296C929D1B43A191C22FAEB538458F"
     },
     "cell_type" : "markdown",
-    "source" : "What about the other languages? \n* **Python:** Also has an interpreter and [iPython/Jupyter](https://ipython.org/) was one of the first, widely-used notebook environments.\n* **R:** Also has an interpreter and notebook/IDE environments.\n* **Java:** Does _not_ have an interpreter and can't be programmed in a notebook environment."
+    "source" : "What about the other languages? \n* **Python:** Also has an interpreter and [iPython/Jupyter](https://ipython.org/) was one of the first, widely-used notebook environments.\n* **R:** Also has an interpreter and notebook/IDE environments.\n* **Java:** Does _not_ have an interpreter and can't be programmed in a notebook environment. However, Java 9 will have a REPL, after 20+ years!"
   }, {
     "metadata" : {
       "id" : "32F89F305EFE4D2B9FF61F0B357A0BA7"
@@ -636,7 +636,7 @@
       "id" : "2DF9D1306DAB41319E03DD8322721545"
     },
     "cell_type" : "code",
-    "source" : "val grouped = airportsDF.groupBy($\"state\", $\"country\").count.orderBy($\"count\".desc)\ngrouped.printSchema\ngrouped.limit(100)  // all 50 states + territories",
+    "source" : "val grouped = airportsDF.groupBy($\"state\", $\"country\").count.orderBy($\"count\".desc)\ngrouped.printSchema\ngrouped.limit(100)  // all 50 states + territories < 100",
     "outputs" : [ {
       "name" : "stdout",
       "output_type" : "stream",
@@ -661,7 +661,7 @@
       "id" : "D098E3AAA94942EDBEC629B643C53F4A"
     },
     "cell_type" : "markdown",
-    "source" : "## 9. And a Few Other Things...\nThere are many more Scala features that the other languages don't have or don't support as nicely. Some are actually quite significant for general programming tasks, but they are used infrequently in Spark code. Here they are, for completeness."
+    "source" : "## 9. And a Few Other Things...\nThere are many more Scala features that the other languages don't have or don't support as nicely. Some are actually quite significant for general programming tasks, but they are used less frequently in Spark code. Here they are, for completeness."
   }, {
     "metadata" : {
       "id" : "563FAC0C5F894273839564136EFD4287"
@@ -948,7 +948,7 @@
       "id" : "ED60872A44504B0C8B3726352EBD3CD4"
     },
     "cell_type" : "markdown",
-    "source" : "Here's an example, sort of like `Either`, but oriented more towards the usage of encapsulating success or failure.\nHowever, we'll put \"success\" on the left instead of the right, which is the convention when using `Either`.\nWe'll have one type parameter `Result`; on `Success`, it will hold an instance of the type `Result`.\nOn Failure, it will hold no successful result, so we'll use the \"bottom\" type `Nothing` for the type parameter,\nand expect the error information to be returned in a `RuntimeException`."
+    "source" : "Here's an example, sort of like `Either`, but oriented more towards the usage of encapsulating success or failure.\nHowever, we'll put \"success\" on the left instead of the right, which is the convention when using `Either`.\n\nWe'll have one type parameter `Result`; on `Success`, it will hold an instance of the type `Result`.\nOn Failure, it will hold no successful result, so we'll use the \"bottom\" type `Nothing` for the type parameter,\nand expect the error information to be returned in a `RuntimeException`."
   }, {
     "metadata" : {
       "trusted" : true,
