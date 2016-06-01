@@ -35,7 +35,7 @@
       "id" : "CD77ADBE58414C2BA53D7A3017F4D501"
     },
     "cell_type" : "markdown",
-    "source" : "* flow chart (beta)\n* reactivity\n* synchronization\n* create new chart type live from js\n* sh, markdown (incl $\\LaTeX$), javascript contexts with interpolation\n* scala generation\n* number of stars (from github)\n* gitter (number of participants from gitter)"
+    "source" : "* scala file generation\n* number of stars (from github)\n* gitter (number of participants from gitter)"
   }, {
     "metadata" : {
       "id" : "ADA0BB6570A04F9A832BC2A4A1827441"
@@ -260,7 +260,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "3B03DFAD401D44B08D0C8592C5246AF0"
     },
     "cell_type" : "code",
@@ -369,7 +369,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "presentation" : {
         "tabs_state" : "{\n  \"tab_id\": \"#tab114424344-0\"\n}",
         "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
@@ -383,7 +383,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "presentation" : {
         "tabs_state" : "{\n  \"tab_id\": \"#tab1249479791-0\"\n}",
         "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
@@ -415,7 +415,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "C17877C2189A484EBCA6CB8D9A5BAD75"
     },
     "cell_type" : "code",
@@ -431,7 +431,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "B23EDAF0D8204B7D845248EE24E20F30"
     },
     "cell_type" : "code",
@@ -441,7 +441,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "D27A7B265CEB4963BE9352BA0A5B6510"
     },
     "cell_type" : "code",
@@ -451,7 +451,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "presentation" : {
         "tabs_state" : "{\n  \"tab_id\": \"#tab1529529486-0\"\n}",
         "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
@@ -465,7 +465,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "6B6635CEBAC349EC87BAC809E5F21F78"
     },
     "cell_type" : "code",
@@ -493,7 +493,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "DA236FFF7873453397F47AED00A55C87"
     },
     "cell_type" : "code",
@@ -503,7 +503,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "CAC0438C302A4C5388A9B71E5C246FD8"
     },
     "cell_type" : "code",
@@ -519,7 +519,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "presentation" : {
         "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [\n    \"_2P_pc\"\n  ],\n  \"rows\": [\n    \"Player\"\n  ],\n  \"vals\": [\n    \"_3P_pc\"\n  ],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Sum\",\n  \"rendererName\": \"Line Chart\"\n}"
       },
@@ -538,11 +538,235 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "536D63D7B3A64281BD62B95E7FBB4E76"
     },
     "cell_type" : "code",
     "source" : "ParallelCoordChart(team, sizes=(800, 500))",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "CD0C49DF563340A38E82471242EF4F32"
+    },
+    "cell_type" : "markdown",
+    "source" : "### Timeseries"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "2B91343B09F041B19FD683E0C04F99D8"
+    },
+    "cell_type" : "code",
+    "source" : "import java.util.Calendar\nimport java.util.Calendar._\nval cal = Calendar.getInstance\ncal.set(DAY_OF_MONTH, 0)\ncal.set(HOUR, 0)\ncal.set(MINUTE, 0)\ncal.set(SECOND, 0)\ncal.set(MILLISECOND, 0)\nval ts = scala.io.Source.fromURL(\"http://www.ncdc.noaa.gov/cag/time-series/global/globe/land_ocean/p12/12/1880-2015.csv\")\n                .getLines.drop(4)\n                .map(_.split(\",\").toList.map(_.trim))\n                .map{case List(y,c) => (y.take(4).toInt, y.drop(4).take(2).dropWhile(_ == '0').toInt-1, c.toDouble)}\n                .map{ case (y, m, c) => \n                  cal.set(YEAR, y)\n                  cal.set(MONTH, m)\n                  cal.getTime → c\n                }.toList\nval tc = TimeseriesChart(ts)\ntc",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "7C30152109AD4727827599D6949592F0"
+    },
+    "cell_type" : "markdown",
+    "source" : "## Everything is Dynamic and Reactive"
+  }, {
+    "metadata" : {
+      "id" : "3AADA3697ABE44BF85FFB47209E06036"
+    },
+    "cell_type" : "markdown",
+    "source" : "Since data can come live in a system or you want to log vizualy some events or perhaps you need to have two visual components to interact... what you don't want to do is to write the html, js, server code and who knows what else you'll need to master...\n\nFor that, the spark notebook comes with dynamicity of charts and most (if not all) components can be listened and react to events."
+  }, {
+    "metadata" : {
+      "id" : "83B7B4F029324AADA94E34497C395F35"
+    },
+    "cell_type" : "markdown",
+    "source" : "### Dynamic Line Chart"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "CE563B405582434AAFA53E4C4AE8C893"
+    },
+    "cell_type" : "code",
+    "source" : "val tsH :: tsS = ts.sliding(100, 100).toList\nval dynTC = TimeseriesChart(tsH, maxPoints = ts.size)\ndynTC",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "FA0E02EBBD7D467385D7C17B4708DFBB"
+    },
+    "cell_type" : "code",
+    "source" : "var cont = true\nnew Thread() {\n  override def run = \n    pdataS.foreach { l =>\n    if (cont) {\n      Thread.sleep(1000)\n      dynTC.addAndApply(l)\n    }\n  }\n}.start",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "9BD0C8C4788049C78D4C6E90059E3A83"
+    },
+    "cell_type" : "markdown",
+    "source" : "### Components"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "C3A5386580284B5D9C8D4BE907F6FA8C"
+    },
+    "cell_type" : "code",
+    "source" : "val rteam = shuffle(team.toList).take(5)\nval dd = new DropDown(\"All\" :: rteam.map(_.Player))\nval rc = RadarChart(rteam, labelField=Some(\"Player\"), sizes=(800, 600))\nval bout = out\ndd ++ bout ++ rc",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "C46F272CFC8C476FB022FD2BD6C84811"
+    },
+    "cell_type" : "code",
+    "source" : "dd.selected --> Connection.fromObserver { p =>\n  bout(p + \" is selected\")\n  rc.applyOn(rc.originalData.filter(_.Player == p || p == \"All\"))\n}",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "42D57AE9A76F4FA1A114BA95C2E1FADB"
+    },
+    "cell_type" : "markdown",
+    "source" : "## Synchronization"
+  }, {
+    "metadata" : {
+      "id" : "7460856EFF64425A83DD0DD4B5814360"
+    },
+    "cell_type" : "markdown",
+    "source" : "Oh... notebooks are synchronized!\n\nOpen another browser window and relaunch the timeseries example."
+  }, {
+    "metadata" : {
+      "id" : "593AD5B17B854593B20EA88F8B18E338"
+    },
+    "cell_type" : "markdown",
+    "source" : "## Create new chart type... live"
+  }, {
+    "metadata" : {
+      "id" : "E51CB610568E4936ADA024549386E8E3"
+    },
+    "cell_type" : "markdown",
+    "source" : "If you want/need to exerce your js fu, you can always use the `Chart` (for instance) API to create new dynamic widgets types.\n\nIn the following, we'll create a widget that can plot duration bars based for given operations (only a name):\n* a `js` string which is the javascript to execute for the new chart. It:\n  * has to be a function with 3 params\n    * `dataO` a knockout observable wich can be listened for new incoming data, see the `subscribe` call\n    * `container` is the div element where you can add new elements\n    * `options` is an extra object passed to the widget which defines additional configuration options (like width or a specific color or whatever)\n  * has a `this` object containing:\n    * `dataInit` this is the JSON representation of the Scala data as an array of objects having the same schema as the Scala type\n    * `genId` a unique id that you can use for a high level element for instance"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "81349F9C871E416093E496CEA8A9F534"
+    },
+    "cell_type" : "code",
+    "source" : "val js = \"\"\"\nfunction progressgraph (dataO, container, options) {\n  var css = 'div.prog {position: relative; overflow: hidden; } span.pp {display: inline-block; position: absolute; height: 16px;} span.prog {display: inline-block; position: absolute; height: 16px; }' +\n            '.progs {border: solid 1px #ccc; background: #eee; } .progs .pv {background: #3182bd; }',\n      head = document.head || document.getElementsByTagName('head')[0],\n      style = document.createElement('style');\n\n  style.type = 'text/css';\n  if (style.styleSheet){\n    style.styleSheet.cssText = css;\n  } else {\n    style.appendChild(document.createTextNode(css));\n  }\n\n  head.appendChild(style);\n\n\n  var width = options.width||600\n  var height = options.height||400\n  \n  function create(name, duration) {\n    var div =  d3.select(container).append(\"div\").attr(\"class\", \"prog\");\n\n    div.append(\"span\").attr(\"class\", \"pp prog\")\n        .style(\"width\", \"74px\")\n        .style(\"text-align\", \"right\")\n        .style(\"z-index\", \"2000\")\n        .text(name);\n\n    div.append(\"span\")\n        .attr(\"class\", \"progs\")\n        .style(\"width\", \"240px\")\n        .style(\"left\", \"80px\")\n      .append(\"span\")\n        .attr(\"class\", \"pp pv\")\n      .transition()\n        .duration(duration)\n        .ease(\"linear\")\n        .style(\"width\", \"350px\");\n\n    div.transition()\n        .style(\"height\", \"20px\")\n      .transition()\n        .delay(duration)\n        .style(\"height\", \"0px\")\n        .remove();\n\n  }\n\n  function onData(data) {\n    _.each(data, function(d) {\n      create(d[options.name], 5000 + d[options.duration])\n    });\n  }\n\n  onData(this.dataInit);\n  dataO.subscribe(onData);\n}\n\"\"\".trim",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "D652E9BA1D884CDB98B8DF06D77DEB35"
+    },
+    "cell_type" : "markdown",
+    "source" : "Now we can create the widget extending `notebook.front.widgets.charts.Chart[C]`, where `C` is any Scala type, it'll be converted to JS using the implicit instance of `ToPoints`.\n\nIt has to declare the original dataset which needs to be a wrapper (`List`, `Array`, ...) of the `C` instances we want to plot. But it can also define other things like below:\n* `sizes` are the $w \\times h$ dimension of the chart\n* `maxPoints` the number of points to plot, the way to select them is defined in the implicitly available instance of `Sampler`.\n* `scripts` a list of references to existing javascript scripts\n* `snippets` a list of string that represent snippets to execute in JS, they take the form of a JSON object with\n  * `f` the function to call when the snippet will be executed\n  * `o` a JSON object that will be provided to the above function at execution time. Here we define which field has to be used for the name and duration."
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "FA51FED8558140FEB37478F0594DAB4E"
+    },
+    "cell_type" : "code",
+    "source" : "import notebook.front.widgets._\nimport notebook.front.widgets.magic._\nimport notebook.front.widgets.magic.Implicits._\nimport notebook.front.widgets.magic.SamplerImplicits._\ncase class ProgChart[C:ToPoints:Sampler](\n  originalData:C,\n  override val sizes:(Int, Int)=(600, 400),\n  maxPoints:Int = 1000,\n  name:String,\n  duration:String\n) extends notebook.front.widgets.charts.Chart[C](originalData, maxPoints) {\n  def mToSeq(t:MagicRenderPoint):Seq[(String, Any)] = t.data.toSeq\n\n\n  override val snippets = List(s\"\"\"|{\n                                   |  \"f\": $js, \n                                   |  \"o\": {\n                                   |    \"name\": \"$name\",\n                                   |    \"duration\": \"$duration\"\n                                   |  }\n                                   |}\n                                  \"\"\".stripMargin)\n  \n  override val scripts = Nil\n}",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "1A5FD93B14BD42E99F49806BDEB16AC5"
+    },
+    "cell_type" : "markdown",
+    "source" : "We can define the type of data we'll use for this example"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "4A344133173D40158A4091AAC56F8AD2"
+    },
+    "cell_type" : "code",
+    "source" : "case class ProgData(n:String, v:Int)",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "9DA8C6053A214FB2A01FBCE9C25EBE7F"
+    },
+    "cell_type" : "markdown",
+    "source" : "Here we generate a bunch of data bucketized by 10, and we create an instance of the new widget giving it the first bucket of data and specifying the right field names for `name` and `duration`."
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "4BB2C6EA4B634DFC97B7D5D9845DF0AD"
+    },
+    "cell_type" : "code",
+    "source" : "val pdata = for {\n  c1 <- 'a' to 'e'\n  c2 <- 'a' to 'e'\n} yield ProgData(\"\"+c1+c2, (nextDouble * 10000).toInt)\nval pdataH :: pdataS = pdata.toList.sliding(10, 10).toList\n\nval pc = ProgChart(pdataH, name = \"n\", duration = \"v\")\npc",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "35435A5C31AF4F67BF4508910220FA92"
+    },
+    "cell_type" : "markdown",
+    "source" : "We update the chart by passing the value using the `addAndApply` approach."
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "15392CC271B04DA5842904489A447B1C"
+    },
+    "cell_type" : "code",
+    "source" : "var pcont = true\nnew Thread() {\n  override def run = \n    pdataS.foreach { l =>\n    if (pcont) {\n      Thread.sleep(9000)\n      pc.addAndApply(l, true)\n    }\n  }\n}.start",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "787984960C10439D81F5DA7FBD00505A"
+    },
+    "cell_type" : "markdown",
+    "source" : "## Contexts with interpolation"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "09F41F85FD34409C837320D904108BE6"
+    },
+    "cell_type" : "code",
+    "source" : ":sh ls ${sys.env(\"NOTEBOOKS_DIR\")}",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "C924A6AA52B94822B64718240069CFB0"
+    },
+    "cell_type" : "code",
+    "source" : "val ok = \"snb\"",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "416D1E2D54154AE7845CE8FC14ECF334"
+    },
+    "cell_type" : "code",
+    "source" : ":markdown \nWe're using a **$ok** file",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "7B10ABEE96784E458F34447A8C9E7C46"
+    },
+    "cell_type" : "code",
+    "source" : ":javascript\nalert(\"$ok\")",
     "outputs" : [ ]
   } ],
   "nbformat" : 4
