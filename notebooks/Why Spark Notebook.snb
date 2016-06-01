@@ -26,16 +26,22 @@
     "source" : "# Spark Notebook fills the gap"
   }, {
     "metadata" : {
-      "id" : "64E3FE37D1AC4D078CFFA1B5898A73FC"
+      "id" : "FD1F7891FDCA4BF9898E243432930B07"
     },
     "cell_type" : "markdown",
-    "source" : "TODO"
+    "source" : "The Spark Notebook is the open source notebook focusing on productive and enterprise environments.\n\nFor that, it is only based on JVM components and has no other dependencies.\n\nScala is the only supported language for the reasons mentioned above, and if the language would still miss some features to do data science efficiently, the Spark Notebook is there to help, hereafter you'll be presented what is available."
   }, {
     "metadata" : {
-      "id" : "CD77ADBE58414C2BA53D7A3017F4D501"
+      "id" : "9D4B9FB7CE8547AF8E22DEFB2F004560"
     },
     "cell_type" : "markdown",
-    "source" : "* scala file generation\n* number of stars (from github)\n* gitter (number of participants from gitter)"
+    "source" : "Before getting started, the Spark Notebook is also famous for \n* its great community out of its 1300+ stars on GitHub,\n* its very active [gitter](https://gitter.im/andypetrella/spark-notebook) channel (1st June 2016): \n  * 460+ participants and \n  * 750+ messages per month."
+  }, {
+    "metadata" : {
+      "id" : "816B3C0AC858439AB425EE1BBCF3F553"
+    },
+    "cell_type" : "markdown",
+    "source" : "<a href=\"https://gitter.im/andypetrella/spark-notebook?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge\"><img src=\"https://camo.githubusercontent.com/da2edb525cde1455a622c58c0effc3a90b9a181c/68747470733a2f2f6261646765732e6769747465722e696d2f4a6f696e253230436861742e737667\" alt=\"Gitter\" data-canonical-src=\"https://badges.gitter.im/Join%20Chat.svg\" style=\"max-width:100%;\"></a>"
   }, {
     "metadata" : {
       "id" : "ADA0BB6570A04F9A832BC2A4A1827441"
@@ -47,7 +53,7 @@
       "id" : "24F6BEA80211494580BE0C17D62C995E"
     },
     "cell_type" : "markdown",
-    "source" : "One of the top most feature brought by the spark notebook is its separation of the running notebooks.\n\nIndeed, each started notebook will spawn a new JVM with its own `SparkContext` instance. This allows a maximal flexibility for:\n* dependencies without clashes\n* access different clusters\n* tune differently each notebook\n* external scheduling (on the roadmap)"
+    "source" : "One of the top most useful feature brought by the spark notebook is its separation of the running notebooks.\n\nIndeed, each started notebook will spawn a new JVM with its own `SparkContext` instance. This allows a maximal flexibility for:\n* dependencies without clashes\n* access different clusters\n* tune differently each notebook\n* external scheduling (on the roadmap)"
   }, {
     "metadata" : {
       "id" : "E092B8282D04469697399B855136522D"
@@ -60,7 +66,7 @@
       "input_collapsed" : false,
       "collapsed" : true,
       "presentation" : {
-        "tabs_state" : "{\n  \"tab_id\": \"#tab1216778342-0\"\n}",
+        "tabs_state" : "{\n  \"tab_id\": \"#tab1345575921-0\"\n}",
         "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
       },
       "id" : "8BCC90AE74CF4C00811E64FD82287703"
@@ -86,7 +92,7 @@
       "id" : "22D8EFAF7D8C4463A064B8C90F720F63"
     },
     "cell_type" : "code",
-    "source" : "val context = List(sparkContext, sc)",
+    "source" : "val context = (sparkContext, sc)",
     "outputs" : [ ]
   }, {
     "metadata" : {
@@ -278,7 +284,7 @@
       "input_collapsed" : false,
       "collapsed" : true,
       "presentation" : {
-        "tabs_state" : "{\n  \"tab_id\": \"#tab230764484-0\"\n}",
+        "tabs_state" : "{\n  \"tab_id\": \"#tab955364267-0\"\n}",
         "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
       },
       "id" : "2E61401D7F6B4DCEA0D5F52DE96FB973"
@@ -442,16 +448,6 @@
       "trusted" : true,
       "input_collapsed" : false,
       "collapsed" : true,
-      "id" : "D27A7B265CEB4963BE9352BA0A5B6510"
-    },
-    "cell_type" : "code",
-    "source" : "airportsDF",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
       "presentation" : {
         "tabs_state" : "{\n  \"tab_id\": \"#tab1529529486-0\"\n}",
         "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
@@ -582,7 +578,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "CE563B405582434AAFA53E4C4AE8C893"
     },
     "cell_type" : "code",
@@ -592,11 +588,11 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "FA0E02EBBD7D467385D7C17B4708DFBB"
     },
     "cell_type" : "code",
-    "source" : "var cont = true\nnew Thread() {\n  override def run = \n    pdataS.foreach { l =>\n    if (cont) {\n      Thread.sleep(1000)\n      dynTC.addAndApply(l)\n    }\n  }\n}.start",
+    "source" : "var cont = true\nnew Thread() {\n  override def run = \n    tsS.foreach { l =>\n    if (cont) {\n      Thread.sleep(1000)\n      dynTC.addAndApply(l)\n    }\n  }\n}.start",
     "outputs" : [ ]
   }, {
     "metadata" : {
@@ -608,7 +604,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "C3A5386580284B5D9C8D4BE907F6FA8C"
     },
     "cell_type" : "code",
@@ -618,7 +614,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "C46F272CFC8C476FB022FD2BD6C84811"
     },
     "cell_type" : "code",
@@ -652,7 +648,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "81349F9C871E416093E496CEA8A9F534"
     },
     "cell_type" : "code",
@@ -668,7 +664,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "FA51FED8558140FEB37478F0594DAB4E"
     },
     "cell_type" : "code",
@@ -684,7 +680,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "4A344133173D40158A4091AAC56F8AD2"
     },
     "cell_type" : "code",
@@ -700,7 +696,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "4BB2C6EA4B634DFC97B7D5D9845DF0AD"
     },
     "cell_type" : "code",
@@ -716,7 +712,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "15392CC271B04DA5842904489A447B1C"
     },
     "cell_type" : "code",
@@ -732,7 +728,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "09F41F85FD34409C837320D904108BE6"
     },
     "cell_type" : "code",
@@ -742,7 +738,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "C924A6AA52B94822B64718240069CFB0"
     },
     "cell_type" : "code",
@@ -752,7 +748,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "416D1E2D54154AE7845CE8FC14ECF334"
     },
     "cell_type" : "code",
@@ -762,7 +758,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "7B10ABEE96784E458F34447A8C9E7C46"
     },
     "cell_type" : "code",

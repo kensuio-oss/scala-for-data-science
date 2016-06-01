@@ -1,0 +1,33 @@
+{
+  "metadata" : {
+    "name" : "Data Science with Scala",
+    "user_save_timestamp" : "1970-01-01T01:00:00.000Z",
+    "auto_save_timestamp" : "1970-01-01T01:00:00.000Z",
+    "language_info" : {
+      "name" : "scala",
+      "file_extension" : "scala",
+      "codemirror_mode" : "text/x-scala"
+    },
+    "trusted" : true,
+    "customLocalRepo" : null,
+    "customRepos" : null,
+    "customDeps" : null,
+    "customImports" : null,
+    "customArgs" : null,
+    "customSparkConf" : null
+  },
+  "cells" : [ {
+    "metadata" : {
+      "id" : "77BBFF186BC94896B20C0B703DA3AF69"
+    },
+    "cell_type" : "markdown",
+    "source" : "TODO"
+  }, {
+    "metadata" : {
+      "id" : "A697180C935B4BE99AA332927D2B507E"
+    },
+    "cell_type" : "markdown",
+    "source" : "* MLlib\n* H2O\n* deeplearning4j\n* OptiML (stanford)\n* Figaro\n* aren de vries course\n* sysml?\n* lipn"
+  } ],
+  "nbformat" : 4
+}
