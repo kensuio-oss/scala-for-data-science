@@ -35,7 +35,7 @@
       "id" : "9D4B9FB7CE8547AF8E22DEFB2F004560"
     },
     "cell_type" : "markdown",
-    "source" : "Before getting started, the Spark Notebook is also famous for \n* its great community out of its 1300+ stars on GitHub,\n* its very active [gitter](https://gitter.im/andypetrella/spark-notebook) channel (1st June 2016): \n  * 460+ participants and \n  * 750+ messages per month."
+    "source" : "Before getting started, the Spark Notebook is also famous for \n* its great community out of its 1300+ stars on GitHub,\n* its very active [gitter](https://gitter.im/andypetrella/spark-notebook) channel: \n  * 460+ participants and \n  * 750+ messages per month.\n\n<small>(1st June 2016)</small>"
   }, {
     "metadata" : {
       "id" : "816B3C0AC858439AB425EE1BBCF3F553"
@@ -44,10 +44,26 @@
     "source" : "<a href=\"https://gitter.im/andypetrella/spark-notebook?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge\"><img src=\"https://camo.githubusercontent.com/da2edb525cde1455a622c58c0effc3a90b9a181c/68747470733a2f2f6261646765732e6769747465722e696d2f4a6f696e253230436861742e737667\" alt=\"Gitter\" data-canonical-src=\"https://badges.gitter.im/Join%20Chat.svg\" style=\"max-width:100%;\"></a>"
   }, {
     "metadata" : {
+      "id" : "4FB943930C654421BF949217B72BC5CE"
+    },
+    "cell_type" : "markdown",
+    "source" : "---\n## Skin to control the flow visually"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "E11445B1CCCE465B83A27E374CCF5BED"
+    },
+    "cell_type" : "code",
+    "source" : ":html\n<style>h2{color: coral; } hr{height: 3px; background-color: cornflowerblue !important; }</style>",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
       "id" : "ADA0BB6570A04F9A832BC2A4A1827441"
     },
     "cell_type" : "markdown",
-    "source" : "## Multiple Spark Contexts"
+    "source" : "---\n## Multiple Spark Contexts"
   }, {
     "metadata" : {
       "id" : "24F6BEA80211494580BE0C17D62C995E"
@@ -66,7 +82,7 @@
       "input_collapsed" : false,
       "collapsed" : true,
       "presentation" : {
-        "tabs_state" : "{\n  \"tab_id\": \"#tab1345575921-0\"\n}",
+        "tabs_state" : "{\n  \"tab_id\": \"#tab624392215-0\"\n}",
         "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
       },
       "id" : "8BCC90AE74CF4C00811E64FD82287703"
@@ -99,7 +115,7 @@
       "id" : "6D96AEA2A64E48E383FCEF609B635966"
     },
     "cell_type" : "markdown",
-    "source" : "## Metadata"
+    "source" : "---\n## Metadata"
   }, {
     "metadata" : {
       "id" : "1B7ACC1DDB8348688F7FF4D7895727B3"
@@ -225,7 +241,7 @@
       "id" : "7F3F63814584413E817A6AE5B56C0FAD"
     },
     "cell_type" : "markdown",
-    "source" : "## Logs"
+    "source" : "---\n## Logs"
   }, {
     "metadata" : {
       "id" : "D4B5803CA95D4E6B9497CA86DE6C866F"
@@ -237,19 +253,29 @@
       "id" : "A187C1B705A644B794DDEDB33AE7B223"
     },
     "cell_type" : "markdown",
-    "source" : "## Side pane"
+    "source" : "---\n## Side pane"
   }, {
     "metadata" : {
       "id" : "9870E3C823B048CC8D558F2B538CC83F"
     },
     "cell_type" : "markdown",
-    "source" : "In the **View** menu, you'll can open the side pane which contains many interesting panels:\n* terms: a table listing the defined _functions_, _variables_ and _types_ !\n* error logs: displaying and bringing back any errors thrown in the server\n* chat room: a fancy chat room available for the current notebook (see below in the synchronized section)"
+    "source" : "In the **View** menu, you'll can open the side pane which contains many interesting panels:\n* `terms` : a table listing the defined _functions_, _variables_ and _types_ !\n* `error logs` : displaying and bringing back any errors thrown in the server\n* `chat room` : a fancy chat room available for the current notebook (see below in the synchronized section)"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "90AF0CFA143E4F6283502273EF5DB351"
+    },
+    "cell_type" : "code",
+    "source" : ":javascript\njQuery('a#toggle-sidebar').click()",
+    "outputs" : [ ]
   }, {
     "metadata" : {
       "id" : "3F098E2A54C446E486EE544C75C756F9"
     },
     "cell_type" : "markdown",
-    "source" : "## Plotting"
+    "source" : "---\n## Plotting"
   }, {
     "metadata" : {
       "id" : "39F23F6B83C6465D8DE2CD5BD18C2C41"
@@ -270,7 +296,7 @@
       "id" : "3B03DFAD401D44B08D0C8592C5246AF0"
     },
     "cell_type" : "code",
-    "source" : "case class Example(id:Int, category:String, value:Long, advanced:Boolean)\nimport scala.util.Random\nimport scala.util.Random._\nval categories = List.fill(5)(List.fill(10)(nextPrintableChar).mkString)\ndef category:String = shuffle(categories).head\nval examples = List.fill(100)(Example(nextInt(2000), category, nextLong, nextBoolean))",
+    "source" : "case class Example(id:Int, category:String, value:Long, advanced:Boolean)\nimport scala.util.Random._\n\nval categories = List.fill(5)(List.fill(10)(nextPrintableChar).mkString)\ndef category:String = shuffle(categories).head\nval examples = List.fill(100)(Example(nextInt(2000), category, nextLong, nextBoolean))",
     "outputs" : [ ]
   }, {
     "metadata" : {
@@ -284,7 +310,7 @@
       "input_collapsed" : false,
       "collapsed" : true,
       "presentation" : {
-        "tabs_state" : "{\n  \"tab_id\": \"#tab955364267-0\"\n}",
+        "tabs_state" : "{\n  \"tab_id\": \"#tab1819083238-0\"\n}",
         "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
       },
       "id" : "2E61401D7F6B4DCEA0D5F52DE96FB973"
@@ -315,7 +341,7 @@
       "id" : "595E9615FC9A410AA16F64B33FF80912"
     },
     "cell_type" : "code",
-    "source" : "PivotChart(examples)",
+    "source" : "TableChart(examples)",
     "outputs" : [ ]
   }, {
     "metadata" : {
@@ -364,7 +390,7 @@
       "id" : "4153FEFD93464E86A0F7FF113FB1139F"
     },
     "cell_type" : "markdown",
-    "source" : "## Graphs"
+    "source" : "---\n## Graphs"
   }, {
     "metadata" : {
       "id" : "F91D80C4BFD0408DA915051BC3AEE740"
@@ -390,6 +416,16 @@
       "trusted" : true,
       "input_collapsed" : false,
       "collapsed" : true,
+      "id" : "E31A5ACA4F8D442383289F17C620C5B4"
+    },
+    "cell_type" : "code",
+    "source" : "val nodes = examples.map(e => Node(e.id, e, catCol(e.category), 5))\n\n\nval clusters = examples.groupBy(_.category)\nval connectedClusters = clusters.toList.flatMap { case (c, cl) => \n                                      for {\n                                        a <- cl\n                                        b <- cl if a != b\n                                      } yield Edge(2000+a.id+b.id, (a.id, b.id), \"yellow\")\n                                     }\n\n\nval singleConnections = {\n  val s = clusters.toList.map(_._2).map(x => shuffle(x).head)\n  \n  for (a <- s; b <- s if a != b) \n    yield Edge(4000+a.id+b.id, (a.id, b.id), \"green\")\n}\n\nval all = nodes ::: connectedClusters ::: singleConnections",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
       "presentation" : {
         "tabs_state" : "{\n  \"tab_id\": \"#tab1249479791-0\"\n}",
         "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
@@ -397,14 +433,14 @@
       "id" : "1F073EEB99CE4B1781AD74C59E208805"
     },
     "cell_type" : "code",
-    "source" : "val nodes = examples.map(e => Node(e.id, e, catCol(e.category), 5))\nval clusters = examples.groupBy(_.category)\nval connectedClusters = clusters.toList.flatMap { case (c, cl) => \n                                      for {\n                                                a <- cl\n                                                b <- cl if a != b\n                                              } yield Edge(2000+a.id+b.id, (a.id, b.id), \"yellow\")\n                                     }\nval singleConnections = {\n  val s = clusters.toList.map(_._2).map(x => shuffle(x).head)\n  for (a <- s; b <- s if a != b) yield Edge(4000+a.id+b.id, (a.id, b.id), \"green\")\n}\n\nval all = nodes ::: connectedClusters ::: singleConnections\nGraphChart(all, maxPoints = all.size)",
+    "source" : "GraphChart(all, maxPoints = all.size)",
     "outputs" : [ ]
   }, {
     "metadata" : {
       "id" : "E14D74FA3B164544A79D22800BB84BDD"
     },
     "cell_type" : "markdown",
-    "source" : "## Geo charts"
+    "source" : "---\n## Geo charts"
   }, {
     "metadata" : {
       "id" : "E78EF394884248DF87A887AFE627B13F"
@@ -469,10 +505,76 @@
     "outputs" : [ ]
   }, {
     "metadata" : {
+      "id" : "B4273E6F1E8A4ADA8866AB9A067533E4"
+    },
+    "cell_type" : "markdown",
+    "source" : "---\n## GeoChart"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "ACD54EC9C7414EE98C568AD260A377ED"
+    },
+    "cell_type" : "code",
+    "source" : ":sh wget http://data.cyc.opendata.arcgis.com/datasets/57fa576e5e8149b0b744f768e01e5ce1_0.geojson -O Parks_and_Gardens.geojson",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "750EC1E117C24C28851D00C89298F5A8"
+    },
+    "cell_type" : "code",
+    "source" : "val ut = new Utils(){}\nval geoJSONRepr = ut.parseGeoJSON(scala.io.Source.fromFile(\"Parks_and_Gardens.geojson\").getLines.mkString(\"\"))",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "012789D6569C4DC6A15579070B0B17B6"
+    },
+    "cell_type" : "code",
+    "source" : ":sh wget http://data.cyc.opendata.arcgis.com/datasets/9b212b7af275438ca9088ff868bda139_9.geojson -O airqual.geojson",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "E5314FF973454E0B96877C2A6690B914"
+    },
+    "cell_type" : "code",
+    "source" : "val ng = ut.parseGeoJSON(scala.io.Source.fromFile(\"airqual.geojson\").getLines.mkString(\"\"))",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "273E8A681B4942838D2E0DB37C215F9E"
+    },
+    "cell_type" : "code",
+    "source" : "val gc = GeoChart(Seq(geoJSONRepr))\ngc",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "1E08A11C501C4E618FDFD7E97F340D79"
+    },
+    "cell_type" : "code",
+    "source" : "gc.addAndApply(Seq(ng))",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
       "id" : "2DDE82591B3E4DE1B09C71CC9292E148"
     },
     "cell_type" : "markdown",
-    "source" : "## Fancy charts"
+    "source" : "---\n## Fancy charts"
   }, {
     "metadata" : {
       "id" : "415502CC4E5E44D7BF7F08978A4C80BD"
@@ -561,7 +663,7 @@
       "id" : "7C30152109AD4727827599D6949592F0"
     },
     "cell_type" : "markdown",
-    "source" : "## Everything is Dynamic and Reactive"
+    "source" : "---\n## Everything is Dynamic and Reactive"
   }, {
     "metadata" : {
       "id" : "3AADA3697ABE44BF85FFB47209E06036"
@@ -608,24 +710,14 @@
       "id" : "C3A5386580284B5D9C8D4BE907F6FA8C"
     },
     "cell_type" : "code",
-    "source" : "val rteam = shuffle(team.toList).take(5)\nval dd = new DropDown(\"All\" :: rteam.map(_.Player))\nval rc = RadarChart(rteam, labelField=Some(\"Player\"), sizes=(800, 600))\nval bout = out\ndd ++ bout ++ rc",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "C46F272CFC8C476FB022FD2BD6C84811"
-    },
-    "cell_type" : "code",
-    "source" : "dd.selected --> Connection.fromObserver { p =>\n  bout(p + \" is selected\")\n  rc.applyOn(rc.originalData.filter(_.Player == p || p == \"All\"))\n}",
+    "source" : "val rteam = shuffle(team.toList).take(5)\nval dd = new DropDown(\"All\" :: rteam.map(_.Player))\nval rc = RadarChart(rteam, labelField=Some(\"Player\"), sizes=(800, 600))\nval bout = out\n\ndd.selected --> Connection.fromObserver { p =>\n  bout(p + \" is selected\")\n  rc.applyOn(rc.originalData.filter(_.Player == p || p == \"All\"))\n}\n\ndd ++ bout ++ rc",
     "outputs" : [ ]
   }, {
     "metadata" : {
       "id" : "42D57AE9A76F4FA1A114BA95C2E1FADB"
     },
     "cell_type" : "markdown",
-    "source" : "## Synchronization"
+    "source" : "---\n## Synchronization"
   }, {
     "metadata" : {
       "id" : "7460856EFF64425A83DD0DD4B5814360"
@@ -637,7 +729,7 @@
       "id" : "593AD5B17B854593B20EA88F8B18E338"
     },
     "cell_type" : "markdown",
-    "source" : "## Create new chart type... live"
+    "source" : "---\n## Create new chart type... live"
   }, {
     "metadata" : {
       "id" : "E51CB610568E4936ADA024549386E8E3"
@@ -723,7 +815,7 @@
       "id" : "787984960C10439D81F5DA7FBD00505A"
     },
     "cell_type" : "markdown",
-    "source" : "## Contexts with interpolation"
+    "source" : "---\n## Contexts with interpolation"
   }, {
     "metadata" : {
       "trusted" : true,
@@ -742,7 +834,7 @@
       "id" : "C924A6AA52B94822B64718240069CFB0"
     },
     "cell_type" : "code",
-    "source" : "val ok = \"snb\"",
+    "source" : "val ok = \"$\\\\LaTeX$ interpolated in Scala is $\\\\Re$\"",
     "outputs" : [ ]
   }, {
     "metadata" : {
@@ -752,7 +844,7 @@
       "id" : "416D1E2D54154AE7845CE8FC14ECF334"
     },
     "cell_type" : "code",
-    "source" : ":markdown \nWe're using a **$ok** file",
+    "source" : ":markdown \nYup, **$ok** in Spark Notebook",
     "outputs" : [ ]
   }, {
     "metadata" : {
@@ -762,7 +854,7 @@
       "id" : "7B10ABEE96784E458F34447A8C9E7C46"
     },
     "cell_type" : "code",
-    "source" : ":javascript\nalert(\"$ok\")",
+    "source" : ":javascript\nalert(\"I am ${(\"whoami\".!!).trim}\")",
     "outputs" : [ ]
   } ],
   "nbformat" : 4
