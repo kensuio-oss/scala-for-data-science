@@ -7,6 +7,7 @@
 
 * Scala Days NYC, May 5th, 2016
 * GOTO Chicago, May 24, 2016
+* Strata + Hadoop World London, June 3, 2016
 * Scala Days Berlin, June 16th, 2016
 
 See also the [Spark Notebook](http://spark-notebook.io) version of this content, available at [github.com/data-fellas/scala-for-data-science](https://github.com/data-fellas/scala-for-data-science).
@@ -16,6 +17,8 @@ See also the [Spark Notebook](http://spark-notebook.io) version of this content,
 While Python and R are traditional languages of choice for Data Science, [Spark](http://spark.apache.org) also supports Scala (the language in which it's written) and Java.
 
 However, using one language for all work has advantages like simplifying the software development process, such as building, testing, and deploying techniques, coding conventions, etc.
+
+If you want a thorough introduction to Scala, see [Dean's book](http://shop.oreilly.com/product/0636920033073.do).
 
 So, what are the advantages, as well as disadvantages of Scala?
 
@@ -37,7 +40,7 @@ Scala also implements some _functional_ features using _object-oriented inherita
 * **R:** As a Statistics language, R is more functional than object-oriented.
 * **Java:** An object-oriented language, but with recently introduced functional constructs, _lambdas_ (anonymous functions) and collection operations that follow a more _functional_ style, rather than _imperative_ (i.e., where mutating the collection is embraced).
 
-There are a few differences with Java's vs. Scala's approaches to OOP and FP that are worth mentioning:
+There are a few differences with Java's vs. Scala's approaches to OOP and FP that are worth mentioning specifically:
 
 ### 1a. Traits vs. Interfaces
 Scala's object model adds a _trait_ feature, which is a more powerful concept than Java 8 interfaces. Before Java 8, there was no [mixin composition](https://en.wikipedia.org/wiki/Mixin) capability in Java, where composition is generally [preferred over inheritance](https://en.wikipedia.org/wiki/Composition_over_inheritance). 
@@ -47,7 +50,7 @@ Imagine that you want to define reusable logging code and mix it into other clas
 Scala traits fully support mixin composition by supporting both field and method definitions with flexibility rules for overriding behavior, once the traits are mixed into classes.
 
 ### 1b. Java Streams
-When you use the Java 8 collections, you can convert the the tradition collections to a "stream", which is lazy and gives you more functional operations. However, sometimes, the conversions back and forth can be tedious, e.g., converting to a stream for functional processing, then converting pass them to older APIs, etc. Scala collections are more consistently functional.
+When you use the Java 8 collections, you can convert the traditional collections to a "stream", which is lazy and gives you more functional operations. However, sometimes, the conversions back and forth can be tedious, e.g., converting to a stream for functional processing, then converting pass them to older APIs, etc. Scala collections are more consistently functional.
 
 ### The Virtue of Functional Collections: 
 Let's examine how concisely we can operate on a collection of values in Scala and Spark.
@@ -84,7 +87,7 @@ Let's compare a Scala collections calculation vs. the same thing in Spark; how m
 This produces the results:
 ```scala
 res16: scala.collection.immutable.Map[Boolean,Int] = Map(
-    false -> 74, true -> 25)
+    false -> 75, true -> 25)
 ```
 Note that for the numbers between 1 and 100, inclusive, exactly 1/3 of them are prime!
 
@@ -95,7 +98,7 @@ Note how similar the following code is to the previous example. After constructi
 However, because Spark collections are "lazy" by default (i.e., not evaluated until we ask for results), we explicitly print the results so Spark evaluates them!
 
 ```scala
-val rddPrimes = sparkContext.parallelize(1 until 100).
+val rddPrimes = sparkContext.parallelize(1 to 100).
   map(i => (i, isPrime(i))).
   groupBy(tuple => tuple._2).
   map(tuple => (tuple._1, tuple._2.size))
@@ -106,7 +109,7 @@ This produces the result:
 ```scala
 rddPrimes: org.apache.spark.rdd.RDD[(Boolean, Int)] = 
   MapPartitionsRDD[4] at map at <console>:61
-res18: Array[(Boolean, Int)] = Array((false,74), (true,25))
+res18: Array[(Boolean, Int)] = Array((false,75), (true,25))
 ```
 
 Note the inferred type, an `RDD` with records of type `(Boolean, Int)`, meaning two-element tuples.
@@ -123,19 +126,19 @@ What about the other languages?
 
 ## 2. Interpreter (REPL)
 
-In the notebook, we've been using the Scala interpreter (a.k.a., the REPL - Read Eval, Print, Loop) already behind the scenes. It makes notebooks possible!
+In the notebook, we've been using the Scala interpreter (a.k.a., the REPL - Read Eval, Print, Loop) already behind the scenes. It makes notebooks like this one possible!
 
 What about the other languages? 
 
 * **Python:** Also has an interpreter and [iPython/Jupyter](https://ipython.org/) was one of the first, widely-used notebook environments.
 * **R:** Also has an interpreter and notebook/IDE environments.
-* **Java:** Does _not_ have an interpreter and can't be programmed in a notebook environment.
+* **Java:** Does _not_ have an interpreter and can't be programmed in a notebook environment. However, Java 9 will have a REPL, after 20+ years!
 
 ## 3. Tuple Syntax
 In data, you work with records of `n` fields (for some value of `n`) all the time. Support for `n`-element _tuples_ is very convenient and Scala has a shorthand syntax for instantiating tuples. We used it twice previously to return two-element tuples in the anonymous functions passed to the `map` methods above:
 
 ```scala
-sparkContext.parallelize(1 until 100).
+sparkContext.parallelize(1 to 100).
   map(i => (i, isPrime(i))).                // <-- here
   groupBy(tuple => tuple._2).
   map(tuple => (tuple._1, tuple._2.size))   // <-- here
@@ -174,7 +177,7 @@ This is one of the most powerful features you'll find in most functional languag
 Let's rewrite our previous primes example:
 
 ```scala
-sparkContext.parallelize(1 until 100).
+sparkContext.parallelize(1 to 100).
   map(i => (i, isPrime(i))).
   groupBy{ case (_, primality) => primality}.  // Syntax: { case pattern => body }
   map{ case (primality, values) => (primality, values.size) } . // same here
@@ -184,7 +187,7 @@ sparkContext.parallelize(1 until 100).
 The output is:
 ```scala
 (true,25)
-(false,74)
+(false,75)
 ```
 
 Note the `case` keyword and `=>` separating the pattern from the body to execute if the pattern matches.
@@ -268,7 +271,7 @@ j: Int = 10
 Recall our previous Spark example, where we wrote nothing about types, but they were inferred: 
 
 ```scala
-sparkContext.parallelize(1 until 100).
+sparkContext.parallelize(1 to 100).
   map(i => (i, isPrime(i))).
   groupBy{ case(_, primality) => primality }.
   map{ case (primality, values) => (primality, values.size) }
@@ -330,11 +333,10 @@ Get the root directory of the notebooks:
 val root = sys.env("NOTEBOOKS_DIR")
 ```
 
-Load the airports data into a [DataFrame](http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.DataFrame). (In the notebook, the "cell" returns Scala "Unit", `()`, which is sort of like `void`, to avoid an annoying bug in the output.)
+Load the airports data into a [DataFrame](http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.DataFrame).
 
 ```scala
 val airportsDF = sqlContext.read.json(s"$root/airports.json")
-()
 ```
 
 Note the "schema" is inferred from the JSON and shown by the REPL (by calling `DataFrame.toString`).
@@ -345,6 +347,12 @@ airportsDF: org.apache.spark.sql.DataFrame = [airport: string, city: string, cou
 
 We cache the results, so Spark will keep the data in memory since we'll run a few queries over it. `DataFrame.show` is convenient for displaying the first `N` records (20 by default).
 
+```scala
+airportsDF.cache
+airportsDF.show
+```
+
+Here's the output of `show`:
 ```
 +--------------------+------------------+-------+----+-----------+------------+-----+
 |             airport|              city|country|iata|        lat|        long|state|
@@ -378,7 +386,7 @@ Now we can show the idiomatic DataFrame API (DSL) in action:
 ```scala
 val grouped = airportsDF.groupBy($"state", $"country").count.orderBy($"count".desc)
 grouped.printSchema
-grouped.show(100)  // all 50 states + territories
+grouped.show(100)  // 50 states + territories < 100
 ```
 
 Here is the output:
@@ -460,7 +468,7 @@ What about the other languages?
 * **Java:** Limited to so-called _fluent_ APIs, similar to our collections and RDD examples above.
 
 ## 9. And a Few Other Things...
-There are many more Scala features that the other languages don't have or don't support as nicely. Some are actually quite significant for general programming tasks, but they are used infrequently in Spark code. Here they are, for completeness.
+There are many more Scala features that the other languages don't have or don't support as nicely. Some are actually quite significant for general programming tasks, but they are used less frequently in Spark code. Here they are, for completeness.
 
 ### 9A. Singletons Are a Built-in Feature
 Implement the _Singleton Design Pattern_ without special logic to ensure there's only one instance.
@@ -713,6 +721,7 @@ SuccessOrFailure<? extends Object> sof = null;
 sof = new Success<String>("foo");
 
 ```
+
 This is harder for the user, who has to understand what's okay in this case, both what the designer intended and some technical rules of type theory. 
 
 It's much better if the _designer_ of `SuccessOrFailure[T]`, who understands the desired behavior, defines the allowed variance behavior at the _definition site_, which Scala supports. Recall from above:
