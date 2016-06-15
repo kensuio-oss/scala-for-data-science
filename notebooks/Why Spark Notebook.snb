@@ -11,7 +11,7 @@
     "trusted" : true,
     "customLocalRepo" : null,
     "customRepos" : null,
-    "customDeps" : [ "org.apache.spark %% spark-streaming-kafka % _", "com.datastax.spark %% spark-cassandra-connector-java % 1.6.0-M1", "- org.scala-lang % _ % _" ],
+    "customDeps" : [ "org.apache.spark %% spark-streaming-kafka-0-8 % _", "com.datastax.spark %% spark-cassandra-connector-java % 1.6.0-M1", "- org.scala-lang % _ % _" ],
     "customImports" : null,
     "customArgs" : null,
     "customSparkConf" : {
@@ -69,7 +69,7 @@
       "id" : "24F6BEA80211494580BE0C17D62C995E"
     },
     "cell_type" : "markdown",
-    "source" : "One of the top most useful feature brought by the spark notebook is its separation of the running notebooks.\n\nIndeed, each started notebook will spawn a new JVM with its own `SparkContext` instance. This allows a maximal flexibility for:\n* dependencies without clashes\n* access different clusters\n* tune differently each notebook\n* external scheduling (on the roadmap)"
+    "source" : "One of the top most useful feature brought by the spark notebook is its separation of the running notebooks.\n\nIndeed, each started notebook will spawn a new JVM with its own `SparkSession` instance. This allows a maximal flexibility for:\n* dependencies without clashes\n* access different clusters\n* tune differently each notebook\n* external scheduling (on the roadmap)"
   }, {
     "metadata" : {
       "id" : "E092B8282D04469697399B855136522D"
@@ -80,9 +80,9 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "presentation" : {
-        "tabs_state" : "{\n  \"tab_id\": \"#tab624392215-0\"\n}",
+        "tabs_state" : "{\n  \"tab_id\": \"#tab1480813823-0\"\n}",
         "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
       },
       "id" : "8BCC90AE74CF4C00811E64FD82287703"
@@ -95,12 +95,12 @@
       "id" : "3638F8A33FBB4FD28408513DCBA49F75"
     },
     "cell_type" : "markdown",
-    "source" : "So this notebook contains a variable `sparkContext` and its alias `sc`."
+    "source" : "So this notebook declares the variables `sparkSession` and `sparkContext` (with its alias `sc`)."
   }, {
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "presentation" : {
         "tabs_state" : "{\n  \"tab_id\": \"#tab53254654-0\"\n}",
         "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
@@ -108,7 +108,7 @@
       "id" : "22D8EFAF7D8C4463A064B8C90F720F63"
     },
     "cell_type" : "code",
-    "source" : "val context = (sparkContext, sc)",
+    "source" : "val context = (sparkSession, sparkContext, sc)",
     "outputs" : [ ]
   }, {
     "metadata" : {
@@ -138,7 +138,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "D96B3008B9E440408F5200F325A4FADA"
     },
     "cell_type" : "code",
@@ -148,11 +148,11 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "79A7AA0CF09B446B883FB07360684127"
     },
     "cell_type" : "code",
-    "source" : "sparkContext.getConf.get(\"spark.default.parallelism\")",
+    "source" : "sparkSession.conf.get(\"spark.default.parallelism\")",
     "outputs" : [ ]
   }, {
     "metadata" : {
@@ -170,7 +170,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "215600D86BCB41669835C288F4FFC9CB"
     },
     "cell_type" : "code",
@@ -186,7 +186,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "1BE83A0B7B6744FF83D8513BECC55DB9"
     },
     "cell_type" : "code",
@@ -202,7 +202,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "E5CABC64B14B442D8A824994EC18C4EA"
     },
     "cell_type" : "code",
@@ -230,7 +230,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "75D9790EC99F4F23ADE7434CE9DC72EC"
     },
     "cell_type" : "code",
@@ -264,7 +264,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "90AF0CFA143E4F6283502273EF5DB351"
     },
     "cell_type" : "code",
@@ -292,7 +292,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "3B03DFAD401D44B08D0C8592C5246AF0"
     },
     "cell_type" : "code",
@@ -308,9 +308,9 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "presentation" : {
-        "tabs_state" : "{\n  \"tab_id\": \"#tab1819083238-0\"\n}",
+        "tabs_state" : "{\n  \"tab_id\": \"#tab1634420495-0\"\n}",
         "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
       },
       "id" : "2E61401D7F6B4DCEA0D5F52DE96FB973"
@@ -334,7 +334,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "presentation" : {
         "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
       },
@@ -359,7 +359,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "A993AFEA7F2945A184B760EE6251EBAE"
     },
     "cell_type" : "code",
@@ -369,7 +369,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "A993AFEA7F2945A184B760EE6251EBAE"
     },
     "cell_type" : "code",
@@ -379,7 +379,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "A993AFEA7F2945A184B760EE6251EBAE"
     },
     "cell_type" : "code",
@@ -401,7 +401,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "presentation" : {
         "tabs_state" : "{\n  \"tab_id\": \"#tab114424344-0\"\n}",
         "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
@@ -415,7 +415,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "E31A5ACA4F8D442383289F17C620C5B4"
     },
     "cell_type" : "code",
@@ -425,7 +425,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "presentation" : {
         "tabs_state" : "{\n  \"tab_id\": \"#tab1249479791-0\"\n}",
         "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
@@ -455,16 +455,6 @@
     "source" : "### GeoPointsChart"
   }, {
     "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "C17877C2189A484EBCA6CB8D9A5BAD75"
-    },
-    "cell_type" : "code",
-    "source" : "import org.apache.spark.sql.SQLContext\nval sqlContext = new SQLContext(sparkContext)\nimport sqlContext.implicits._ \nimport org.apache.spark.sql.functions._  // for min, max, etc. column operations",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
       "id" : "BB38DC199B5E4DAA9ECFFBF4FBD9B3AB"
     },
     "cell_type" : "markdown",
@@ -473,17 +463,17 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "B23EDAF0D8204B7D845248EE24E20F30"
     },
     "cell_type" : "code",
-    "source" : "val root = sys.env(\"NOTEBOOKS_DIR\")\nval airportsDF = sqlContext.read.json(s\"$root/airports.json\")\nairportsDF.cache\nairportsDF",
+    "source" : "val root = sys.env(\"NOTEBOOKS_DIR\")\nval airportsDF = sparkSession.read.json(s\"$root/airports.json\")\nairportsDF.cache\nairportsDF",
     "outputs" : [ ]
   }, {
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "presentation" : {
         "tabs_state" : "{\n  \"tab_id\": \"#tab1529529486-0\"\n}",
         "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
@@ -491,13 +481,45 @@
       "id" : "1707B838D5494D1F8476AADCA120EFC5"
     },
     "cell_type" : "code",
-    "source" : "airportsDF.groupBy(\"state\").count.orderBy($\"count\".desc).limit(5)",
+    "source" : "val statsDF = airportsDF.groupBy(\"state\").count.orderBy($\"count\".desc).limit(5)",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "0A7F973B66494A349A505FAE9A4454ED"
+    },
+    "cell_type" : "markdown",
+    "source" : "Convert to Dataset (for the fun)."
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "88DD55147E984B7F98349BFA935C2572"
+    },
+    "cell_type" : "code",
+    "source" : "case class StateStat(state:String, count:Long)",
     "outputs" : [ ]
   }, {
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
+      "id" : "575DBAFD9887415EB6BBD0D1D63B8194"
+    },
+    "cell_type" : "code",
+    "source" : "statsDF.as[StateStat]",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "335F1C282CE94D4B88DD6A2D3D5C3651"
+    },
+    "cell_type" : "markdown",
+    "source" : "Plot the dataframe with dedicated colors for each state"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
       "id" : "6B6635CEBAC349EC87BAC809E5F21F78"
     },
     "cell_type" : "code",
@@ -511,9 +533,15 @@
     "source" : "---\n## GeoChart"
   }, {
     "metadata" : {
+      "id" : "0E6BA873EB35476B8A6CC133F42ACDF4"
+    },
+    "cell_type" : "markdown",
+    "source" : "Fetch some data on the web about parks and gardens"
+  }, {
+    "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "ACD54EC9C7414EE98C568AD260A377ED"
     },
     "cell_type" : "code",
@@ -521,19 +549,31 @@
     "outputs" : [ ]
   }, {
     "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "750EC1E117C24C28851D00C89298F5A8"
+      "id" : "7C6FD417F57A47098A685A3E4DDC721C"
     },
-    "cell_type" : "code",
-    "source" : "val ut = new Utils(){}\nval geoJSONRepr = ut.parseGeoJSON(scala.io.Source.fromFile(\"Parks_and_Gardens.geojson\").getLines.mkString(\"\"))",
-    "outputs" : [ ]
+    "cell_type" : "markdown",
+    "source" : "Parse it as GeoJSON using provided `widgets.parseGeoJSON`"
   }, {
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
+      "id" : "750EC1E117C24C28851D00C89298F5A8"
+    },
+    "cell_type" : "code",
+    "source" : "val geoJSONRepr = widgets.parseGeoJSON(scala.io.Source.fromFile(\"Parks_and_Gardens.geojson\").getLines.mkString(\"\"))",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "A4544FA65C0F480EB4FFAF28E27F5DBB"
+    },
+    "cell_type" : "markdown",
+    "source" : "Fetch some more vectorial information of the same area."
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
       "id" : "012789D6569C4DC6A15579070B0B17B6"
     },
     "cell_type" : "code",
@@ -541,19 +581,31 @@
     "outputs" : [ ]
   }, {
     "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "E5314FF973454E0B96877C2A6690B914"
+      "id" : "86A9DEA8BDD843B08DC2985638799232"
     },
-    "cell_type" : "code",
-    "source" : "val ng = ut.parseGeoJSON(scala.io.Source.fromFile(\"airqual.geojson\").getLines.mkString(\"\"))",
-    "outputs" : [ ]
+    "cell_type" : "markdown",
+    "source" : "And parse it..."
   }, {
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
+      "id" : "E5314FF973454E0B96877C2A6690B914"
+    },
+    "cell_type" : "code",
+    "source" : "val ng = widgets.parseGeoJSON(scala.io.Source.fromFile(\"airqual.geojson\").getLines.mkString(\"\"))",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "9F1F3B348DEA40BFA087795342006AEE"
+    },
+    "cell_type" : "markdown",
+    "source" : "Create a `GeoChart` instance on `GeoJSON` representation of the first dataset."
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
       "id" : "273E8A681B4942838D2E0DB37C215F9E"
     },
     "cell_type" : "code",
@@ -561,9 +613,15 @@
     "outputs" : [ ]
   }, {
     "metadata" : {
+      "id" : "898788F161C94A898F20FD85328526C8"
+    },
+    "cell_type" : "markdown",
+    "source" : "We can now add the linear features into the same chart using the helpful function `addAndApply` which adds information to the existing chart."
+  }, {
+    "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "1E08A11C501C4E618FDFD7E97F340D79"
     },
     "cell_type" : "code",
@@ -591,17 +649,17 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "DA236FFF7873453397F47AED00A55C87"
     },
     "cell_type" : "code",
-    "source" : "case class TeamMember(Player:String, Age:Int, FG_pc:Double, _3P_pc:Double, _2P_pc:Double, eFG_pc:Double, FT_pc:Double)\nval team = \n      s\"\"\"\n        1\tKawhi Leonard\t24\t72\t72\t2380\t551\t1090\t.506\t129\t291\t.443\t422\t799\t.528\t.565\t292\t334\t.874\t95\t398\t493\t186\t128\t71\t105\t133\t1523\n        2\tLaMarcus Aldridge\t30\t74\t74\t2261\t536\t1045\t.513\t0\t16\t.000\t536\t1029\t.521\t.513\t259\t302\t.858\t176\t456\t632\t110\t38\t81\t99\t151\t1331\n        3\tDanny Green\t28\t79\t79\t2062\t211\t561\t.376\t116\t349\t.332\t95\t212\t.448\t.480\t34\t46\t.739\t48\t255\t303\t141\t79\t64\t75\t141\t572\n        4\tTony Parker\t33\t72\t72\t1980\t350\t710\t.493\t27\t65\t.415\t323\t645\t.501\t.512\t130\t171\t.760\t17\t159\t176\t379\t54\t11\t131\t114\t857\n        5\tPatrick Mills\t27\t81\t3\t1662\t260\t612\t.425\t123\t320\t.384\t137\t292\t.469\t.525\t47\t58\t.810\t27\t131\t158\t226\t59\t6\t76\t102\t690\n        6\tTim Duncan\t39\t61\t60\t1536\t215\t441\t.488\t0\t2\t.000\t215\t439\t.490\t.488\t92\t131\t.702\t115\t332\t447\t163\t47\t78\t90\t125\t522\n        7\tDavid West\t35\t78\t19\t1404\t244\t448\t.545\t3\t7\t.429\t241\t441\t.546\t.548\t63\t80\t.788\t72\t237\t309\t143\t44\t55\t68\t142\t554\n        8\tBoris Diaw\t33\t76\t4\t1386\t202\t383\t.527\t25\t69\t.362\t177\t314\t.564\t.560\t56\t76\t.737\t58\t175\t233\t176\t26\t21\t97\t102\t485\n        9\tKyle Anderson\t22\t78\t11\t1245\t138\t295\t.468\t12\t37\t.324\t126\t258\t.488\t.488\t62\t83\t.747\t25\t219\t244\t123\t60\t29\t59\t97\t350\n        10\tManu Ginobili\t38\t58\t0\t1134\t197\t435\t.453\t70\t179\t.391\t127\t256\t.496\t.533\t91\t112\t.813\t26\t120\t146\t177\t66\t11\t99\t99\t555\n        11\tJonathon Simmons\t26\t55\t2\t813\t122\t242\t.504\t18\t47\t.383\t104\t195\t.533\t.541\t69\t92\t.750\t16\t80\t96\t58\t24\t5\t53\t103\t331\n        12\tBoban Marjanovic\t27\t54\t4\t508\t105\t174\t.603\t0\t0\t.0\t105\t174\t.603\t.603\t87\t114\t.763\t73\t121\t194\t21\t12\t23\t29\t54\t297\n        13\tRasual Butler\t36\t46\t0\t432\t49\t104\t.471\t15\t49\t.306\t34\t55\t.618\t.543\t11\t16\t.688\t3\t53\t56\t24\t13\t23\t8\t11\t124\n        14\tKevin Martin\t32\t16\t1\t261\t30\t85\t.353\t11\t33\t.333\t19\t52\t.365\t.418\t28\t30\t.933\t4\t25\t29\t12\t9\t2\t13\t15\t99\n        15\tRay McCallum\t24\t31\t3\t256\t27\t67\t.403\t5\t16\t.313\t22\t51\t.431\t.440\t9\t10\t.900\t6\t25\t31\t33\t5\t4\t11\t14\t68\n        16\tMatt Bonner\t35\t30\t2\t206\t29\t57\t.509\t15\t34\t.441\t14\t23\t.609\t.640\t3\t4\t.750\t3\t24\t27\t9\t6\t1\t3\t16\t76\n        17\tAndre Miller\t39\t13\t4\t181\t23\t48\t.479\t1\t4\t.250\t22\t44\t.500\t.490\t9\t13\t.692\t6\t21\t27\t29\t7\t0\t12\t14\t56\n     \"\"\".trim.split(\"\\n\").map(s => s.trim.split(\"\\t\").drop(1).toList).map(x => (x.head, x(1).trim.toInt) → x.drop(2).filter(_.startsWith(\".\")).map(_.trim.toDouble * 100)).map { case ((p, a), stats)  =>\n        TeamMember(p, a, stats(0), stats(1), stats(2), stats(3), stats(4))\n      }",
+    "source" : "case class TeamMember(Player:String, Age:Int, FG_pc:Double, _3P_pc:Double, _2P_pc:Double, eFG_pc:Double, FT_pc:Double)\nval team = \n      s\"\"\"\n        1\tKawhi Leonard\t24\t72\t72\t2380\t551\t1090\t.506\t129\t291\t.443\t422\t799\t.528\t.565\t292\t334\t.874\t95\t398\t493\t186\t128\t71\t105\t133\t1523\n        2\tLaMarcus Aldridge\t30\t74\t74\t2261\t536\t1045\t.513\t0\t16\t.000\t536\t1029\t.521\t.513\t259\t302\t.858\t176\t456\t632\t110\t38\t81\t99\t151\t1331\n        3\tDanny Green\t28\t79\t79\t2062\t211\t561\t.376\t116\t349\t.332\t95\t212\t.448\t.480\t34\t46\t.739\t48\t255\t303\t141\t79\t64\t75\t141\t572\n        4\tTony Parker\t33\t72\t72\t1980\t350\t710\t.493\t27\t65\t.415\t323\t645\t.501\t.512\t130\t171\t.760\t17\t159\t176\t379\t54\t11\t131\t114\t857\n        5\tPatrick Mills\t27\t81\t3\t1662\t260\t612\t.425\t123\t320\t.384\t137\t292\t.469\t.525\t47\t58\t.810\t27\t131\t158\t226\t59\t6\t76\t102\t690\n        6\tTim Duncan\t39\t61\t60\t1536\t215\t441\t.488\t0\t2\t.000\t215\t439\t.490\t.488\t92\t131\t.702\t115\t332\t447\t163\t47\t78\t90\t125\t522\n        7\tDavid West\t35\t78\t19\t1404\t244\t448\t.545\t3\t7\t.429\t241\t441\t.546\t.548\t63\t80\t.788\t72\t237\t309\t143\t44\t55\t68\t142\t554\n        8\tBoris Diaw\t33\t76\t4\t1386\t202\t383\t.527\t25\t69\t.362\t177\t314\t.564\t.560\t56\t76\t.737\t58\t175\t233\t176\t26\t21\t97\t102\t485\n        9\tKyle Anderson\t22\t78\t11\t1245\t138\t295\t.468\t12\t37\t.324\t126\t258\t.488\t.488\t62\t83\t.747\t25\t219\t244\t123\t60\t29\t59\t97\t350\n        10\tManu Ginobili\t38\t58\t0\t1134\t197\t435\t.453\t70\t179\t.391\t127\t256\t.496\t.533\t91\t112\t.813\t26\t120\t146\t177\t66\t11\t99\t99\t555\n        11\tJonathon Simmons\t26\t55\t2\t813\t122\t242\t.504\t18\t47\t.383\t104\t195\t.533\t.541\t69\t92\t.750\t16\t80\t96\t58\t24\t5\t53\t103\t331\n        12\tBoban Marjanovic\t27\t54\t4\t508\t105\t174\t.603\t0\t0\t.0\t105\t174\t.603\t.603\t87\t114\t.763\t73\t121\t194\t21\t12\t23\t29\t54\t297\n        13\tRasual Butler\t36\t46\t0\t432\t49\t104\t.471\t15\t49\t.306\t34\t55\t.618\t.543\t11\t16\t.688\t3\t53\t56\t24\t13\t23\t8\t11\t124\n        14\tKevin Martin\t32\t16\t1\t261\t30\t85\t.353\t11\t33\t.333\t19\t52\t.365\t.418\t28\t30\t.933\t4\t25\t29\t12\t9\t2\t13\t15\t99\n        15\tRay McCallum\t24\t31\t3\t256\t27\t67\t.403\t5\t16\t.313\t22\t51\t.431\t.440\t9\t10\t.900\t6\t25\t31\t33\t5\t4\t11\t14\t68\n        16\tMatt Bonner\t35\t30\t2\t206\t29\t57\t.509\t15\t34\t.441\t14\t23\t.609\t.640\t3\t4\t.750\t3\t24\t27\t9\t6\t1\t3\t16\t76\n        17\tAndre Miller\t39\t13\t4\t181\t23\t48\t.479\t1\t4\t.250\t22\t44\t.500\t.490\t9\t13\t.692\t6\t21\t27\t29\t7\t0\t12\t14\t56\n     \"\"\".trim.split(\"\\n\").map(s => s.trim.split(\"\\t\").drop(1).toList).map(x => (x.head, x(1).trim.toInt) → x.drop(2).filter(_.startsWith(\".\"))\n                                                                     .map(_.trim.toDouble * 100)).map { case ((p, a), stats)  =>\n        TeamMember(p, a, stats(0), stats(1), stats(2), stats(3), stats(4))\n      }",
     "outputs" : [ ]
   }, {
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "CAC0438C302A4C5388A9B71E5C246FD8"
     },
     "cell_type" : "code",
@@ -617,7 +675,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "presentation" : {
         "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [\n    \"_2P_pc\"\n  ],\n  \"rows\": [\n    \"Player\"\n  ],\n  \"vals\": [\n    \"_3P_pc\"\n  ],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Sum\",\n  \"rendererName\": \"Line Chart\"\n}"
       },
@@ -636,7 +694,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "536D63D7B3A64281BD62B95E7FBB4E76"
     },
     "cell_type" : "code",
@@ -652,7 +710,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "2B91343B09F041B19FD683E0C04F99D8"
     },
     "cell_type" : "code",
@@ -680,7 +738,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "CE563B405582434AAFA53E4C4AE8C893"
     },
     "cell_type" : "code",
@@ -690,7 +748,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "FA0E02EBBD7D467385D7C17B4708DFBB"
     },
     "cell_type" : "code",
@@ -706,7 +764,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "C3A5386580284B5D9C8D4BE907F6FA8C"
     },
     "cell_type" : "code",
