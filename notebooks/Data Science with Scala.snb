@@ -10,8 +10,8 @@
     },
     "trusted" : true,
     "customLocalRepo" : null,
-    "customRepos" : null,
-    "customDeps" : [ "com.github.haifengl % smile-core % 1.0.4", "org.deeplearning4j % deeplearning4j-core % 0.4-rc3.9", "org.deeplearning4j % deeplearning4j-nlp % 0.4-rc3.9" ],
+    "customRepos" : [ "spartakus % default % http://dl.bintray.com/spark-clustering-notebook/maven % maven" ],
+    "customDeps" : [ "com.github.haifengl % smile-core % 1.0.4", "org.deeplearning4j % deeplearning4j-core % 0.4-rc3.9", "org.deeplearning4j % deeplearning4j-nlp % 0.4-rc3.9", "batchstream %% batchstream % 1.0" ],
     "customImports" : null,
     "customArgs" : null,
     "customSparkConf" : null
@@ -119,19 +119,7 @@
     },
     "cell_type" : "code",
     "source" : "case class SmileDataset(\n  x:Array[Array[Int]],\n  y:Array[Int],\n  p:Int\n)",
-    "outputs" : [ {
-      "name" : "stdout",
-      "output_type" : "stream",
-      "text" : "defined class SmileDataset\n"
-    }, {
-      "metadata" : { },
-      "data" : {
-        "text/html" : ""
-      },
-      "output_type" : "execute_result",
-      "execution_count" : 1,
-      "time" : "Took: 631 milliseconds, at 2016-6-15 22:8"
-    } ]
+    "outputs" : [ ]
   }, {
     "metadata" : {
       "trusted" : true,
@@ -141,19 +129,7 @@
     },
     "cell_type" : "code",
     "source" : "def load(resource:String):SmileDataset  = {\n  val xs = scala.collection.mutable.ArrayBuffer.empty[Array[Int]]\n  val ys = scala.collection.mutable.ArrayBuffer.empty[Int]\n  \n  val head :: content = scala.io.Source.fromFile(new java.io.File(resource)).getLines.toList\n  \n  val Array(nseq, k, p) = head.split(\" \").map(_.trim.toInt)\n  \n  content.foreach{ line =>\n    val seqid :: pos :: len :: featureAndY = line.split(\" \").map(_.trim.toInt).toList\n    val (feature, y) = (featureAndY.init, featureAndY.last)\n    xs += feature.toArray\n    ys += y\n  }\n  \n  SmileDataset(xs.toArray, ys.toArray, p)\n}",
-    "outputs" : [ {
-      "name" : "stdout",
-      "output_type" : "stream",
-      "text" : "load: (resource: String)SmileDataset\n"
-    }, {
-      "metadata" : { },
-      "data" : {
-        "text/html" : ""
-      },
-      "output_type" : "execute_result",
-      "execution_count" : 2,
-      "time" : "Took: 927 milliseconds, at 2016-6-15 22:8"
-    } ]
+    "outputs" : [ ]
   }, {
     "metadata" : {
       "trusted" : true,
@@ -163,19 +139,7 @@
     },
     "cell_type" : "code",
     "source" : "import smile.classification.Maxent\nval train = load(\"/tmp/sparse.hyphen.6.train\")\nval test = load(\"/tmp/sparse.hyphen.6.test\")\n\nval maxent = new Maxent(train.p, train.x, train.y, 0.1, 1E-5, 500);\n\nval error = (test.x zip test.y).filter{ case (x,y) => maxent.predict(x) != y }.size",
-    "outputs" : [ {
-      "name" : "stdout",
-      "output_type" : "stream",
-      "text" : "import smile.classification.Maxent\ntrain: SmileDataset = SmileDataset([[I@86e337c,[I@7af61636,162)\ntest: SmileDataset = SmileDataset([[I@322c724b,[I@403b3a9,162)\nmaxent: smile.classification.Maxent = smile.classification.Maxent@f081e4e\nerror: Int = 1513\n"
-    }, {
-      "metadata" : { },
-      "data" : {
-        "text/html" : ""
-      },
-      "output_type" : "execute_result",
-      "execution_count" : 3,
-      "time" : "Took: 1 second 50 milliseconds, at 2016-6-15 22:8"
-    } ]
+    "outputs" : [ ]
   }, {
     "metadata" : {
       "trusted" : true,
@@ -185,19 +149,7 @@
     },
     "cell_type" : "code",
     "source" : ":markdown \nHyphen error is $error of ${test.x.size}",
-    "outputs" : [ {
-      "name" : "stdout",
-      "output_type" : "stream",
-      "text" : "res12: String = Hyphen error is 1513 of 12049\n"
-    }, {
-      "metadata" : { },
-      "data" : {
-        "text/markdown" : "Hyphen error is 1513 of 12049"
-      },
-      "output_type" : "execute_result",
-      "execution_count" : 8,
-      "time" : "Took: 537 milliseconds, at 2016-6-15 22:9"
-    } ]
+    "outputs" : [ ]
   }, {
     "metadata" : {
       "trusted" : true,
@@ -207,19 +159,7 @@
     },
     "cell_type" : "code",
     "source" : ":markdown\nHyphen error rate = ${100.0 * error / test.x.length}",
-    "outputs" : [ {
-      "name" : "stdout",
-      "output_type" : "stream",
-      "text" : "res14: String = Hyphen error rate = 12.557058677068637\n"
-    }, {
-      "metadata" : { },
-      "data" : {
-        "text/markdown" : "Hyphen error rate = 12.557058677068637"
-      },
-      "output_type" : "execute_result",
-      "execution_count" : 9,
-      "time" : "Took: 516 milliseconds, at 2016-6-15 22:9"
-    } ]
+    "outputs" : [ ]
   }, {
     "metadata" : {
       "id" : "7D761878E55148ACBC6545F0E0B80332"
@@ -402,6 +342,144 @@
     "source" : "### Example of Random Forest"
   }, {
     "metadata" : {
+      "id" : "AA31064E508843B3832F8B23078A4CDA"
+    },
+    "cell_type" : "markdown",
+    "source" : "The MLlib guide is really good and present the models with examples plus their theorical and practical foundations.\n\nHence the following example of Random Forest is shamelessly stealt from the guide :-)."
+  }, {
+    "metadata" : {
+      "id" : "E084EA0943974E67BE8199AA2DE7DE47"
+    },
+    "cell_type" : "markdown",
+    "source" : "As usual we first import the required classes, which are the model, the algorithm and a utils class to load predefined data types "
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "D641028ABE2B47748513B9406574D5E2"
+    },
+    "cell_type" : "code",
+    "source" : "import org.apache.spark.mllib.tree.RandomForest\nimport org.apache.spark.mllib.tree.model.RandomForestModel\nimport org.apache.spark.mllib.util.MLUtils",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "D9EB6B5A237E4B64877E8C7097EC82DB"
+    },
+    "cell_type" : "markdown",
+    "source" : "Download the dataset"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "8442F74EAC064B6A8C7FA7540AD7C756"
+    },
+    "cell_type" : "code",
+    "source" : ":sh wget https://raw.githubusercontent.com/apache/spark/master/data/mllib/sample_libsvm_data.txt -O /tmp/sample_libsvm_data.txt",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "50FF68EFD4B44B8983BF132B78B0FCE5"
+    },
+    "cell_type" : "markdown",
+    "source" : "Load and parse the data file."
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "23E9B4A6AD6040CE96A32B2B7DB76BD4"
+    },
+    "cell_type" : "code",
+    "source" : "val data = MLUtils.loadLibSVMFile(sc, \"/tmp/sample_libsvm_data.txt\")",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "A0602B0895DC460F8B5D7AC660E4C1C5"
+    },
+    "cell_type" : "markdown",
+    "source" : "Split the data into training and test sets (30% held out for testing)"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "65FC2F1EA6884FA991ECA28A962FA127"
+    },
+    "cell_type" : "code",
+    "source" : "val splits = data.randomSplit(Array(0.7, 0.3))\nval (trainingData, testData) = (splits(0), splits(1))",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "8A72D49D5A1849DE92CB23BCB60A3C81"
+    },
+    "cell_type" : "markdown",
+    "source" : "Train a RandomForest model.\n\nEmpty categoricalFeaturesInfo indicates all features are continuous."
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "A8DC8E18B8AC48B3901230FB25D5E180"
+    },
+    "cell_type" : "code",
+    "source" : "val numClasses = 2\nval categoricalFeaturesInfo = Map[Int, Int]()\nval numTrees = 3 // Use more in practice.\nval featureSubsetStrategy = \"auto\" // Let the algorithm choose.\nval impurity = \"gini\"\nval maxDepth = 4\nval maxBins = 32",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "7A58234C49814CFC80B6609DD12AE88D"
+    },
+    "cell_type" : "code",
+    "source" : "val model = RandomForest.trainClassifier(trainingData, \n                                         numClasses, \n                                         categoricalFeaturesInfo,\n                                         numTrees, \n                                         featureSubsetStrategy, \n                                         impurity, \n                                         maxDepth, \n                                         maxBins)",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "3FC587E4A580450794BA4704EF7A6766"
+    },
+    "cell_type" : "markdown",
+    "source" : "Evaluate model on test instances and compute test error"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "C6AF1D4F9B5F421F9F9443E5DF6B812A"
+    },
+    "cell_type" : "code",
+    "source" : "val labelAndPreds = testData.map { point =>\n  val prediction = model.predict(point.features)\n  (point.label, prediction)\n}",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "69A330F4C5544F628C744C623AE280C5"
+    },
+    "cell_type" : "code",
+    "source" : "val testErr = labelAndPreds.filter(r => r._1 != r._2).count.toDouble / testData.count()\ntext(\"Test Error = \" + testErr) ++ html(<br/>) ++ text(\"Learned classification forest model:\\n\") ++ html(<pre>{model.toDebugString}</pre>)",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "6EC433E37604464C863DFB3F850F9103"
+    },
+    "cell_type" : "markdown",
+    "source" : "Save and load model"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "DE9462E48A9C4D198385A017A8EDA776"
+    },
+    "cell_type" : "code",
+    "source" : "model.save(sc, \"/tmp/myRandomForestClassificationModel\")\nval sameModel = RandomForestModel.load(sc, \"/tmp/myRandomForestClassificationModel\")",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
       "id" : "E4855C423EA64BD18589BF8EEE93670C"
     },
     "cell_type" : "markdown",
@@ -418,6 +496,130 @@
     },
     "cell_type" : "markdown",
     "source" : "### Example G-Stream"
+  }, {
+    "metadata" : {
+      "id" : "897E8ACAB74649338FDA86D5A01B510D"
+    },
+    "cell_type" : "markdown",
+    "source" : "Publications:\n\n1. Mohammed Ghesmoune, Mustapha Lebbah, Hanene Azzag: Micro-Batching Growing Neural Gas for Clustering Data Streams Using Spark Streaming. INNS Conference on Big Data 2015: 158-166.\n\n2. Mohammed Ghesmoune, Mustapha Lebbah, Hanene Azzag, Tarn Duong: Streaming Data Clustering using Spark Streaming: Application to Big-Data of Insurance. KDD 2016 (** Paper under submission **)."
+  }, {
+    "metadata" : {
+      "id" : "A6E0E11FCD2447098FF286A3B767846C"
+    },
+    "cell_type" : "markdown",
+    "source" : "Prepare spark streaming context"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "694A2EB24B4D4B5CBEF45FC658145100"
+    },
+    "cell_type" : "code",
+    "source" : "import org.apache.spark.streaming.{Seconds, StreamingContext, Milliseconds}\n@transient val ssc:StreamingContext = {\n  StreamingContext.getActive.foreach(_.stop(false))\n  new StreamingContext(sparkContext, Milliseconds(m(\"intervalMs\").toInt))\n}",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "384DC3DC983A44548EADF09121029996"
+    },
+    "cell_type" : "markdown",
+    "source" : "Init first data and connect to stream (see https://github.com/Spark-clustering-notebook/coliseum/blob/master/notebooks/coliseum/G-Stream.snb)"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "6F14D2AF06164782A886D500EEE1C2ED"
+    },
+    "cell_type" : "code",
+    "source" : "val separator = \" \"\n// 'points2' contains the first two data-points used for initialising the model\n@transient val points2 = sc.textFile(s\"$expDir/data0\").map(x => x.split(separator).map(_.toDouble))\n\n// Create a DStreams that reads batch files from dirData\n@transient val stream = ssc.textFileStream(expDir).map(x => x.split(separator).map(_.toDouble))\n// Create a DStreams that will connect to a socket hostname:port\n//val stream = ssc.socketTextStream(\"localhost\", 9999).map(x => x.split(separator).map(_.toDouble)) //localhost or 10.32.2.153 for Teralab",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "95D4808CE17242E48044C38D76D3AC77"
+    },
+    "cell_type" : "markdown",
+    "source" : "Transform data as feature vectors"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "BC36ED5CC523493B83D96470EE159096"
+    },
+    "cell_type" : "code",
+    "source" : "stream.foreachRDD{r => \n                  val d = r.take(10).map(_.toList.toString)\n                  datalist.appendAll(d)\n                 }  \nval labId = 2 //TODO: change -1 to -2 when you add the id to the file (last column) //-2 because the last 2 columns represent label & id\nval dim = points2.take(1)(0).size - labId",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "6C07FE40130D4BAA87CB9C7FF9F45AE1"
+    },
+    "cell_type" : "markdown",
+    "source" : "Import G-Stream model"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "E8798372293841EB828EF2DCCF0F4479"
+    },
+    "cell_type" : "code",
+    "source" : "import org.lipn.clustering.batchStream.batchStream",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "277F3A7B08D74ED888D549206E7CD6B6"
+    },
+    "cell_type" : "markdown",
+    "source" : "Configure G-Stream"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "990EDC710D5A40229303981047872201"
+    },
+    "cell_type" : "code",
+    "source" : "val decayFactor = 0.9\n  val lambdaAge = 1.2\n  val nbNodesToAdd = 3\n  val nbWind = 5\n  val DSname = \"dsname\"\n\n@transient var gstream = new batchStream()\n                          .setDecayFactor(decayFactor)\n                          .setLambdaAge(lambdaAge)\n                          .setMaxInsert(nbNodesToAdd)\n\n// converting each point into an object\n@transient val dstreamObj = stream.map( e =>\n  gstream.model.pointToObjet(e, dim, labId)\n)",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "923B04DCECB841278D5681F17B3967CA"
+    },
+    "cell_type" : "markdown",
+    "source" : "Init the model wiht the first 2 points"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "45202B93E2764B1988D53EDC368BB1B4"
+    },
+    "cell_type" : "code",
+    "source" : "// initialization of the model by creating a graph of two nodes (the first 2 data-points)\ngstream.initModelObj(points2, dim)",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "59FB6C24C1AF490C8DF9B3194C975649"
+    },
+    "cell_type" : "markdown",
+    "source" : "Train the model online with new data coming in the `DStream`"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "CC9724E021EB4B3787BD16595224274E"
+    },
+    "cell_type" : "code",
+    "source" : "// training on the model\ngstream.trainOnObj(dstreamObj, gstream, outputDir+\"/\"+DSname+\"-\"+nbNodesToAdd, dim, nbWind)",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "0BD046386C0940A995943F4CB978C202"
+    },
+    "cell_type" : "markdown",
+    "source" : "This will create a new dataset (File) for each batch of data (RDD) which will contain the new `protoptypes` (~ `clusters`) which are linked as a _Self Organized Map_ "
   }, {
     "metadata" : {
       "id" : "77BBFF186BC94896B20C0B703DA3AF69"
