@@ -461,6 +461,17 @@ root
 grouped: org.apache.spark.sql.DataFrame = [state: string, country: string, count: bigint]
 ```
 
+By the way, this DSL is essentially a programmatic version of SQL:
+
+```scala
+airportsDF.registerTempTable("airports")
+val grouped2 = sqlContext.sql("""
+  SELECT state, country, COUNT(*) AS cnt FROM airports
+  GROUP BY state, country
+  ORDER BY cnt DESC
+""")
+```
+
 What about the other languages? 
 
 * **Python:** Dynamically-typed languages often have features that make idiomatic DSLs easy to define. The Spark DataFrame API is inspired by the [Pandas DataFrame](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html) API.
