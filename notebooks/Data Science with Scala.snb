@@ -9,7 +9,7 @@
       "codemirror_mode" : "text/x-scala"
     },
     "trusted" : true,
-    "customLocalRepo" : null,
+    "customLocalRepo" : "/tmp/repo",
     "customRepos" : [ "spartakus % default % http://dl.bintray.com/spark-clustering-notebook/maven % maven" ],
     "customDeps" : [ "com.github.haifengl % smile-core % 1.0.4", "org.deeplearning4j % deeplearning4j-core % 0.4-rc3.9", "org.deeplearning4j % deeplearning4j-nlp % 0.4-rc3.9", "batchstream %% batchstream % 1.0" ],
     "customImports" : null,
@@ -108,13 +108,13 @@
       "id" : "4699144082CF486A804DCED6326066BD"
     },
     "cell_type" : "code",
-    "source" : "import sys.process._\nimport scala.language.postfixOps\n\n\"wget https://raw.githubusercontent.com/haifengl/smile/master/shell/src/universal/data/sequence/sparse.hyphen.6.train -O /tmp/sparse.hyphen.6.train \"!!\n\n\"wget https://raw.githubusercontent.com/haifengl/smile/master/shell/src/universal/data/sequence/sparse.hyphen.6.train -O /tmp/sparse.hyphen.6.test \"!!",
+    "source" : "import sys.process._\nimport scala.language.postfixOps\n\n\"wget https://raw.githubusercontent.com/haifengl/smile/master/shell/src/universal/data/sequence/sparse.hyphen.6.train -O /tmp/sparse.hyphen.6.train \"!!\n\n\"wget https://raw.githubusercontent.com/haifengl/smile/master/shell/src/universal/data/sequence/sparse.hyphen.6.test -O /tmp/sparse.hyphen.6.test \"!!",
     "outputs" : [ ]
   }, {
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "DD548922D7734331811948F0FF6946BF"
     },
     "cell_type" : "code",
@@ -124,7 +124,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "D76F34DAF0934FA29142026AA82BDBB9"
     },
     "cell_type" : "code",
@@ -134,7 +134,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "9CC0506B62854016892AE78C94D7A9F5"
     },
     "cell_type" : "code",
@@ -144,7 +144,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "0AD1F07DFE6C45A68AE15AF4001C5A18"
     },
     "cell_type" : "code",
@@ -154,7 +154,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "3504A2996BBB43128F077F9DC97E588D"
     },
     "cell_type" : "code",
@@ -356,7 +356,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "D641028ABE2B47748513B9406574D5E2"
     },
     "cell_type" : "code",
@@ -372,7 +372,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "8442F74EAC064B6A8C7FA7540AD7C756"
     },
     "cell_type" : "code",
@@ -404,7 +404,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "65FC2F1EA6884FA991ECA28A962FA127"
     },
     "cell_type" : "code",
@@ -420,7 +420,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "A8DC8E18B8AC48B3901230FB25D5E180"
     },
     "cell_type" : "code",
@@ -430,7 +430,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "7A58234C49814CFC80B6609DD12AE88D"
     },
     "cell_type" : "code",
@@ -446,7 +446,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "C6AF1D4F9B5F421F9F9443E5DF6B812A"
     },
     "cell_type" : "code",
@@ -456,7 +456,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "69A330F4C5544F628C744C623AE280C5"
     },
     "cell_type" : "code",
@@ -472,7 +472,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "DE9462E48A9C4D198385A017A8EDA776"
     },
     "cell_type" : "code",

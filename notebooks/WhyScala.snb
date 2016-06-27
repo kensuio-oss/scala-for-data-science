@@ -9,7 +9,7 @@
       "codemirror_mode" : "text/x-scala"
     },
     "trusted" : true,
-    "customLocalRepo" : null,
+    "customLocalRepo" : "/tmp/repo",
     "customRepos" : null,
     "customDeps" : null,
     "customImports" : null,
@@ -116,7 +116,7 @@
       "input_collapsed" : false,
       "collapsed" : false,
       "presentation" : {
-        "tabs_state" : "{\n  \"tab_id\": \"#tab1805283772-0\"\n}",
+        "tabs_state" : "{\n  \"tab_id\": \"#tab1216671336-0\"\n}",
         "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
       },
       "id" : "5E9DCA78D8DB4E5E8362EB9138F380F5"
@@ -142,7 +142,7 @@
       "input_collapsed" : false,
       "collapsed" : false,
       "presentation" : {
-        "tabs_state" : "{\n  \"tab_id\": \"#tab2009222807-0\"\n}",
+        "tabs_state" : "{\n  \"tab_id\": \"#tab1566223637-1\"\n}",
         "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
       },
       "id" : "5B884B3F73BF4D0699067F8850A499AD"
@@ -190,7 +190,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "2C28CB38977246F8AC8F202459D99B43"
     },
     "cell_type" : "code",
@@ -212,7 +212,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "C4162770FDDA49438DE4E54638979322"
     },
     "cell_type" : "code",
@@ -354,7 +354,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "FE1190855EE24235B43678F98CA1D3FB"
     },
     "cell_type" : "code",
@@ -458,7 +458,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "D5EFC6E128DC4BD9840CAE8A94EE1DA7"
     },
     "cell_type" : "code",
@@ -474,7 +474,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "63781B531D29467EAA44AC81CF96E7DF"
     },
     "cell_type" : "code",
@@ -484,7 +484,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "4AB3F2B4D4DD4E70A20D31E4568CE074"
     },
     "cell_type" : "code",
@@ -494,7 +494,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "presentation" : {
         "tabs_state" : "{\n  \"tab_id\": \"#tab1954373211-0\"\n}",
         "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
@@ -514,7 +514,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "6BEA262B490540E79A21B1A1282F54C3"
     },
     "cell_type" : "code",
@@ -530,7 +530,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "BF39CCF4418042FCBDE25C3E3CFD7008"
     },
     "cell_type" : "code",
@@ -546,7 +546,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "ECAEC625BFBD4B82957F5D81EE524341"
     },
     "cell_type" : "code",
@@ -562,7 +562,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "EF9F87A5DF6A4589AE09E2F8FD05279E"
     },
     "cell_type" : "code",
@@ -572,7 +572,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "presentation" : {
         "tabs_state" : "{\n  \"tab_id\": \"#tab478386907-0\"\n}"
       },
@@ -591,7 +591,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "3A3561A859AB4205BABA7D1C2EE76CEF"
     },
     "cell_type" : "code",
@@ -619,7 +619,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "7A40CA303C9443A3828EEAFBAC0186AA"
     },
     "cell_type" : "code",
@@ -641,7 +641,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "674289AA57C64BF08E71F8EEF3F222D6"
     },
     "cell_type" : "code",
@@ -651,7 +651,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "presentation" : {
         "tabs_state" : "{\n  \"tab_id\": \"#tab2033043172-0\"\n}"
       },
