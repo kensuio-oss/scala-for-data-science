@@ -9,25 +9,629 @@
       "codemirror_mode" : "text/x-scala"
     },
     "trusted" : true,
-    "customLocalRepo" : null,
-    "customRepos" : null,
-    "customDeps" : null,
+    "customLocalRepo" : "/tmp/repo",
+    "customRepos" : [ "spartakus % default % http://dl.bintray.com/spark-clustering-notebook/maven % maven" ],
+    "customDeps" : [ "com.github.haifengl % smile-core % 1.0.4", "org.deeplearning4j % deeplearning4j-core % 0.4-rc3.9", "org.deeplearning4j % deeplearning4j-nlp % 0.4-rc3.9", "batchstream %% batchstream % 1.0" ],
     "customImports" : null,
     "customArgs" : null,
     "customSparkConf" : null
   },
   "cells" : [ {
     "metadata" : {
+      "id" : "B0A64FACA3AE41FD8A8CC61106CDB042"
+    },
+    "cell_type" : "markdown",
+    "source" : "# What is available?"
+  }, {
+    "metadata" : {
+      "id" : "88B84167E7E9422C869BA7FF63F07099"
+    },
+    "cell_type" : "markdown",
+    "source" : "## Libraries: Awesome-Scala"
+  }, {
+    "metadata" : {
+      "id" : "E9751047EE5F49CA8E79F8D865F5E7BB"
+    },
+    "cell_type" : "markdown",
+    "source" : "The _Awesome Scala_ project by [@lauris](https://github.com/lauris) is listing \"all\" available libraries in Scala, there is an awesome (of course) sublist for Data Science related stuff, you can check it [here](https://github.com/lauris/awesome-scala#science-and-data-analysis)."
+  }, {
+    "metadata" : {
+      "id" : "FAAD385D942E4423B869F3D6A4B1EB31"
+    },
+    "cell_type" : "markdown",
+    "source" : "## Models: in Scala/JVM"
+  }, {
+    "metadata" : {
+      "id" : "FBBF02F2BD594437A5A2CF68B01A29A5"
+    },
+    "cell_type" : "markdown",
+    "source" : "The JVM is getting ready for the new world it is entering into, and we can count on the multi millions users <small>(10M based on a mix of wikipedia and other sources)</small> to continue the addition of new models or to improve existing implementations."
+  }, {
+    "metadata" : {
+      "id" : "E93B500E5A174D268D7EF4E86FC30B1E"
+    },
+    "cell_type" : "markdown",
+    "source" : "So we will show a few of them in the following section <small>(help wanted :-D)</small>"
+  }, {
+    "metadata" : {
+      "id" : "FBF9AD0483E6481790E8111314F7D4B8"
+    },
+    "cell_type" : "markdown",
+    "source" : "## Smile [GitHub](https://github.com/haifengl/smile)"
+  }, {
+    "metadata" : {
+      "id" : "4E0845C51EEE484A8CF7C1B606E0AA4E"
+    },
+    "cell_type" : "markdown",
+    "source" : "Probably the most complete project available in Scala in terms of implementation, with more than 90 <small>(98 at the time writing)</small> methods/models."
+  }, {
+    "metadata" : {
+      "id" : "091F7CD7443B491C8C482BC3A8D82286"
+    },
+    "cell_type" : "markdown",
+    "source" : "* Classification\n  * Support Vector Machines\n  * Decision Trees\n  * AdaBoost\n  * Gradient Boosting\n  * Random Forest\n  * Logistic Regression\n  * Neural Networks\n  * RBF Networks\n  * Maximum Entropy Classifier\n  * Naïve Bayesian\n  * Fisher / Linear / Quadratic / Regularized Discriminant Analysis\n* Regression\n  * Support Vector Regression\n  * Gaussian Process\n  * Regression Trees\n  * Gradient Boosting\n  * Random Forest\n  * RBF Networks\n  * Linear Regression\n  * LASSO\n  * Ridge Regression\n* Feature Selection\n  * Genetic Algorithm based Feature Selection\n  * Ensemble Learning based Feature Selection\n  * Signal Noise ratio\n  * Sum Squares ratio\n* Dimension Reduction\n  * PCA\n  * Kernel PCA\n  * Probabilistic PCA\n  * Generalized Hebbian Algorithm\n  * Random Project\n* Model Validation\n  * Cross Validation\n  * Leave-One-Out Validation\n  * Bootstrap\n  * Confusion Matrix\n  * AUC\n  * Fallout\n  * FDR\n  * F-Score\n  * Precision\n  * Recall\n  * Sensitivity\n  * Specificity\n  * MSE\n  * RMSE\n  * RSS\n  * Absolute Deviation\n  * Rand Index\n  * Adjusted Rand Index\n* Clustering\n  * BIRCH\n  * CLARANS\n  * DBScan\n  * DENCLUE\n  * Deterministic Annealing\n  * K-Means\n  * X-Means\n  * G-Means\n  * Neural Gas\n  * Growing Neural Gas\n  * Hierarchical Clustering\n  * Sequential Information Bottleneck\n  * Self-Organizing Maps\n  * Spectral Clustering\n  * Minimum Entropy Clustering\n* Association Rules\n  * Frequent Itemset Mining\n  * Association Rule Mining\n* Manifold learning\n  * IsoMap\n  * LLE\n  * Laplacian Eigenmap\n* Multi-Dimensional Scaling\n  * Classical MDS\n  * Isotonic MDS\n  * Sammon Mapping\n* Nearest Neighbor Search\n  * BK-Tree\n  * Cover Tree\n  * KD-Tree\n  * Locality-Sensitive Hashing\n* Sequence Learning\n  * Hidden Markov Model\n  * Conditional Random Field\n* Natural Language Processing\n  * Sentence Splitter\n  * Tokenizer\n  * Bigram Statistical Test\n  * Phrase Extractor\n  * Keyword Extractor\n  * Porter Stemmer\n  * Lancaster Stemmer\n  * POS Tagging\n  * Relevance Ranking\n* Interpolation\n  * Linear\n  * Bilinear\n  * Cubic\n  * Bicubic\n  * Kriging\n  * Laplace\n  * Shepard\n  * RBF\n* Wavelet\n  * Discrete Wavelet Transform\n  * Wavelet Shrinkage Haar Daubechies D4 Best Localized Wavelet\n  * Coiflet\n  * Symmlet"
+  }, {
+    "metadata" : {
+      "id" : "8C49D8D0D60B4DD5956FE2DAC8F2808F"
+    },
+    "cell_type" : "markdown",
+    "source" : "However, this is local only.\n> Haifeng Li (the main author) is providing a quick benchmark where Smile outperforms R/Python/Spark/H2O and claims too quickly that we can train the model locally only. This wouldn't work if the data is getting bigger or if we simply want to run ensembles or many algorithms -- a cluster would still be worth considering."
+  }, {
+    "metadata" : {
+      "id" : "3E0F0919691340D3B3A946411500D586"
+    },
+    "cell_type" : "markdown",
+    "source" : "### Example of Maximum Entropy Classifier (Maxent) using Smile"
+  }, {
+    "metadata" : {
+      "id" : "114AA350182B48A0ABDBFBA19C441111"
+    },
+    "cell_type" : "markdown",
+    "source" : "Maximum entropy is a technique for learning probability distributions from data. \n\nIn maximum entropy models, the observed data itself is assumed to be the testable information. Maximum entropy models don't assume anything about the probability distribution other than what have been observed and always choose the most uniform distribution subject to the observed constraints."
+  }, {
+    "metadata" : {
+      "id" : "9700BA7AFD894F729780D0F0BB0E8AE3"
+    },
+    "cell_type" : "markdown",
+    "source" : "```scala\ndef maxent(x: Array[Array[Int]], y: Array[Int], p: Int, lambda: Double = 0.1, tol: Double = 1E-5, maxIter: Int = 500): Maxent\n```"
+  }, {
+    "metadata" : {
+      "id" : "446B6E618681440CAA93A50975B4C7C6"
+    },
+    "cell_type" : "markdown",
+    "source" : "where `x` is the sparse training samples. Each sample is represented by a set of sparse binary features. The features are stored in an integer array, of which are the indices of nonzero features. \n\nThe parameter `p` is the dimension of feature space, and `lambda` is the regularization factor.\n\nBasically, maximum entropy classifier is another name of multinomial logistic regression applied to categorical independent variables, \nwhich are converted to binary dummy variables. \n\nMaximum entropy models are widely used in natural language processing. Therefore, Smile's implementation assumes that **binary features** are stored in a sparse array, of which entries are the indices of nonzero features."
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "4699144082CF486A804DCED6326066BD"
+    },
+    "cell_type" : "code",
+    "source" : "import sys.process._\nimport scala.language.postfixOps\n\n\"wget https://raw.githubusercontent.com/haifengl/smile/master/shell/src/universal/data/sequence/sparse.hyphen.6.train -O /tmp/sparse.hyphen.6.train \"!!\n\n\"wget https://raw.githubusercontent.com/haifengl/smile/master/shell/src/universal/data/sequence/sparse.hyphen.6.test -O /tmp/sparse.hyphen.6.test \"!!",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "DD548922D7734331811948F0FF6946BF"
+    },
+    "cell_type" : "code",
+    "source" : "case class SmileDataset(\n  x:Array[Array[Int]],\n  y:Array[Int],\n  p:Int\n)",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "D76F34DAF0934FA29142026AA82BDBB9"
+    },
+    "cell_type" : "code",
+    "source" : "def load(resource:String):SmileDataset  = {\n  val xs = scala.collection.mutable.ArrayBuffer.empty[Array[Int]]\n  val ys = scala.collection.mutable.ArrayBuffer.empty[Int]\n  \n  val head :: content = scala.io.Source.fromFile(new java.io.File(resource)).getLines.toList\n  \n  val Array(nseq, k, p) = head.split(\" \").map(_.trim.toInt)\n  \n  content.foreach{ line =>\n    val seqid :: pos :: len :: featureAndY = line.split(\" \").map(_.trim.toInt).toList\n    val (feature, y) = (featureAndY.init, featureAndY.last)\n    xs += feature.toArray\n    ys += y\n  }\n  \n  SmileDataset(xs.toArray, ys.toArray, p)\n}",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "9CC0506B62854016892AE78C94D7A9F5"
+    },
+    "cell_type" : "code",
+    "source" : "import smile.classification.Maxent\nval train = load(\"/tmp/sparse.hyphen.6.train\")\nval test = load(\"/tmp/sparse.hyphen.6.test\")\n\nval maxent = new Maxent(train.p, train.x, train.y, 0.1, 1E-5, 500);\n\nval error = (test.x zip test.y).filter{ case (x,y) => maxent.predict(x) != y }.size",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "0AD1F07DFE6C45A68AE15AF4001C5A18"
+    },
+    "cell_type" : "code",
+    "source" : ":markdown \nHyphen error is $error of ${test.x.size}",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "3504A2996BBB43128F077F9DC97E588D"
+    },
+    "cell_type" : "code",
+    "source" : ":markdown\nHyphen error rate = ${100.0 * error / test.x.length}",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "7D761878E55148ACBC6545F0E0B80332"
+    },
+    "cell_type" : "markdown",
+    "source" : "## DeepLearning4J [GitHub](https://github.com/deeplearning4j/deeplearning4j)"
+  }, {
+    "metadata" : {
+      "id" : "E43F83384B284FCD86C3B6BF392026B1"
+    },
+    "cell_type" : "markdown",
+    "source" : "Probably the Ultimate library to follow in terms of local optimization (CPU/GPU) and obviously for Deep Learning models (both local and distributed using Spark for instance)."
+  }, {
+    "metadata" : {
+      "id" : "9EFEFD14676049348478B8BB8C029C75"
+    },
+    "cell_type" : "markdown",
+    "source" : "### Example of LSTM"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "8B2DEFC72CBB47C2A5080209171F1676"
+    },
+    "cell_type" : "code",
+    "source" : "import org.deeplearning4j.datasets.iterator._\nimport org.deeplearning4j.eval.Evaluation\nimport org.deeplearning4j.models.embeddings.loader.WordVectorSerializer\nimport org.deeplearning4j.models.embeddings.wordvectors.WordVectors\n\nimport org.deeplearning4j.nn.api.OptimizationAlgorithm\nimport org.deeplearning4j.nn.conf._\nimport org.deeplearning4j.nn.conf.layers._\nimport org.deeplearning4j.nn.multilayer.MultiLayerNetwork\nimport org.deeplearning4j.nn.weights.WeightInit\n\nimport org.nd4j.linalg.api.ndarray.INDArray\nimport org.nd4j.linalg.dataset.DataSet\nimport org.nd4j.linalg.lossfunctions.LossFunctions",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "46A4DEB01C024725B8DD7D6F045F1A2D"
+    },
+    "cell_type" : "markdown",
+    "source" : "Using Word2Vec feature space"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "458E3AC613CA433A8F1533F97DAEC48E"
+    },
+    "cell_type" : "code",
+    "source" : "val wordVectors: WordVectors =WordVectorSerializer.loadGoogleModel(WORD_VECTORS_PATH, true, false)",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "7F7660A14B044A628CB8DE7115BACA23"
+    },
+    "cell_type" : "markdown",
+    "source" : "LSTM: The solution to exploding and vanishing gradients"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "B2A8B81473564238836CEC096829FADE"
+    },
+    "cell_type" : "code",
+    "source" : "val lstmLayer:GravesLSTM = new GravesLSTM.Builder()\n                                          .nIn(vectorSize)\n                                          .nOut(200) // 200 hidden units\n                                          .activation(\"softsign\")\n                                          .build()",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "7FD8C1AA70E24BDA8E8749AF93AB5545"
+    },
+    "cell_type" : "markdown",
+    "source" : "Output Layer"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "D88CDED53ECC4A7590DC676501BFA58C"
+    },
+    "cell_type" : "code",
+    "source" : "val rnnLayer:RnnOutputLayer = new RnnOutputLayer.Builder()\n                                                  .activation(\"softmax\")\n                                                  .lossFunction(LossFunctions.LossFunction.MCXENT)\n                                                  .nIn(200)\n                                                  .nOut(2)\n                                                  .build()",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "6257296C93C04E7DB5CADE461299DE36"
+    },
+    "cell_type" : "markdown",
+    "source" : "Model"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "3A57CF5E0C344AF087F877349F9F41B0"
+    },
+    "cell_type" : "code",
+    "source" : "//Set up network configuration\nval conf = new NeuralNetConfiguration.Builder()\n                .optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT)\n                  .iterations(1) // 1 iteration per mini-batch\n                .updater(Updater.RMSPROP) // How to propagate the \"errors\"\n                .regularization(true).l2(1e-5)\n                .weightInit(WeightInit.XAVIER)\n                .gradientNormalization(GradientNormalization.ClipElementWiseAbsoluteValue)\n                  .gradientNormalizationThreshold(1.0)\n                .learningRate(0.0018)\n                .list()\n                .layer(0, lstmLayer)\n                .layer(1, rnnLayer)\n                .pretrain(false) \n                .backprop(true)\n                .build()",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "4473F552C0A642508471FF7D984A9924"
+    },
+    "cell_type" : "code",
+    "source" : "val net = new MultiLayerNetwork(conf)\nnet.init()",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "5C730159197C42C89CE5BBE82C0E6F82"
+    },
+    "cell_type" : "markdown",
+    "source" : "Spark"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "C7D7D7F652F043B99834E71974D82220"
+    },
+    "cell_type" : "code",
+    "source" : "import org.deeplearning4j.spark.impl.multilayer.SparkDl4jMultiLayer\nval sparkNetwork = new SparkDl4jMultiLayer(sparkContext, net)",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "B62E83CBB7C44969A0E13EC42F8D4E9C"
+    },
+    "cell_type" : "markdown",
+    "source" : "Load distributed data"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "237B2AA9241D49AA83597DF4C5DABA78"
+    },
+    "cell_type" : "code",
+    "source" : "val rdd = ???",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "3292362830C546C29B03E54F9DEBD6D0"
+    },
+    "cell_type" : "markdown",
+    "source" : "Train on Spark"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "118F303E945C4D2DA09873A3BDF0A503"
+    },
+    "cell_type" : "code",
+    "source" : "val trainedNetwork = sparkNetwork.fitDataSet(rdd)",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "2471B6E4297D40458575C054905F548C"
+    },
+    "cell_type" : "markdown",
+    "source" : "## MLlib [Guide](https://spark.apache.org/docs/latest/mllib-guide.html)"
+  }, {
+    "metadata" : {
+      "id" : "CF6CAE27D5A74DA68AB9667A521BE940"
+    },
+    "cell_type" : "markdown",
+    "source" : "Apache Spark's machine learning library, focused on scalability and distributed dataset."
+  }, {
+    "metadata" : {
+      "id" : "7CBAE40AF08D41ED8098FD53F5BD07C1"
+    },
+    "cell_type" : "markdown",
+    "source" : "MLlib has more than 20 optimized and distributed methods/models implementation available (at the time writing)."
+  }, {
+    "metadata" : {
+      "id" : "DDA47801A31A4A9C8915F40C7FA2954C"
+    },
+    "cell_type" : "markdown",
+    "source" : "* Basic statistics\n  * summary statistics\n  * correlations\n  * stratified sampling\n  * hypothesis testing\n  * streaming significance testing\n  * random data generation\n* Classification and regression\n  * linear models (SVMs, logistic regression, linear regression)\n  * naive Bayes\n  * decision trees\n  * ensembles of trees (Random Forests and Gradient-Boosted Trees)\n  * isotonic regression\n* Collaborative filtering\n  * alternating least squares (ALS)\n* Clustering\n  * k-means\n  * Gaussian mixture\n  * power iteration clustering (PIC)\n  * latent Dirichlet allocation (LDA)\n  * bisecting k-means\n  * streaming k-means\n* Dimensionality reduction\n  * singular value decomposition (SVD)\n  * principal component analysis (PCA)\n* Feature extraction and transformation\n* Frequent pattern mining\n  * FP-growth\n  * association rules\n  * PrefixSpan\n* Evaluation metrics\n* Optimization (developer)\n  * stochastic gradient descent\n  * limited-memory BFGS (L-BFGS)"
+  }, {
+    "metadata" : {
+      "id" : "2806EB46987A49798EE2A58E251317E8"
+    },
+    "cell_type" : "markdown",
+    "source" : "### Example of Random Forest"
+  }, {
+    "metadata" : {
+      "id" : "AA31064E508843B3832F8B23078A4CDA"
+    },
+    "cell_type" : "markdown",
+    "source" : "The MLlib guide is really good and present the models with examples plus their theorical and practical foundations.\n\nHence the following example of Random Forest is shamelessly stealt from the guide :-)."
+  }, {
+    "metadata" : {
+      "id" : "E084EA0943974E67BE8199AA2DE7DE47"
+    },
+    "cell_type" : "markdown",
+    "source" : "As usual we first import the required classes, which are the model, the algorithm and a utils class to load predefined data types "
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "D641028ABE2B47748513B9406574D5E2"
+    },
+    "cell_type" : "code",
+    "source" : "import org.apache.spark.mllib.tree.RandomForest\nimport org.apache.spark.mllib.tree.model.RandomForestModel\nimport org.apache.spark.mllib.util.MLUtils",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "D9EB6B5A237E4B64877E8C7097EC82DB"
+    },
+    "cell_type" : "markdown",
+    "source" : "Download the dataset"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "8442F74EAC064B6A8C7FA7540AD7C756"
+    },
+    "cell_type" : "code",
+    "source" : ":sh wget https://raw.githubusercontent.com/apache/spark/master/data/mllib/sample_libsvm_data.txt -O /tmp/sample_libsvm_data.txt",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "50FF68EFD4B44B8983BF132B78B0FCE5"
+    },
+    "cell_type" : "markdown",
+    "source" : "Load and parse the data file."
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "23E9B4A6AD6040CE96A32B2B7DB76BD4"
+    },
+    "cell_type" : "code",
+    "source" : "val data = MLUtils.loadLibSVMFile(sc, \"/tmp/sample_libsvm_data.txt\")",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "A0602B0895DC460F8B5D7AC660E4C1C5"
+    },
+    "cell_type" : "markdown",
+    "source" : "Split the data into training and test sets (30% held out for testing)"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "65FC2F1EA6884FA991ECA28A962FA127"
+    },
+    "cell_type" : "code",
+    "source" : "val splits = data.randomSplit(Array(0.7, 0.3))\nval (trainingData, testData) = (splits(0), splits(1))",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "8A72D49D5A1849DE92CB23BCB60A3C81"
+    },
+    "cell_type" : "markdown",
+    "source" : "Train a RandomForest model.\n\nEmpty categoricalFeaturesInfo indicates all features are continuous."
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "A8DC8E18B8AC48B3901230FB25D5E180"
+    },
+    "cell_type" : "code",
+    "source" : "val numClasses = 2\nval categoricalFeaturesInfo = Map[Int, Int]()\nval numTrees = 3 // Use more in practice.\nval featureSubsetStrategy = \"auto\" // Let the algorithm choose.\nval impurity = \"gini\"\nval maxDepth = 4\nval maxBins = 32",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "7A58234C49814CFC80B6609DD12AE88D"
+    },
+    "cell_type" : "code",
+    "source" : "val model = RandomForest.trainClassifier(trainingData, \n                                         numClasses, \n                                         categoricalFeaturesInfo,\n                                         numTrees, \n                                         featureSubsetStrategy, \n                                         impurity, \n                                         maxDepth, \n                                         maxBins)",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "3FC587E4A580450794BA4704EF7A6766"
+    },
+    "cell_type" : "markdown",
+    "source" : "Evaluate model on test instances and compute test error"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "C6AF1D4F9B5F421F9F9443E5DF6B812A"
+    },
+    "cell_type" : "code",
+    "source" : "val labelAndPreds = testData.map { point =>\n  val prediction = model.predict(point.features)\n  (point.label, prediction)\n}",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "69A330F4C5544F628C744C623AE280C5"
+    },
+    "cell_type" : "code",
+    "source" : "val testErr = labelAndPreds.filter(r => r._1 != r._2).count.toDouble / testData.count()\ntext(\"Test Error = \" + testErr) ++ html(<br/>) ++ text(\"Learned classification forest model:\\n\") ++ html(<pre>{model.toDebugString}</pre>)",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "6EC433E37604464C863DFB3F850F9103"
+    },
+    "cell_type" : "markdown",
+    "source" : "Save and load model"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "DE9462E48A9C4D198385A017A8EDA776"
+    },
+    "cell_type" : "code",
+    "source" : "model.save(sc, \"/tmp/myRandomForestClassificationModel\")\nval sameModel = RandomForestModel.load(sc, \"/tmp/myRandomForestClassificationModel\")",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "E4855C423EA64BD18589BF8EEE93670C"
+    },
+    "cell_type" : "markdown",
+    "source" : "## Spark (Online) Clustering [GitHub](https://github.com/Spark-clustering-notebook/)"
+  }, {
+    "metadata" : {
+      "id" : "5486D0036B6340EE88270E8BBDF7F48A"
+    },
+    "cell_type" : "markdown",
+    "source" : "Project started at the LIPN (University of Paris 13 lab), team leaded by Mustapha Lebbah and focusing on online algorithms (mainly classification) on distributed computing (mainly Spark)."
+  }, {
+    "metadata" : {
+      "id" : "FE8C0729A38546CB83ECF9625E4725EC"
+    },
+    "cell_type" : "markdown",
+    "source" : "### Example G-Stream"
+  }, {
+    "metadata" : {
+      "id" : "897E8ACAB74649338FDA86D5A01B510D"
+    },
+    "cell_type" : "markdown",
+    "source" : "Publications:\n\n1. Mohammed Ghesmoune, Mustapha Lebbah, Hanene Azzag: Micro-Batching Growing Neural Gas for Clustering Data Streams Using Spark Streaming. INNS Conference on Big Data 2015: 158-166.\n\n2. Mohammed Ghesmoune, Mustapha Lebbah, Hanene Azzag, Tarn Duong: Streaming Data Clustering using Spark Streaming: Application to Big-Data of Insurance. KDD 2016 (** Paper under submission **)."
+  }, {
+    "metadata" : {
+      "id" : "A6E0E11FCD2447098FF286A3B767846C"
+    },
+    "cell_type" : "markdown",
+    "source" : "Prepare spark streaming context"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "694A2EB24B4D4B5CBEF45FC658145100"
+    },
+    "cell_type" : "code",
+    "source" : "import org.apache.spark.streaming.{Seconds, StreamingContext, Milliseconds}\n@transient val ssc:StreamingContext = {\n  StreamingContext.getActive.foreach(_.stop(false))\n  new StreamingContext(sparkContext, Milliseconds(m(\"intervalMs\").toInt))\n}",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "384DC3DC983A44548EADF09121029996"
+    },
+    "cell_type" : "markdown",
+    "source" : "Init first data and connect to stream (see https://github.com/Spark-clustering-notebook/coliseum/blob/master/notebooks/coliseum/G-Stream.snb)"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "6F14D2AF06164782A886D500EEE1C2ED"
+    },
+    "cell_type" : "code",
+    "source" : "val separator = \" \"\n// 'points2' contains the first two data-points used for initialising the model\n@transient val points2 = sc.textFile(s\"$expDir/data0\").map(x => x.split(separator).map(_.toDouble))\n\n// Create a DStreams that reads batch files from dirData\n@transient val stream = ssc.textFileStream(expDir).map(x => x.split(separator).map(_.toDouble))\n// Create a DStreams that will connect to a socket hostname:port\n//val stream = ssc.socketTextStream(\"localhost\", 9999).map(x => x.split(separator).map(_.toDouble)) //localhost or 10.32.2.153 for Teralab",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "95D4808CE17242E48044C38D76D3AC77"
+    },
+    "cell_type" : "markdown",
+    "source" : "Transform data as feature vectors"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "BC36ED5CC523493B83D96470EE159096"
+    },
+    "cell_type" : "code",
+    "source" : "stream.foreachRDD{r => \n                  val d = r.take(10).map(_.toList.toString)\n                  datalist.appendAll(d)\n                 }  \nval labId = 2 //TODO: change -1 to -2 when you add the id to the file (last column) //-2 because the last 2 columns represent label & id\nval dim = points2.take(1)(0).size - labId",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "6C07FE40130D4BAA87CB9C7FF9F45AE1"
+    },
+    "cell_type" : "markdown",
+    "source" : "Import G-Stream model"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "E8798372293841EB828EF2DCCF0F4479"
+    },
+    "cell_type" : "code",
+    "source" : "import org.lipn.clustering.batchStream.batchStream",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "277F3A7B08D74ED888D549206E7CD6B6"
+    },
+    "cell_type" : "markdown",
+    "source" : "Configure G-Stream"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "990EDC710D5A40229303981047872201"
+    },
+    "cell_type" : "code",
+    "source" : "val decayFactor = 0.9\n  val lambdaAge = 1.2\n  val nbNodesToAdd = 3\n  val nbWind = 5\n  val DSname = \"dsname\"\n\n@transient var gstream = new batchStream()\n                          .setDecayFactor(decayFactor)\n                          .setLambdaAge(lambdaAge)\n                          .setMaxInsert(nbNodesToAdd)\n\n// converting each point into an object\n@transient val dstreamObj = stream.map( e =>\n  gstream.model.pointToObjet(e, dim, labId)\n)",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "923B04DCECB841278D5681F17B3967CA"
+    },
+    "cell_type" : "markdown",
+    "source" : "Init the model wiht the first 2 points"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "45202B93E2764B1988D53EDC368BB1B4"
+    },
+    "cell_type" : "code",
+    "source" : "// initialization of the model by creating a graph of two nodes (the first 2 data-points)\ngstream.initModelObj(points2, dim)",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "59FB6C24C1AF490C8DF9B3194C975649"
+    },
+    "cell_type" : "markdown",
+    "source" : "Train the model online with new data coming in the `DStream`"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "CC9724E021EB4B3787BD16595224274E"
+    },
+    "cell_type" : "code",
+    "source" : "// training on the model\ngstream.trainOnObj(dstreamObj, gstream, outputDir+\"/\"+DSname+\"-\"+nbNodesToAdd, dim, nbWind)",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "0BD046386C0940A995943F4CB978C202"
+    },
+    "cell_type" : "markdown",
+    "source" : "This will create a new dataset (File) for each batch of data (RDD) which will contain the new `protoptypes` (~ `clusters`) which are linked as a _Self Organized Map_ "
+  }, {
+    "metadata" : {
       "id" : "77BBFF186BC94896B20C0B703DA3AF69"
     },
     "cell_type" : "markdown",
-    "source" : "TODO"
+    "source" : "# TO BE CONTINUED"
   }, {
     "metadata" : {
       "id" : "A697180C935B4BE99AA332927D2B507E"
     },
     "cell_type" : "markdown",
-    "source" : "* MLlib\n* H2O\n* deeplearning4j\n* OptiML (stanford)\n* Figaro\n* aren de vries course\n* sysml?\n* lipn"
+    "source" : "For instance,\n\n* H2O\n* OptiML (stanford)\n* Figaro (https://github.com/p2t2/figaro)\n* sysml?\n* Factorie (http://factorie.cs.umass.edu/)\n* OscaR (https://bitbucket.org/oscarlib/oscar/wiki/Home)\n* Chalk for NLP (https://github.com/scalanlp/chalk)\n* Bayes Scala (https://github.com/danielkorzekwa/bayes-scala)"
   } ],
   "nbformat" : 4
 }
