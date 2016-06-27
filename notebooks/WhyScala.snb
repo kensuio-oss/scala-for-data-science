@@ -92,7 +92,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "EB02D7EAB7F8406A849C22CE2528B443"
     },
     "cell_type" : "code",
@@ -114,7 +114,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "presentation" : {
         "tabs_state" : "{\n  \"tab_id\": \"#tab1216671336-0\"\n}",
         "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
@@ -140,7 +140,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "presentation" : {
         "tabs_state" : "{\n  \"tab_id\": \"#tab1566223637-1\"\n}",
         "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
@@ -228,7 +228,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "48179E0BC6C3404289378596471F1D11"
     },
     "cell_type" : "code",
@@ -250,7 +250,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "722539C191BC4E09B50334373DE61C7E"
     },
     "cell_type" : "code",
@@ -266,7 +266,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "BFE7303C687B473885B74C2784C73B72"
     },
     "cell_type" : "code",
@@ -282,7 +282,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "D3745DD75E024E7C97A653963381E756"
     },
     "cell_type" : "code",
@@ -304,7 +304,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "BB8E2DBE4DB649138913CFA2BE9016D5"
     },
     "cell_type" : "code",
@@ -320,7 +320,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "261F068BDF344DA6B96DC784AEB86F19"
     },
     "cell_type" : "code",
@@ -382,7 +382,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "B32809D4A5EE4F29846A6CCFD9B19BCE"
     },
     "cell_type" : "code",
@@ -398,7 +398,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "78D3E11A8F8F45EE86E884812BCE9564"
     },
     "cell_type" : "code",
@@ -414,7 +414,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "C4943349BC644D468A72E623BE10F17A"
     },
     "cell_type" : "code",
@@ -430,11 +430,37 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "2DF9D1306DAB41319E03DD8322721545"
     },
     "cell_type" : "code",
     "source" : "val grouped = airportsDF.groupBy($\"state\", $\"country\").count.orderBy($\"count\".desc)\ngrouped.printSchema\ngrouped.limit(100)  // all 50 states + territories < 100",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "62D7351CF14F4C668DD1FA5AB4B2E600"
+    },
+    "cell_type" : "markdown",
+    "source" : "By the way, this DSL is essentially a programmatic version of SQL:"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "322C5E92AF6741E68445C244E43A5F20"
+    },
+    "cell_type" : "code",
+    "source" : "airportsDF.registerTempTable(\"airports\")\nval grouped2 = sqlContext.sql(\"\"\"\n  SELECT state, country, COUNT(*) AS cnt FROM airports\n  GROUP BY state, country\n  ORDER BY cnt DESC\n\"\"\")",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "D30F0C37ECDA4E7CBE020A874AC53E68"
+    },
+    "cell_type" : "code",
+    "source" : "grouped2.printSchema\ngrouped2.show",
     "outputs" : [ ]
   }, {
     "metadata" : {
