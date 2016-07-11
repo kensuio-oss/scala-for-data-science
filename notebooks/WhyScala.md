@@ -670,7 +670,7 @@ Note that `Option[T]` represents two and only two possible states, either I have
 
 The term _sum type_ comes from an analog between types and arithmetic. For `Option`, the number of allowed intances (ignoring the type parameter `T`) is just the sum, _two_. Similarly for `Either`.
 
-There are also _product types_, like tuples, where combining types together _multiples_ the number of instances. For example, a tuple of `(Option,Either)` would have 2*2 instances. A tuple `(Boolean,Option,HTTP_Commands)` has 2*2*7 possible instances (there are 7 HTTP 1.1 commands, like `GET`, `POST`, etc.)
+There are also _product types_, like tuples, where combining types together _multiplies_ the number of instances. For example, a tuple of `(Option,Either)` would have 2*2 instances. A tuple `(Boolean,Option,HTTP_Commands)` has 2*2*7 possible instances (there are 7 HTTP 1.1 commands, like `GET`, `POST`, etc.)
 
 Scala uses type hierarchies for sum types, where an abstract _sealed_ trait or class is used for the base type, e.g., `Option[T]` and `Either[L,R]`, and subtypes represent the concrete types. The `sealed` keyword is used on the base type and it is crucial; it tells the compiler to only allow subtypes to be defined in the same _file_, which means users can't add their own subtypes, breaking the logic of the type.
 
