@@ -11,7 +11,7 @@ A docker container exists with the Spark Notebook available with the current not
 
 ### Pull it from docker hub:
 ```
-docker datafellas/scala-for-data-science:1.0-spark2
+docker pull datafellas/scala-for-data-science:1.0-spark2
 ```
 
 ### Run it
