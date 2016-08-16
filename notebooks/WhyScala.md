@@ -89,7 +89,7 @@ This produces the results:
 res16: scala.collection.immutable.Map[Boolean,Int] = Map(
     false -> 75, true -> 25)
 ```
-Note that for the numbers between 1 and 100, inclusive, exactly 1/3 of them are prime!
+Note that for the numbers between 1 and 100, inclusive, exactly 1/4 of them are prime!
 
 ### Spark Example
 
@@ -253,7 +253,7 @@ What about the other languages?
 * **Java:** Only supports regular expression matching for strings. Nothing like case classes.
 
 ## 6. Type Inference
-Most languages associate a type with values, but they fall into two categories, crudely speaking, those which evaluate the type of expressions and variables at compile time (like Scala and Java) and those which do so at runtime (Python and R). This is call _static typing_ and _dynamic typing_, respectively.
+Most languages associate a type with values, but they fall into two categories, crudely speaking, those which evaluate the type of expressions and variables at compile time (like Scala and Java) and those which do so at runtime (Python and R). This is called _static typing_ and _dynamic typing_, respectively.
 
 So, languages with static typing either have to be told the type of every expression or variable, or they can _infer_ types in some or all cases. Scala can infer types most of the time, while Java can do so only in limited cases. Here are some examples for Scala. Note the results shown for each expression:
 
@@ -670,11 +670,11 @@ Note that `Option[T]` represents two and only two possible states, either I have
 
 The term _sum type_ comes from an analog between types and arithmetic. For `Option`, the number of allowed intances (ignoring the type parameter `T`) is just the sum, _two_. Similarly for `Either`.
 
-There are also _product types_, like tuples, where you can combining types together _multiples_ the number of instances. For example, a tuple of `(Option,Either)` would have 2*2 instances. A tuple `(Boolean,Option,HTTP_Commands)` has 2*2*7 possible instances (there are 7 HTTP 1.1 commands, like `GET`, `POST`, etc.)
+There are also _product types_, like tuples, where combining types together _multiplies_ the number of instances. For example, a tuple of `(Option,Either)` would have 2*2 instances. A tuple `(Boolean,Option,HTTP_Commands)` has 2*2*7 possible instances (there are 7 HTTP 1.1 commands, like `GET`, `POST`, etc.)
 
-Scala use type hierarchies for sum types, where an abstract _sealed_ trait or class is used for the base type, e.g., `Option[T]` and `Either[L,R]`, and subtypes represent the concrete types. The `sealed` keyword is used on the base type and it is crucial; it tells the compiler to only allow subtypes to be defined in the same _file_, which means users can't add their own subtypes, breaking the logic of the type.
+Scala uses type hierarchies for sum types, where an abstract _sealed_ trait or class is used for the base type, e.g., `Option[T]` and `Either[L,R]`, and subtypes represent the concrete types. The `sealed` keyword is used on the base type and it is crucial; it tells the compiler to only allow subtypes to be defined in the same _file_, which means users can't add their own subtypes, breaking the logic of the type.
 
-Some other languages implement sumtypes using a variation of _enumerations_. Jave has that, but it's a much more limited concept than true subtypes.
+Some other languages implement sum types using a variation of _enumerations_. Java has that, but it's a much more limited concept than true subtypes.
 
 Here's an example, sort of like `Either`, but oriented more towards the usage of encapsulating success or failure. However, we'll put "success" on the left instead of the right, which is the convention when using `Either`.
 
@@ -806,7 +806,7 @@ There's no real workaround when you want the efficiency of arrays, except to imp
 ### 2b. Inefficiency of the JVM Memory Model
 The JVM has a very flexible, general-purpose model of organizing data into memory and managing garbage collection. However, for massive data sets of records with the same or nearly the same schema, the model is very inefficient. Spark's [Tungsten Project](https://databricks.com/blog/2015/04/28/project-tungsten-bringing-spark-closer-to-bare-metal.html) is addressing this problem by introducing custom object-layouts, managed memory, as well as code generation for other performance bottlenecks.
 
-Here is an example of how Java typically lays out objects in memory. Note the references to small, discontiguous chunks of memory. Now imaging billions of these little bits of memory. That means a lot of garbage to manage. Also, the discontinuities cause poor CPU cache performance.
+Here is an example of how Java typically lays out objects in memory. Note the references to small, discontiguous chunks of memory. Now imagine billions of these little bits of memory. That means a lot of garbage to manage. Also, the discontinuities cause poor CPU cache performance.
 
 <img src='https://raw.githubusercontent.com/data-fellas/scala-for-data-science/master/notebooks/images/JavaMemory.jpg' alt='Typical Java Object Layout' height='414' width='818'></img>
 
@@ -841,6 +841,6 @@ class LineN {
 }
 ```
 
-Why? The JVM expects classes to be compiled into byte code, so the REPL syntheses classes for each line you evaluate (or group of lines when you use the `:paste ... ^D` feature).
+Why? The JVM expects classes to be compiled into byte code, so the REPL synthesizes classes for each line you evaluate (or group of lines when you use the `:paste ... ^D` feature).
 
 Note that the overridden `massiveArray` shadows the original one, which is the trick the REPL uses to let you redefine variables, which would be prohibited by the compiler otherwise. Unfortunately, that leaves the shadowed reference attached to old data, so it can't be garbage collected, even though the REPL provides no way to ever refer to it again!
