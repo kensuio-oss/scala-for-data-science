@@ -1,787 +1,892 @@
 {
-  "metadata" : {
-    "name" : "WhyScala",
-    "user_save_timestamp" : "1969-12-31T18:00:00.000Z",
-    "auto_save_timestamp" : "1969-12-31T18:00:00.000Z",
-    "language_info" : {
-      "name" : "scala",
-      "file_extension" : "scala",
-      "codemirror_mode" : "text/x-scala"
+  "metadata": {
+    "name": "WhyScala",
+    "user_save_timestamp": "1969-12-31T18:00:00.000Z",
+    "auto_save_timestamp": "1969-12-31T18:00:00.000Z",
+    "language_info": {
+      "name": "scala",
+      "file_extension": "scala",
+      "codemirror_mode": "text/x-scala"
     },
-    "trusted" : true,
-    "customLocalRepo" : "/tmp/repo",
-    "customRepos" : null,
-    "customDeps" : null,
-    "customImports" : null,
-    "customArgs" : null,
-    "customSparkConf" : null
+    "trusted": true,
+    "customLocalRepo": "/tmp/repo",
+    "customRepos": null,
+    "customDeps": null,
+    "customImports": null,
+    "customArgs": null,
+    "customSparkConf": null
   },
-  "cells" : [ {
-    "metadata" : {
-      "id" : "FFD1A3B3C876454DA66D87714D2AE706"
-    },
-    "cell_type" : "markdown",
-    "source" : "# Scala: the Unpredicted Lingua Franca for Data Science"
-  }, {
-    "metadata" : {
-      "id" : "A032770187B947768ADE83D1C76C6D8B"
-    },
-    "cell_type" : "markdown",
-    "source" : " **Andy Petrella**<br/>[noootsab@data-fellas.guru](mailto:noootsab@data-fellas.guru)<br/>\n **Dean Wampler**<br/>[dean.wampler@lightbend.com](mailto:dean.wampler@lightbend.com)\n\n* Scala Days NYC, May 5th, 2016\n* GOTO Chicago, May 24, 2016\n* Strata + Hadoop World London, June 3, 2016\n* Scala Days Berlin, June 16th, 2016\n\nThis notebook available at [github.com/data-fellas/scala-for-data-science](https://github.com/data-fellas/scala-for-data-science)."
-  }, {
-    "metadata" : {
-      "id" : "89E60F5356A24745AD7FFC3ED747D7E4"
-    },
-    "cell_type" : "markdown",
-    "source" : "## Why Scala for Data Science with Spark?"
-  }, {
-    "metadata" : {
-      "id" : "3B4411F9D439469AB4992A6E8D178757"
-    },
-    "cell_type" : "markdown",
-    "source" : "While Python and R are traditional languages of choice for Data Science, [Spark](http://spark.apache.org) also supports Scala (the language in which it's written) and Java.\n\nHowever, using one language for all work has advantages like simplifying the software development process, such as build and deployment tools, coding conventions, etc.\n\nIf you want a thorough introduction to Scala, see [Dean's book](http://shop.oreilly.com/product/0636920033073.do).\n\nSo, what are the advantages, as well as disadvantages of Scala?"
-  }, {
-    "metadata" : {
-      "id" : "058C9660033E42EAB7089F7B95B9441A"
-    },
-    "cell_type" : "markdown",
-    "source" : "## 1. Functional Programming Plus Objects\n\nScala is a _multi-paradigm_ language. Code can look a lot like traditional Java code using _Object-Oriented Programming_ (OOP), but it also embraces _Function Programming_ (FP), which emphasizes the virtues of:\n1. **Immutable values:** Mutability is a common source of bugs.\n1. **Functions with no _side effects_:** All the information they need is passed in and all the \"work\" is returned. No external state is modified.\n1. **Referential transparency:** You can replace a function call with a cached value that was returned from a previous invocation with the same arguments. (This is a benefit enabled by functions without side effects.)\n1. **Higher-order functions:** Functions that take other functions as arguments are return functions as results.\n1. **Structure separated from operations:** A core set of collections meets most needs. An operation applicable to one data structure is applicable to all."
-  }, {
-    "metadata" : {
-      "id" : "0DDBE39BA9264FE387FA4721718608F2"
-    },
-    "cell_type" : "markdown",
-    "source" : "However, objects are still useful as an _encapsulation_ mechanism. This is valuable for projects with large teams and code bases. \nScala also implements some _functional_ features using _object-oriented inheritance_ (e.g., \"abstract data types\" and \"type classes\", for you experts...)."
-  }, {
-    "metadata" : {
-      "id" : "F76E6ACFA660449C8B4CEDE9289C0DD9"
-    },
-    "cell_type" : "markdown",
-    "source" : "What about the other languages? \n* **Python:** Supports mixed FP-OOP programming, too, but isn't as \"rigorous\". \n* **R:** As a Statistics language, R is more functional than object-oriented.\n* **Java:** An object-oriented language, but with recently introduced functional constructs, _lambdas_ (anonymous functions) and collection operations that follow a more _functional_ style, rather than _imperative_ (i.e., where mutating the collection is embraced)."
-  }, {
-    "metadata" : {
-      "id" : "84C5C921657D4A0B821CD106634135A4"
-    },
-    "cell_type" : "markdown",
-    "source" : "There are a few differences with Java's vs. Scala's approaches to OOP and FP that are worth mentioning specifically:"
-  }, {
-    "metadata" : {
-      "id" : "584F4A92CB454F0586F5EBC2F4ACD135"
-    },
-    "cell_type" : "markdown",
-    "source" : "### 1a. Traits vs. Interfaces\nScala's object model adds a _trait_ feature, which is a more powerful concept than Java 8 interfaces. Before Java 8, there was no [mixin composition](https://en.wikipedia.org/wiki/Mixin) capability in Java, where composition is generally [preferred over inheritance](https://en.wikipedia.org/wiki/Composition_over_inheritance). \n\nImagine that you want to define reusable logging code and mix it into other classes declaratively. Before Java 8, you could define the abstraction for logging in an interface, but you had to use some ad hoc mechanism to implement it (like implementing all methods to delegate to a helper object). Java 8 added the ability to provide default method definitions, as well as declarations in interfaces. This makes mixin composition easier, but you still can't add fields (for state), so the capability is limited. \n\nScala traits fully support mixin composition by supporting both field and method definitions with flexibility rules for overriding behavior, once the traits are mixed into classes."
-  }, {
-    "metadata" : {
-      "id" : "DC6C322EAB2244B9844CB0FDABCE6BA3"
-    },
-    "cell_type" : "markdown",
-    "source" : "### 1b. Java Streams\nWhen you use the Java 8 collections, you can convert the traditional collections to a \"stream\", which is lazy and gives you more functional operations. However, sometimes, the conversions back and forth can be tedious, e.g., converting to a stream for functional processing, then converting pass them to older APIs, etc. Scala collections are more consistently functional."
-  }, {
-    "metadata" : {
-      "id" : "E706C1FC94B34C5E86C25040BDF9263C"
-    },
-    "cell_type" : "markdown",
-    "source" : "### The Virtue of Functional Collections\nLet's examine how concisely we can operate on a collection of values in Scala and Spark."
-  }, {
-    "metadata" : {
-      "id" : "358539665C7D40479DC6FB0910C08FBE"
-    },
-    "cell_type" : "markdown",
-    "source" : "First, let's define a helper function: is an integer a prime? (Naïve algorithm from [Wikipedia](https://en.wikipedia.org/wiki/Primality_test).)"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "EB02D7EAB7F8406A849C22CE2528B443"
-    },
-    "cell_type" : "code",
-    "source" : "def isPrime(n: Int): Boolean = {\n  def test(i: Int, n2: Int): Boolean = {\n    if (i*i > n2) true\n    else if (n2 % i == 0 || n2 % (i + 2) == 0) false\n    else test(i+6, n2)\n  }\n  if (n <= 1) false\n  else if (n <= 3) true\n  else if (n % 2 == 0 || n % 3 == 0) false\n  else test(5, n)\n}",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "81C67BC34835425582115F8FD36BCEC3"
-    },
-    "cell_type" : "markdown",
-    "source" : "Note that no values are mutated here (\"virtue\" #1 listed above) and `isPrime` has no side effects (#2), which means we could cache previous invocations for a given `n` for better performance if we called this a lot (#3)!"
-  }, {
-    "metadata" : {
-      "id" : "1B606E0028B245438CA7BE870A1AF082"
-    },
-    "cell_type" : "markdown",
-    "source" : "#### Scala Collections Example\nLet's compare a Scala collections calculation vs. the same thing in Spark; how many prime numbers are there between 1 and 100, inclusive?"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "presentation" : {
-        "tabs_state" : "{\n  \"tab_id\": \"#tab1216671336-0\"\n}",
-        "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
+  "cells": [
+    {
+      "metadata": {
+        "id": "FFD1A3B3C876454DA66D87714D2AE706"
       },
-      "id" : "5E9DCA78D8DB4E5E8362EB9138F380F5"
+      "cell_type": "markdown",
+      "source": "# Scala: the Unpredicted Lingua Franca for Data Science"
     },
-    "cell_type" : "code",
-    "source" : "(1 to 100).                    // Range of integers from 1 to 100, inclusive.\n  map(i => (i, isPrime(i))).   // `map` is a higher-order method; we pass it a function (#4)\n  groupBy(tuple => tuple._2).  // ... and so is `groupBy`, etc.\n  map(tuple => (tuple._1, tuple._2.size))",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "EA0A325F36A14A3489F3652278A1E199"
-    },
-    "cell_type" : "markdown",
-    "source" : "Note that for the numbers between 1 and 100, inclusive, exactly 1/3 of them are prime!"
-  }, {
-    "metadata" : {
-      "id" : "5638A2D79A1E4073AE3DBA7342623D09"
-    },
-    "cell_type" : "markdown",
-    "source" : "#### Spark Example\n\nNote how similar the following code is to the previous example. After constructing the data set, the \"core\" three lines are _identical_, even though they are operating on completely different underlying collections (#5 above). \n\nHowever, because Spark collections are \"lazy\" by default (i.e., not evaluated until we ask for results), we explicitly print the results so Spark evaluates them!"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "presentation" : {
-        "tabs_state" : "{\n  \"tab_id\": \"#tab1566223637-1\"\n}",
-        "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
+    {
+      "metadata": {
+        "id": "A032770187B947768ADE83D1C76C6D8B"
       },
-      "id" : "5B884B3F73BF4D0699067F8850A499AD"
+      "cell_type": "markdown",
+      "source": " **Andy Petrella**<br/>[noootsab@data-fellas.guru](mailto:noootsab@data-fellas.guru)<br/>\n **Dean Wampler**<br/>[dean.wampler@lightbend.com](mailto:dean.wampler@lightbend.com)\n\n* Scala Days NYC, May 5th, 2016\n* GOTO Chicago, May 24, 2016\n* Strata + Hadoop World London, June 3, 2016\n* Scala Days Berlin, June 16th, 2016\n\nThis notebook available at [github.com/data-fellas/scala-for-data-science](https://github.com/data-fellas/scala-for-data-science)."
     },
-    "cell_type" : "code",
-    "source" : "val rddPrimes = sparkContext.parallelize(1 to 100).\n  map(i => (i, isPrime(i))).\n  groupBy(tuple => tuple._2).\n  map(tuple => (tuple._1, tuple._2.size))\nrddPrimes.collect",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "DBAEF93047F04B438C18674E104C0BA0"
-    },
-    "cell_type" : "markdown",
-    "source" : "Note the inferred type, an `RDD` with records of type `(Boolean, Int)`, meaning two-element tuples.\n\nSpark's RDD API is inspired by the Scala collections API, which is inspired by classic _functional programming_ operations on data collections, i.e., using a series of transformations from one form to the next, without mutating any of the collections. (Spark is very efficient about avoiding the materialization of intermediate outputs.)\n\nOnce you know these operations, it's quick and effective to implement robust, non-trivial transformations."
-  }, {
-    "metadata" : {
-      "id" : "59060F32E3C34640857B9E323B062DB6"
-    },
-    "cell_type" : "markdown",
-    "source" : "What about the other languages? \n* **Python:** Supports very similar functional programming. In fact, Spark Python code looks very similar to Spark Scala code. \n* **R:** More idiomatic (see below).\n* **Java:** Looks similar when _lambdas_ are used, but missing features (see below) limit concision and flexibility."
-  }, {
-    "metadata" : {
-      "id" : "898023452F2442E38BD08B35E2F3B05A"
-    },
-    "cell_type" : "markdown",
-    "source" : "## 2. Interpreter (REPL)"
-  }, {
-    "metadata" : {
-      "id" : "72A05DBF93454EAB840C4D9E25929017"
-    },
-    "cell_type" : "markdown",
-    "source" : "We've been using the Scala interpreter (a.k.a., the REPL - Read Eval, Print, Loop) already behind the scenes. It makes notebooks like this one possible!"
-  }, {
-    "metadata" : {
-      "id" : "DA296C929D1B43A191C22FAEB538458F"
-    },
-    "cell_type" : "markdown",
-    "source" : "What about the other languages? \n* **Python:** Also has an interpreter and [iPython/Jupyter](https://ipython.org/) was one of the first, widely-used notebook environments.\n* **R:** Also has an interpreter and notebook/IDE environments.\n* **Java:** Does _not_ have an interpreter and can't be programmed in a notebook environment. However, Java 9 will have a REPL, after 20+ years!"
-  }, {
-    "metadata" : {
-      "id" : "32F89F305EFE4D2B9FF61F0B357A0BA7"
-    },
-    "cell_type" : "markdown",
-    "source" : "## 3. Tuple Syntax\nIn data, you work with records of `n` fields (for some value of `n`) all the time. Support for `n`-element _tuples_ is very convenient and Scala has a shorthand syntax for instantiating tuples. We used it twice previously to return two-element tuples in the anonymous functions passed to the `map` methods above:"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "2C28CB38977246F8AC8F202459D99B43"
-    },
-    "cell_type" : "code",
-    "source" : "sparkContext.parallelize(1 to 100).\n  map(i => (i, isPrime(i))).                // <-- here\n  groupBy(tuple => tuple._2).\n  map(tuple => (tuple._1, tuple._2.size))   // <-- here",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "4BA733B4AA944F969B5F1DE83B7D3220"
-    },
-    "cell_type" : "markdown",
-    "source" : "**Tuples are used all the time** in Spark Scala RDD code, where it's common to use key-value pairs."
-  }, {
-    "metadata" : {
-      "id" : "445D28CB9F5347088A038275A7390447"
-    },
-    "cell_type" : "markdown",
-    "source" : "What about the other languages? \n* **Python:** Also has some support for the same tuple syntax.\n* **R:** Also has tuple types, but a less convenient syntax for instantiating them.\n* **Java:** Does _not_ have tuple types, not even the special case of two-element tuples (pairs), much less a convenient syntax for them. However, Spark defines a [MutablePair](http://spark.apache.org/docs/latest/api/java/org/apache/spark/util/MutablePair.html) type for this purpose:"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "C4162770FDDA49438DE4E54638979322"
-    },
-    "cell_type" : "code",
-    "source" : "// Using Scala syntax here:\nimport org.apache.spark.util.MutablePair\nval pair = new MutablePair[Int,String](1, \"one\")",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "787A952B7EDD45329BFE71BDF82617B4"
-    },
-    "cell_type" : "markdown",
-    "source" : "## 4. Pattern Matching\nThis is one of the most powerful features you'll find in most functional languages, Scala included. It has no equivalent in Python, R, or Java.\n\nLet's rewrite our previous primes example:"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "48179E0BC6C3404289378596471F1D11"
-    },
-    "cell_type" : "code",
-    "source" : "sparkContext.parallelize(1 to 100).\n  map(i => (i, isPrime(i))).\n  groupBy{ case (_, primality) => primality}.  // Syntax: { case pattern => body }\n  map{ case (primality, values) => (primality, values.size) } . // used here, too\n  foreach(println)",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "8E8F39DFB50F44118B9095470C560E2B"
-    },
-    "cell_type" : "markdown",
-    "source" : "Note the `case` keyword and `=>` separating the pattern from the body to execute if the pattern matches.\n\nIn the first pattern, `(_, primality)`, we didn't need the first tuple element, so we used the \"don't care\" placeholder, `_`. Note also that `{...}` must be used instead of `(...)`. (The extra whitespace after the `{` and before the `}` is not required; it's here for legibility.)\n\nPattern matching is much richer, while more concise than `if ... else ...` constructs in the other languages and we can use it on nearly anything to match what it is and then decompose it into its constituent parts, which are assigned to variables with meaningful names, e.g., `primality`, `values`, etc. "
-  }, {
-    "metadata" : {
-      "id" : "398B4FFC54784BD18F7C2F38EF8F9223"
-    },
-    "cell_type" : "markdown",
-    "source" : "Here's another example, where we _deconstruct_ a nested tuple. We also show that you can use pattern matching for assignment, too!"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "722539C191BC4E09B50334373DE61C7E"
-    },
-    "cell_type" : "code",
-    "source" : "val (a, (b1, (b21, b22)), c) = (\"A\", (\"B1\", (\"B21\", \"B22\")), \"C\")",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "288036612A4D4267890DC7DDA156C8CA"
-    },
-    "cell_type" : "markdown",
-    "source" : "## 5. Case Classes \nNow is a good time to introduce a convenient way to declare classes that encapsulate some state that is composed of some values, called _case classes_."
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "BFE7303C687B473885B74C2784C73B72"
-    },
-    "cell_type" : "code",
-    "source" : "case class Person(firstName: String, lastName: String, age: Int)",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "9901608E6BBA45CCBBAEC1F0EDDD8B99"
-    },
-    "cell_type" : "markdown",
-    "source" : "The `case` keyword tells the compiler to:\n* Make immutable instance fields out of the constructor arguments (the list after the name).\n* Add `equals`, `hashCode`, and `toString` methods (which you can explicitly define yourself, if you want).\n* Add a _companion object_ with the same name, which holds methods for constructing instances and \"destructuring\" instances through patterning matching.\n* Add `copy` (constructor-)methods with default values for each field being their current value (for `this` instance).\n* etc.\n\nCase classes are useful for implementing records in RDDs.\n\nLet's see case class pattern matching in action:"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "D3745DD75E024E7C97A653963381E756"
-    },
-    "cell_type" : "code",
-    "source" : "sparkSession.\n  createDataFrame(Seq(Person(\"Dean\", \"Wampler\", 39), Person(\"Andy\", \"Petrella\", 29))).\n  as[Person].\n  map { \n    case c@Person(first, last, a) => c.copy(age = a + 1)  // happy birthday\n  }",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "8758F66233004E7A9DDA3CF46A6D586D"
-    },
-    "cell_type" : "markdown",
-    "source" : "What about the other languages? \n* **Python:** Regular expression matching for strings is built in. Pattern matching as shown requires a third-party library with an idiomatic syntax. Nothing like case classes.\n* **R:** Only supports regular expression matching for strings. Nothing like case classes.\n* **Java:** Only supports regular expression matching for strings. Nothing like case classes."
-  }, {
-    "metadata" : {
-      "id" : "DB4A6293E81B4C748AE7C26E2B393EA2"
-    },
-    "cell_type" : "markdown",
-    "source" : "## 6. Type Inference\nMost languages associate a type with values, but they fall into two categories, crudely speaking, those which evaluate the type of expressions and variables at compile time (like Scala and Java) and those which do so at runtime (Python and R). This is call _static typing_ and _dynamic typing_, respectively.\n\nSo, languages with static typing either have to be told the type of every expression or variable, or they can _infer_ types in some or all cases. Scala can infer types most of the time, while Java can do so only in limited cases. Here are some examples for Scala. Note the results shown for each expression:"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "BB8E2DBE4DB649138913CFA2BE9016D5"
-    },
-    "cell_type" : "code",
-    "source" : "val i = 100       // <- infer that i is an integer\nval j = i*i % 27  // <- since i is an integer, j must be one, too.",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "E5A4DAF4682144A7B07B20E2B334B422"
-    },
-    "cell_type" : "markdown",
-    "source" : "Recall our previous Spark example, where we wrote nothing about types, but they were inferred: "
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "261F068BDF344DA6B96DC784AEB86F19"
-    },
-    "cell_type" : "code",
-    "source" : "sparkContext.parallelize(1 to 100).\n  map(i => (i, isPrime(i))).\n  groupBy{ case(_, primality) => primality }.                  // Syntax: { case pattern => body }\n  map{ case (primality, values) => (primality, values.size) }  // used here, too",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "B62A3D05041F4E24860434EE37D1AE81"
-    },
-    "cell_type" : "markdown",
-    "source" : "So this long expression (and it is a four-line expression - note the \".\"'s) returns an `RDD[(Boolean, Int)]`. Note that we can also express a tuple _type_ with the `(...)` syntax, just like for tuple _instances_. This type could also be written `RDD[Tuple2[Boolean, Int]]`.\n\nPut another way, we have an `RDD` where the records are key-value pairs of `Booleans` and `Ints`."
-  }, {
-    "metadata" : {
-      "id" : "D2DA2C79231F4685908D8F9A211FD8E2"
-    },
-    "cell_type" : "markdown",
-    "source" : "I really like the extra safety that static typing provides, without the hassle of writing the types for almost everything, compared to Java. Furthermore, when I'm using an API with the Scala interpreter or a notebook like this one, the return value's type is shown, as in the previous example, so I know exactly what \"kinds of things\" I have. That also means I don't have to know _in advance_ what a method will return, in order to explicit add a required type, as in Java."
-  }, {
-    "metadata" : {
-      "id" : "AF7FAC15A7984A878800DC544E1D663F"
-    },
-    "cell_type" : "markdown",
-    "source" : "What about the other languages? \n* **Python:** Uses dynamic typing, so no types are written explicitly, but you also don't get the feedback type inference provides, as in our `RDD[(Boolean, Int)]` example.\n* **R:** Also dynamically typed.\n* **Java:** Statically typed with explicit types required almost everywhere."
-  }, {
-    "metadata" : {
-      "id" : "115056A879A9452F97AECC2A32A2CEBA"
-    },
-    "cell_type" : "markdown",
-    "source" : "## 7. Unification of Primitives and Types\nIn Java, there is a clear distinction between primitives, which are nice for performance (you can put them in registers, you can pass them on the stack, you don't heap allocate them), and instances of classes, which give you the expressiveness of OOP, but with the overhead of heap allocation, etc.\n\nScala unifies the syntax, but in most cases, compiles optimal code. So, for example, `Float` acts like any other type, e.g., `String`, with methods you call, but the compiler uses JVM `float` primitives. `Float` and the other primitives are subtypes of `AnyVal` and include `Byte`, `Short`, `Int`, `Long`, `Float`, `Double`, `Char`, `Boolean`, and `Unit`.\n\nAnother benefit is that the uniformity extends to parameterized types, like collections. If you implement your own `Tree[T]` type, `T` can be `Float`, `String`, `MyMassiveClass`, whatever. There's no mental burden of explicitly boxing and unboxing primitives.\n\nHowever, the downside is that your primitives will be boxed when used in a context like this. Scala does have an annotation `@specialized(a,b,c)` that's used to tell the compiler to generate optimal implementations for the primitives listed for `a,b,c`, but it's not a perfect solution."
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "FE1190855EE24235B43678F98CA1D3FB"
-    },
-    "cell_type" : "code",
-    "source" : "val listString: List[String] = List(\"one\", \"two\", \"three\")\nval listInt:    List[Int]    = List(1, 2, 3)    // No need to use Integer.",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "37172DAD447A41DC8AB60C19A92B64E5"
-    },
-    "cell_type" : "markdown",
-    "source" : "See also **Value Classes** below."
-  }, {
-    "metadata" : {
-      "id" : "F9B2730EB3D54267B924086416959197"
-    },
-    "cell_type" : "markdown",
-    "source" : "## 8. Elegant Tools to Create \"Domain Specific Languages\"\nThe Spark [DataFrame](http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.DataFrame) API is a good example of DSL that mimics the original Python and R DataFrame APIs for single-node use. \n\nFirst, set up the API:"
-  }, {
-    "metadata" : {
-      "id" : "C4E214979E53400AA22437CAD15B8801"
-    },
-    "cell_type" : "markdown",
-    "source" : "Get the root directory of the notebooks:"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "B32809D4A5EE4F29846A6CCFD9B19BCE"
-    },
-    "cell_type" : "code",
-    "source" : "val root = sys.env(\"NOTEBOOKS_DIR\")",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "F57FBE6DCC34418B8AD158423F1A602C"
-    },
-    "cell_type" : "markdown",
-    "source" : "Load the airports data into a [DataFrame](http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.DataFrame). The cell returns Scala \"Unit\", `()`, which is sort of like `void`, to avoid an annoying bug in the output:"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "78D3E11A8F8F45EE86E884812BCE9564"
-    },
-    "cell_type" : "code",
-    "source" : "val airportsDF = sparkSession.read.json(s\"$root/airports.json\")",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "6974DAF449AB43158E79982E35D3C100"
-    },
-    "cell_type" : "markdown",
-    "source" : "Note the \"schema\" is inferred from the JSON and shown by the REPL (by calling `DataFrame.toString`).\n\nWe cache the results, so Spark will keep the data in memory since we'll run a few queries over it. `DataFrame.show` is convenient for displaying the first `N` records (20 by default)."
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "C4943349BC644D468A72E623BE10F17A"
-    },
-    "cell_type" : "code",
-    "source" : "airportsDF.cache\nairportsDF",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "654B4596BCFE41FD99E64DCFDC9314C7"
-    },
-    "cell_type" : "markdown",
-    "source" : "Now we can show the idiomatic DataFrame API (DSL) in action:"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "2DF9D1306DAB41319E03DD8322721545"
-    },
-    "cell_type" : "code",
-    "source" : "val grouped = airportsDF.groupBy($\"state\", $\"country\").count.orderBy($\"count\".desc)\ngrouped.printSchema\ngrouped.limit(100)  // all 50 states + territories < 100",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "62D7351CF14F4C668DD1FA5AB4B2E600"
-    },
-    "cell_type" : "markdown",
-    "source" : "By the way, this DSL is essentially a programmatic version of SQL:"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "322C5E92AF6741E68445C244E43A5F20"
-    },
-    "cell_type" : "code",
-    "source" : "airportsDF.registerTempTable(\"airports\")\nval grouped2 = sqlContext.sql(\"\"\"\n  SELECT state, country, COUNT(*) AS cnt FROM airports\n  GROUP BY state, country\n  ORDER BY cnt DESC\n\"\"\")",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "D30F0C37ECDA4E7CBE020A874AC53E68"
-    },
-    "cell_type" : "code",
-    "source" : "grouped2.printSchema\ngrouped2.show",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "5B5B48609FAB4F18BA0AD49AE547F028"
-    },
-    "cell_type" : "markdown",
-    "source" : "What about the other languages? \n* **Python:** Dynamically-typed languages often have features that make idiomatic DSLs easy to define. The Spark DataFrame API is inspired by the [Pandas DataFrame](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html) API.\n* **R:** Less flexible for idiomatic DSLs, but syntax is designed for Mathematics. The Pandas DataFrame API is inspired by the [R Data Frame](http://www.r-tutor.com/r-introduction/data-frame) API.\n* **Java:** Limited to so-called _fluent_ APIs, similar to our collections and RDD examples above."
-  }, {
-    "metadata" : {
-      "id" : "D098E3AAA94942EDBEC629B643C53F4A"
-    },
-    "cell_type" : "markdown",
-    "source" : "## 9. And a Few Other Things...\nThere are many more Scala features that the other languages don't have or don't support as nicely. Some are actually quite significant for general programming tasks, but they are used less frequently in Spark code. Here they are, for completeness."
-  }, {
-    "metadata" : {
-      "id" : "563FAC0C5F894273839564136EFD4287"
-    },
-    "cell_type" : "markdown",
-    "source" : "### 9A. Singletons Are a Built-in Feature\nImplement the _Singleton Design Pattern_ without special logic to ensure there's only one instance."
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "D5EFC6E128DC4BD9840CAE8A94EE1DA7"
-    },
-    "cell_type" : "code",
-    "source" : "object Foo {\n  def main(args: Array[String]):Unit = {\n    args.foreach(arg => println(s\"arg = $arg\"))\n  }\n}\nFoo.main(Array(\"Scala\", \"is\", \"great!\"))",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "CF2FC2CC60AA4D1982EF940CDDF28A67"
-    },
-    "cell_type" : "markdown",
-    "source" : "### 9B. Named and Default Arguments\nDoes a method have a long argument list? Provide defaults for some of them. Name the arguments when calling the method to document what you're doing."
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "63781B531D29467EAA44AC81CF96E7DF"
-    },
-    "cell_type" : "code",
-    "source" : "val airportsRDD = grouped.select($\"count\", $\"state\").map(row => (row.getLong(0), row.getString(1))).rdd",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "4AB3F2B4D4DD4E70A20D31E4568CE074"
-    },
-    "cell_type" : "code",
-    "source" : "val rdd1 = airportsRDD.sortByKey() // defaults: ascending = true, numPartitions = <current # of partitions>\nval rdd2 = airportsRDD.sortByKey(ascending = false) // name the ascending argument explicitly\nval rdd3 = airportsRDD.sortByKey(numPartitions = 4) // name the numPartitions argument explicitly\nval rdd4 = airportsRDD.sortByKey(ascending = false, numPartitions = 4) // Okay to do both...",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "presentation" : {
-        "tabs_state" : "{\n  \"tab_id\": \"#tab1954373211-0\"\n}",
-        "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
+    {
+      "metadata": {
+        "id": "89E60F5356A24745AD7FFC3ED747D7E4"
       },
-      "id" : "5D959F19FE7E44588FDC45A18368A06C"
+      "cell_type": "markdown",
+      "source": "## Why Scala for Data Science with Spark?"
     },
-    "cell_type" : "code",
-    "source" : "containerFluid(List(\n  List(rdd1, rdd2, rdd3, rdd4).map { rdd => \n    text(s\"#partitions = ${rdd.partitions.length}\") ++\n    TableChart(rdd.take(10), sizes=(150,150))//.foreach(println)\n  }.map(table => (table, 3))\n))",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "6F439C6371434BD39E75E6753164273A"
-    },
-    "cell_type" : "markdown",
-    "source" : "### 9C. String Interpolation\nYou've seen it used already:"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "6BEA262B490540E79A21B1A1282F54C3"
-    },
-    "cell_type" : "code",
-    "source" : "s\"RDD #partitions = ${rdd4.partitions.length}\"",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "17123565F5964C05A302350950C80E2A"
-    },
-    "cell_type" : "markdown",
-    "source" : "### 9D. Few Semicolons\nSemicolons are inferred, making your code just that much more concise. You can use them if you want to write more than one expression on a line:"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "BF39CCF4418042FCBDE25C3E3CFD7008"
-    },
-    "cell_type" : "code",
-    "source" : "val result = \"foo\" match {\n  case \"foo\" => println(\"Found foo!\"); true\n  case _ => false\n}",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "565ED52438AC46ADAC0BC8C82FDC8212"
-    },
-    "cell_type" : "markdown",
-    "source" : "### 9E. Tail Recursion Optimization\n\nRecursion isn't used much in user code for Spark, but for general programming it's a powerful technique. Unfortunately, most OO languages (like Java) do not optimize [tail call recursion](https://en.wikipedia.org/wiki/Tail_call) by converting the recursion into a loop. Without this optimization, use of recursion is risky, because of the risk of stack overflow. Scala's compiler implements this optimization. "
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "ECAEC625BFBD4B82957F5D81EE524341"
-    },
-    "cell_type" : "code",
-    "source" : "def printSeq[T](seq: Seq[T]): Unit = seq match {\n  case head +: tail => println(head); printSeq(tail)\n  case Nil => // done\n}\nprintSeq(Seq(1,2,3,4))",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "FAD283C29E41425E89594C7DBC3122E7"
-    },
-    "cell_type" : "markdown",
-    "source" : "### 9F. Everything Is an Expression\nSome constructs are _statements_ (meaning they return nothing) in some languages, like `if ... then ... else`, `for` loops, etc. Almost everything is an expression in Scala which means you can assign results of the `if` or `for` expression. The alternative in the other languages is that you have to declare a mutable variable, then set its value inside the statement."
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "EF9F87A5DF6A4589AE09E2F8FD05279E"
-    },
-    "cell_type" : "code",
-    "source" : "val worldRocked = if (true == false) \"yes!\" else \"no\"",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "presentation" : {
-        "tabs_state" : "{\n  \"tab_id\": \"#tab478386907-0\"\n}"
+    {
+      "metadata": {
+        "id": "3B4411F9D439469AB4992A6E8D178757"
       },
-      "id" : "9351539BEF5F42369638265DCD40C0FD"
+      "cell_type": "markdown",
+      "source": "While Python and R are traditional languages of choice for Data Science, [Spark](http://spark.apache.org) also supports Scala (the language in which it's written) and Java.\n\nHowever, using one language for all work has advantages like simplifying the software development process, such as build and deployment tools, coding conventions, etc.\n\nIf you want a thorough introduction to Scala, see [Dean's book](http://shop.oreilly.com/product/0636920033073.do).\n\nSo, what are the advantages, as well as disadvantages of Scala?"
     },
-    "cell_type" : "code",
-    "source" : "val primes = for {\n  i <- 0 until 100\n  if isPrime(i)\n} yield i",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "BA85DCC039794BFC804D47C1D0CBBFEF"
-    },
-    "cell_type" : "markdown",
-    "source" : "### 9G. Implicits\nOne of Scala's most powerful features is the _implicits_ mechanism. It's used (or misused) for several capabilities, but one of the most useful is the ability to \"add\" methods to existing types that don't already have the methods. What actually happens is the compiler invokes an _implicit conversion_ from an instance of the type to a wrapper type that has the desired method. \n\nFor example, suppose I want to add a `toJSON` method to my `Person` type above, but I don't want this added to the class itself. Maybe it's from a library that I can't modify. Maybe I only want this method in some contexts, but I don't want its baggage everywhere. Here's how to do it."
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "3A3561A859AB4205BABA7D1C2EE76CEF"
-    },
-    "cell_type" : "code",
-    "source" : "// repeat definition of Person: \ncase class Person(firstName: String, lastName: String, age: Int)\n\nimplicit class PersonToJSON(person: Person) {\n  // Just return a JSON-formatted string, for simplicity of the example:\n  def toJSON: String = \n    s\"\"\"{ \"firstName\": ${person.firstName}, \"lastName\": ${person.lastName}, \"age\": ${person.age} }\"\"\"\n}\n\nval p = Person(\"Dean\", \"Wampler\", 39)\np.toJSON   // Like magic!!",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "12E785FDCA514870A0DE2CFA8F739388"
-    },
-    "cell_type" : "markdown",
-    "source" : "The `implicit` keyword tells the compiler to consider `PersonToJSON` when I attempt to call `toJSON` on a `Person` instance. The compiler finds this implicit class and does the conversion implicitly, then calls the `toJSON` method.\n\nThere are many other uses for implicits. They are a powerful implementation tool for various design problems, but they have to be used wisely, because it can be difficult for the reader to know what's going on."
-  }, {
-    "metadata" : {
-      "id" : "43D51BE94F464AE8B794F673544EF5D3"
-    },
-    "cell_type" : "markdown",
-    "source" : "### 9H. Sealed Type Hierarchies\nAn important concept in modern languages is _sum types_, where there is a finite set of possible instances. Two examples from Scala are `Option[T]` and its allowed subtypes `Some[T]` and `None`, and `Either[L,R]` and its subtypes `Left[L]` and `Right`[R]`.\n\nNote that `Option[T]` represents two and only two possible states, either I have something, a `T` inside a `Some[T]`, or I don't anything, a `None`. There are no additional \"states\" that are logically possible for the `Option[T]` \"abstraction\". Similarly, `Either[L,R]` encapsulates a similar dichotomy, often used for \"failure\" (e.g., `Left[Throwable]` by convention) and \"successful result\" (`Right[T]` for some \"expected\" `T`).\n\nThe term _sum type_ comes from an analog between types and arithmetic. For `Option`, the number of allowed intances (ignoring the type parameter `T`) is just the sum, _two_. Similarly for `Either`.\n\nThere are also _product types_, like tuples, where you can combining types together _multiples_ the number of instances. For example, a tuple of `(Option,Either)` would have 2*2 instances. A tuple `(Boolean,Option,HTTP_Commands)` has 2*2*7 possible instances (there are 7 HTTP 1.1 commands, like `GET`, `POST`, etc.)\n\nScala use type hierarchies for sum types, where an abstract _sealed_ trait or class is used for the base type, e.g., `Option[T]` and `Either[L,R]`, and subtypes represent the concrete types. The `sealed` keyword is used on the base type and it is crucial; it tells the compiler to only allow subtypes to be defined in the same _file_, which means users can't add their own subtypes, breaking the logic of the type.\n\nSome other languages implement sumtypes using a variation of _enumerations_. Jave has that, but it's a much more limited concept than true subtypes."
-  }, {
-    "metadata" : {
-      "id" : "ED60872A44504B0C8B3726352EBD3CD4"
-    },
-    "cell_type" : "markdown",
-    "source" : "Here's an example, sort of like `Either`, but oriented more towards the usage of encapsulating success or failure.\nHowever, we'll put \"success\" on the left instead of the right, which is the convention when using `Either`.\n\nWe'll have one type parameter `Result`; on `Success`, it will hold an instance of the type `Result`.\nOn Failure, it will hold no successful result, so we'll use the \"bottom\" type `Nothing` for the type parameter,\nand expect the error information to be returned in a `RuntimeException`."
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "7A40CA303C9443A3828EEAFBAC0186AA"
-    },
-    "cell_type" : "code",
-    "source" : "// The + means \"contravariant\"; we can use subtypes of the declared \"Result\". \n// See also the **Definition Site Invariance...** section below.\nsealed trait SuccessOrFailure[+Result]  \ncase class   Success[Result](result: Result)  extends SuccessOrFailure[Result]\ncase class   Failure(error: RuntimeException) extends SuccessOrFailure[Nothing]",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "BF40808FF5E5411A871EF3E75080DCF6"
-    },
-    "cell_type" : "markdown",
-    "source" : "The `sealed` keyword is actually less useful in the context of this notebook; we can keep on defining subclasses below. However, in library code, you would put the three declarations in a separate file and then the compiler would prevent anyone from defining a third subclass in a different location."
-  }, {
-    "metadata" : {
-      "id" : "A77A46BDA4A24B1ABA20F6CE9D824156"
-    },
-    "cell_type" : "markdown",
-    "source" : "Let's try it out."
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "674289AA57C64BF08E71F8EEF3F222D6"
-    },
-    "cell_type" : "code",
-    "source" : "def parseInt(string: String): SuccessOrFailure[Int] = try {\n  Success(Integer.parseInt(string))\n} catch {\n  case nfe: NumberFormatException => Failure(new RuntimeException(s\"\"\"Invalid integer string: \"$string\" \"\"\"))\n}",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "presentation" : {
-        "tabs_state" : "{\n  \"tab_id\": \"#tab2033043172-0\"\n}"
+    {
+      "metadata": {
+        "id": "058C9660033E42EAB7089F7B95B9441A"
       },
-      "id" : "30C338D63C5641BC820C4E19C4FC74F0"
+      "cell_type": "markdown",
+      "source": "## 1. Functional Programming Plus Objects\n\nScala is a _multi-paradigm_ language. Code can look a lot like traditional Java code using _Object-Oriented Programming_ (OOP), but it also embraces _Function Programming_ (FP), which emphasizes the virtues of:\n1. **Immutable values:** Mutability is a common source of bugs.\n1. **Functions with no _side effects_:** All the information they need is passed in and all the \"work\" is returned. No external state is modified.\n1. **Referential transparency:** You can replace a function call with a cached value that was returned from a previous invocation with the same arguments. (This is a benefit enabled by functions without side effects.)\n1. **Higher-order functions:** Functions that take other functions as arguments are return functions as results.\n1. **Structure separated from operations:** A core set of collections meets most needs. An operation applicable to one data structure is applicable to all."
     },
-    "cell_type" : "code",
-    "source" : "Seq(\"1\", \"202\", \"three\").map(parseInt)",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "EEA7210546F049D58D92A8C97F4A69E7"
+    {
+      "metadata": {
+        "id": "0DDBE39BA9264FE387FA4721718608F2"
+      },
+      "cell_type": "markdown",
+      "source": "However, objects are still useful as an _encapsulation_ mechanism. This is valuable for projects with large teams and code bases. \nScala also implements some _functional_ features using _object-oriented inheritance_ (e.g., \"abstract data types\" and \"type classes\", for you experts...)."
     },
-    "cell_type" : "markdown",
-    "source" : "### 9I. Option Type Broken in Java\nSpeaking of `Option[T]`, Java 8 introduced a similar type called `Optional`. (The name `Option` was already used for something else.) However, its design has some subtleties that make the behavior not straightforward when `nulls` are involved. For details, see [this blog post](https://developer.atlassian.com/blog/2015/08/optional-broken/)."
-  }, {
-    "metadata" : {
-      "id" : "7C1D0E4BCDD24C9287BF14D74FDFE97D"
+    {
+      "metadata": {
+        "id": "F76E6ACFA660449C8B4CEDE9289C0DD9"
+      },
+      "cell_type": "markdown",
+      "source": "What about the other languages? \n* **Python:** Supports mixed FP-OOP programming, too, but isn't as \"rigorous\". \n* **R:** As a Statistics language, R is more functional than object-oriented.\n* **Java:** An object-oriented language, but with recently introduced functional constructs, _lambdas_ (anonymous functions) and collection operations that follow a more _functional_ style, rather than _imperative_ (i.e., where mutating the collection is embraced)."
     },
-    "cell_type" : "markdown",
-    "source" : "### 9J: Definition-site Variance vs. Call-site Variance\nThis is a technical point. In Java, when you define a type with a type parameter, like our `SuccessOrFailure[T]` previously, to hold items of some type `T`, you can't specify in the declaration whether it's okay to substitute a subtype of `SuccessOrFailure` with a subtype of `T`. For example, is the following okay?:\n\n```java\n// Java\nSuccessOrFailure<Object> sof = null;\n...\nsof = new Success<String>(\"foo\");\n```\n\nThis substitutability is called _variance_, referring to the variance allowed in `T` if we use a subtype of the outer type, `SuccessOrFailure`. Notice that we want to assign a subclass of `SuccessOrFailure` _and_ a subtype of `Object`. In this case, we're doing _covariant substitution_, because the subtyping \"moves in the same direction\", from parent to child for both types. There's also _contravariant_, where the type parameter moves \"up\" while the outer type moves \"down\", and _invariant_ typing, where you can't change the type parameter. That is, in the invariant case, we could only assign `Success<Object>(...)` to `sof`.\n\nJava does not let the type _designer_ specify the correct behavior. This means Java forces the _user_ of the type to specify the variance at the _call site_:\n\n```java\nSuccessOrFailure<? extends Object> sof = null;\n...\nsof = new Success<String>(\"foo\");\n\n```\nThis is harder for the user, who has to understand what's okay in this case, both what the designer intended and some technical rules of type theory. \n\nIt's much better if the _designer_ of `SuccessOrFailure[T]`, who understands the desired behavior, defines the allowed variance behavior at the _definition site_, which Scala supports. Recall from above:\n\n```scala\n// Scala\nsealed trait SuccessOrFailure[+Result]  \ncase class   Success[Result](result: Result)  extends SuccessOrFailure[Result]\ncase class   Failure(error: RuntimeException) extends SuccessOrFailure[Nothing]\n\n...\n// usage:\nval sof: SuccessOrFailure[AnyRef] = new Success[String](\"Yea!\")\n```"
-  }, {
-    "metadata" : {
-      "id" : "069B350306444D689D66BE85E7C96B21"
+    {
+      "metadata": {
+        "id": "84C5C921657D4A0B821CD106634135A4"
+      },
+      "cell_type": "markdown",
+      "source": "There are a few differences with Java's vs. Scala's approaches to OOP and FP that are worth mentioning specifically:"
     },
-    "cell_type" : "markdown",
-    "source" : "### 9K: Value Classes\nScala's built-in _value types_ `Int`, `Long`, `Float`, `Double`, `Boolean`, and `Unit` are implemented with the corresponding JVM primitive values, eliminating the overhead of allocating an instance on the heap. What if you define a class that wraps _one_ of these values?\n```scala\nclass Celsius(value: Float) {\n  // methods\n}\n```\n  Unfortunately, instances are allocated on the heap, even though all instance \"state\" is held by a single primitive `Float`. Scala now has an `AnyVal` trait. If you use it as a parent of types like `Celsius`, they will enjoy the same optimization that the built-in value types enjoy. That is, the single primitive field (`value` here) will be pushed on the stack, etc., and no instance of `Celsius` will be heap allocated, _in most cases._\n```scala\nclass Celsius(value: Float) extends AnyVal {\n  // methods\n}\n```\n\nSo, why doesn't Scala make this optimization automatically? There are some limitations, which are described [here](http://docs.scala-lang.org/overviews/core/value-classes.html) and in [my book](http://shop.oreilly.com/product/0636920033073.do)."
-  }, {
-    "metadata" : {
-      "id" : "BF296220FD9B4E1987610CDFE7D86C91"
+    {
+      "metadata": {
+        "id": "584F4A92CB454F0586F5EBC2F4ACD135"
+      },
+      "cell_type": "markdown",
+      "source": "### 1a. Traits vs. Interfaces\nScala's object model adds a _trait_ feature, which is a more powerful concept than Java 8 interfaces. Before Java 8, there was no [mixin composition](https://en.wikipedia.org/wiki/Mixin) capability in Java, where composition is generally [preferred over inheritance](https://en.wikipedia.org/wiki/Composition_over_inheritance). \n\nImagine that you want to define reusable logging code and mix it into other classes declaratively. Before Java 8, you could define the abstraction for logging in an interface, but you had to use some ad hoc mechanism to implement it (like implementing all methods to delegate to a helper object). Java 8 added the ability to provide default method definitions, as well as declarations in interfaces. This makes mixin composition easier, but you still can't add fields (for state), so the capability is limited. \n\nScala traits fully support mixin composition by supporting both field and method definitions with flexibility rules for overriding behavior, once the traits are mixed into classes."
     },
-    "cell_type" : "markdown",
-    "source" : "### 9L. Lazy Vals\nSometimes you don't want to initialize a value if doing so is expensive and you won't always need it. Or, sometimes you just want to delay the \"hit\" so you're up and running more quickly. For example, a database connection is expensive.\n```scala\nlazy val jdbcConnection = new JDBCConnection(...)\n```\nUse the `lazy` keyword to delay initialization until it's actually needed (if ever). This feature can also be used to solve some tricky \"order of initialization\" problems. It has one drawback; there will be extra overhead for every access to check if it has already been initialized, so don't do this if the value will be read a lot. A future version of Scala will remove this overhead."
-  }, {
-    "metadata" : {
-      "id" : "E1AC9A4F004249AAAD14813AF7AAC1BC"
+    {
+      "metadata": {
+        "id": "DC6C322EAB2244B9844CB0FDABCE6BA3"
+      },
+      "cell_type": "markdown",
+      "source": "### 1b. Java Streams\nWhen you use the Java 8 collections, you can convert the traditional collections to a \"stream\", which is lazy and gives you more functional operations. However, sometimes, the conversions back and forth can be tedious, e.g., converting to a stream for functional processing, then converting pass them to older APIs, etc. Scala collections are more consistently functional."
     },
-    "cell_type" : "markdown",
-    "source" : "What about the other languages? \n* **Python:** Offers equivalents for some these features.\n* **R:** Supports some of these features.\n* **Java:** Supports none of these features."
-  }, {
-    "metadata" : {
-      "id" : "455487BFC1784B8292289A40B70BFAA5"
+    {
+      "metadata": {
+        "id": "E706C1FC94B34C5E86C25040BDF9263C"
+      },
+      "cell_type": "markdown",
+      "source": "### The Virtue of Functional Collections\nLet's examine how concisely we can operate on a collection of values in Scala and Spark."
     },
-    "cell_type" : "markdown",
-    "source" : "# But Scala Has Some Disadvantages...\n\nAll of the advantages discussed above make Scala code quite concise, especially compared to Java code. There are lots of nifty features available to solve particular design problems.\n\nHowever, no language is perfect. You should know about the disadvantages of Scala, too."
-  }, {
-    "metadata" : {
-      "id" : "9EF11FF9CCDA43CE838105419BACAA0C"
+    {
+      "metadata": {
+        "id": "358539665C7D40479DC6FB0910C08FBE"
+      },
+      "cell_type": "markdown",
+      "source": "First, let's define a helper function: is an integer a prime? (Naïve algorithm from [Wikipedia](https://en.wikipedia.org/wiki/Primality_test).)"
     },
-    "cell_type" : "markdown",
-    "source" : "Here, I'll briefly summarize some Scala and JVM issues, especially for Spark, but Dean's talk at [Strata San Jose](http://conferences.oreilly.com/strata/hadoop-big-data-ca/public/schedule/detail/47105) ([extended slides](http://deanwampler.github.io/polyglotprogramming/papers/ScalaJVMBigData-SparkLessons-extended.pdf)) goes into more details."
-  }, {
-    "metadata" : {
-      "id" : "D8DD3106FCBF435FAC27E3D75850AA16"
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "EB02D7EAB7F8406A849C22CE2528B443"
+      },
+      "cell_type": "code",
+      "source": "def isPrime(n: Int): Boolean = {\n  def test(i: Int, n2: Int): Boolean = {\n    if (i*i > n2) true\n    else if (n2 % i == 0 || n2 % (i + 2) == 0) false\n    else test(i+6, n2)\n  }\n  if (n <= 1) false\n  else if (n <= 3) true\n  else if (n % 2 == 0 || n % 3 == 0) false\n  else test(5, n)\n}",
+      "outputs": []
     },
-    "cell_type" : "markdown",
-    "source" : "## 1. Data-centric Tools and Libraries\n\nThe R and Python communities have a much wider selection of data-centric tools and libraries. Python is great for general data science. R was developed by statisticians, so it has a very rich library of statistical algorithms and rich options for charting, like [ggplot2](http://ggplot2.org/)."
-  }, {
-    "metadata" : {
-      "id" : "E23284F1547540108DEC21B524BF8F3C"
+    {
+      "metadata": {
+        "id": "81C67BC34835425582115F8FD36BCEC3"
+      },
+      "cell_type": "markdown",
+      "source": "Note that no values are mutated here (\"virtue\" #1 listed above) and `isPrime` has no side effects (#2), which means we could cache previous invocations for a given `n` for better performance if we called this a lot (#3)!"
     },
-    "cell_type" : "markdown",
-    "source" : "## 2. The JVM Has Some Issues \nBig Data has pushed the limits of the JVM in interesting ways."
-  }, {
-    "metadata" : {
-      "id" : "AA07596741F84C4DBDBD223B5D47B02C"
+    {
+      "metadata": {
+        "id": "1B606E0028B245438CA7BE870A1AF082"
+      },
+      "cell_type": "markdown",
+      "source": "#### Scala Collections Example\nLet's compare a Scala collections calculation vs. the same thing in Spark; how many prime numbers are there between 1 and 100, inclusive?"
     },
-    "cell_type" : "markdown",
-    "source" : "### 2a. Integer indexing of arrays\n\nBecause Java has _signed_ integers only and because arrays are indexed by integers instead of longs, array sizes are limited to 2 billion elements. Therefore, _byte_ arrays, which are often used for holding serialized data, are limited to 2GB. This is in an era when _terabyte_ heaps (TB) are becoming viable!\n\nThere's no real workaround when you want the efficiency of arrays, except to implement logic that can split a large object into \"chunks\" and manage them accordingly."
-  }, {
-    "metadata" : {
-      "id" : "66A59310099B46E985F8B0761076E1E3"
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "presentation": {
+          "tabs_state": "{\n  \"tab_id\": \"#tab239229674-0\"\n}",
+          "pivot_chart_state": "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
+        },
+        "id": "5E9DCA78D8DB4E5E8362EB9138F380F5"
+      },
+      "cell_type": "code",
+      "source": "(1 to 100).                    // Range of integers from 1 to 100, inclusive.\n  map(i => (i, isPrime(i))).   // `map` is a higher-order method; we pass it a function (#4)\n  groupBy(tuple => tuple._2).  // ... and so is `groupBy`, etc.\n  map(tuple => (tuple._1, tuple._2.size))",
+      "outputs": []
     },
-    "cell_type" : "markdown",
-    "source" : "### 2b. Inefficiency of the JVM Memory Model\nThe JVM has a very flexible, general-purpose model of organizing data into memory and managing garbage collection. However, for massive data sets of records with the same or nearly the same schema, the model is very inefficient. Spark's [Tungsten Project](https://databricks.com/blog/2015/04/28/project-tungsten-bringing-spark-closer-to-bare-metal.html) is addressing this problem by introducing custom object-layouts, managed memory, as well as code generation for other performance bottlenecks. "
-  }, {
-    "metadata" : {
-      "id" : "75724F7135BA48E985A5D39CB00CEB42"
+    {
+      "metadata": {
+        "id": "EA0A325F36A14A3489F3652278A1E199"
+      },
+      "cell_type": "markdown",
+      "source": "Note that for the numbers between 1 and 100, inclusive, exactly 1/4 of them are prime!"
     },
-    "cell_type" : "markdown",
-    "source" : "Here is an example of is how Java typically lays out objects in memory. Note the references to small, discontiguous chunks of memory. Now imaging billions of these little bits of memory. That means a lot of garbage to manage. Also, the discontinuities cause poor CPU cache performance."
-  }, {
-    "metadata" : {
-      "id" : "64B3B23B30AF4BE78CF40AC489846064"
+    {
+      "metadata": {
+        "id": "5638A2D79A1E4073AE3DBA7342623D09"
+      },
+      "cell_type": "markdown",
+      "source": "#### Spark Example\n\nNote how similar the following code is to the previous example. After constructing the data set, the \"core\" three lines are _identical_, even though they are operating on completely different underlying collections (#5 above). \n\nHowever, because Spark collections are \"lazy\" by default (i.e., not evaluated until we ask for results), we explicitly print the results so Spark evaluates them!"
     },
-    "cell_type" : "markdown",
-    "source" : "<img src='https://raw.githubusercontent.com/data-fellas/scala-for-data-science/master/notebooks/images/JavaMemory.jpg' alt='Typical Java Object Layout' height='414' width='818'></img>"
-  }, {
-    "metadata" : {
-      "id" : "283CC816BE0B4CA280FC20E2D2A7F412"
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "presentation": {
+          "tabs_state": "{\n  \"tab_id\": \"#tab1714336521-0\"\n}",
+          "pivot_chart_state": "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
+        },
+        "id": "5B884B3F73BF4D0699067F8850A499AD"
+      },
+      "cell_type": "code",
+      "source": "val rddPrimes = sparkContext.parallelize(1 to 100).\n  map(i => (i, isPrime(i))).\n  groupBy(tuple => tuple._2).\n  map(tuple => (tuple._1, tuple._2.size))\nrddPrimes.collect",
+      "outputs": []
     },
-    "cell_type" : "markdown",
-    "source" : "Instead, Tungsten uses a more efficient, cache-friendly encoding in a contiguous byte array. The first few bytes are bit flags to indicate which fields if any are null. Then comes 8 bytes/field for the non-null fields. If the field's value fits in 8 bytes (e.g., longs and doubles), then the value is inlined here. Otherwise, the value holds an offset to the final section, a variable-length sequence of bytes where longer objects, like ASCII strings, are stored."
-  }, {
-    "metadata" : {
-      "id" : "E42E5F36D8714FDBA039F6179D45DFA8"
+    {
+      "metadata": {
+        "id": "DBAEF93047F04B438C18674E104C0BA0"
+      },
+      "cell_type": "markdown",
+      "source": "Note the inferred type, an `RDD` with records of type `(Boolean, Int)`, meaning two-element tuples.\n\nSpark's RDD API is inspired by the Scala collections API, which is inspired by classic _functional programming_ operations on data collections, i.e., using a series of transformations from one form to the next, without mutating any of the collections. (Spark is very efficient about avoiding the materialization of intermediate outputs.)\n\nOnce you know these operations, it's quick and effective to implement robust, non-trivial transformations."
     },
-    "cell_type" : "markdown",
-    "source" : "<img src='https://raw.githubusercontent.com/data-fellas/scala-for-data-science/master/notebooks/images/TungstenMemory.jpg' alt='Tungsten Object Layout' height='264' width='818'></img>"
-  }, {
-    "metadata" : {
-      "id" : "9FFE7D0E67BF422C8D0995383E1F23BF"
+    {
+      "metadata": {
+        "id": "59060F32E3C34640857B9E323B062DB6"
+      },
+      "cell_type": "markdown",
+      "source": "What about the other languages? \n* **Python:** Supports very similar functional programming. In fact, Spark Python code looks very similar to Spark Scala code. \n* **R:** More idiomatic (see below).\n* **Java:** Looks similar when _lambdas_ are used, but missing features (see below) limit concision and flexibility."
     },
-    "cell_type" : "markdown",
-    "source" : "## Scala REPL Weirdness\n\nThe way the Scala REPL (interpreter) compiles code leads to memory leaks, which cause problems when working with big data sets and long sessions. Imagine you write the following code in the REPL:\n```scala\nscala> val massiveArray = get8GBarray(...)\nscala> // do some work\nscala> massiveArray = getDifferent8GBarray(...)\n```\nYou might think that the first \"8GB array\" will be nicely garbage collected when you reassign `massiveArray`. Not so. Here's a simplified view of the code the REPL generates for the _last_ line to pass to the compiler.\n\n```scala\nclass LineN {\n  class LineN_minus_1 {\n    class LineN_minus_2 {\n      ...\n        class Line1 {\n          val massiveArray = get8GBarray(...)\n        }\n      ...\n    }\n  }\n  val massiveArray = getDifferent8GBarray(...)\n}\n```\nWhy? The JVM expects classes to be compiled into byte code, so the REPL syntheses classes for each line you evaluate (or group of lines when you use the `:paste ... ^D` feature).\n\nNote that the overridden `massiveArray` shadows the original one, which is the trick the REPL uses to let you redefine variables, which would be prohibited by the compiler otherwise. Unfortunately, that leaves the shadowed reference attached to old data, so it can't be garbage collected, even though the REPL provides no way to ever refer to it again!"
-  } ],
-  "nbformat" : 4
+    {
+      "metadata": {
+        "id": "898023452F2442E38BD08B35E2F3B05A"
+      },
+      "cell_type": "markdown",
+      "source": "## 2. Interpreter (REPL)"
+    },
+    {
+      "metadata": {
+        "id": "72A05DBF93454EAB840C4D9E25929017"
+      },
+      "cell_type": "markdown",
+      "source": "We've been using the Scala interpreter (a.k.a., the REPL - Read Eval, Print, Loop) already behind the scenes. It makes notebooks like this one possible!"
+    },
+    {
+      "metadata": {
+        "id": "DA296C929D1B43A191C22FAEB538458F"
+      },
+      "cell_type": "markdown",
+      "source": "What about the other languages? \n* **Python:** Also has an interpreter and [iPython/Jupyter](https://ipython.org/) was one of the first, widely-used notebook environments.\n* **R:** Also has an interpreter and notebook/IDE environments.\n* **Java:** Does _not_ have an interpreter and can't be programmed in a notebook environment. However, Java 9 will have a REPL, after 20+ years!"
+    },
+    {
+      "metadata": {
+        "id": "32F89F305EFE4D2B9FF61F0B357A0BA7"
+      },
+      "cell_type": "markdown",
+      "source": "## 3. Tuple Syntax\nIn data, you work with records of `n` fields (for some value of `n`) all the time. Support for `n`-element _tuples_ is very convenient and Scala has a shorthand syntax for instantiating tuples. We used it twice previously to return two-element tuples in the anonymous functions passed to the `map` methods above:"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "2C28CB38977246F8AC8F202459D99B43"
+      },
+      "cell_type": "code",
+      "source": "sparkContext.parallelize(1 to 100).\n  map(i => (i, isPrime(i))).                // <-- here\n  groupBy(tuple => tuple._2).\n  map(tuple => (tuple._1, tuple._2.size))   // <-- here",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "4BA733B4AA944F969B5F1DE83B7D3220"
+      },
+      "cell_type": "markdown",
+      "source": "**Tuples are used all the time** in Spark Scala RDD code, where it's common to use key-value pairs."
+    },
+    {
+      "metadata": {
+        "id": "445D28CB9F5347088A038275A7390447"
+      },
+      "cell_type": "markdown",
+      "source": "What about the other languages? \n* **Python:** Also has some support for the same tuple syntax.\n* **R:** Also has tuple types, but a less convenient syntax for instantiating them.\n* **Java:** Does _not_ have tuple types, not even the special case of two-element tuples (pairs), much less a convenient syntax for them. However, Spark defines a [MutablePair](http://spark.apache.org/docs/latest/api/java/org/apache/spark/util/MutablePair.html) type for this purpose:"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "C4162770FDDA49438DE4E54638979322"
+      },
+      "cell_type": "code",
+      "source": "// Using Scala syntax here:\nimport org.apache.spark.util.MutablePair\nval pair = new MutablePair[Int,String](1, \"one\")",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "787A952B7EDD45329BFE71BDF82617B4"
+      },
+      "cell_type": "markdown",
+      "source": "## 4. Pattern Matching\nThis is one of the most powerful features you'll find in most functional languages, Scala included. It has no equivalent in Python, R, or Java.\n\nLet's rewrite our previous primes example:"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "48179E0BC6C3404289378596471F1D11"
+      },
+      "cell_type": "code",
+      "source": "sparkContext.parallelize(1 to 100).\n  map(i => (i, isPrime(i))).\n  groupBy{ case (_, primality) => primality}.  // Syntax: { case pattern => body }\n  map{ case (primality, values) => (primality, values.size) } . // used here, too\n  foreach(println)",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "8E8F39DFB50F44118B9095470C560E2B"
+      },
+      "cell_type": "markdown",
+      "source": "Note the `case` keyword and `=>` separating the pattern from the body to execute if the pattern matches.\n\nIn the first pattern, `(_, primality)`, we didn't need the first tuple element, so we used the \"don't care\" placeholder, `_`. Note also that `{...}` must be used instead of `(...)`. (The extra whitespace after the `{` and before the `}` is not required; it's here for legibility.)\n\nPattern matching is much richer, while more concise than `if ... else ...` constructs in the other languages and we can use it on nearly anything to match what it is and then decompose it into its constituent parts, which are assigned to variables with meaningful names, e.g., `primality`, `values`, etc. "
+    },
+    {
+      "metadata": {
+        "id": "398B4FFC54784BD18F7C2F38EF8F9223"
+      },
+      "cell_type": "markdown",
+      "source": "Here's another example, where we _deconstruct_ a nested tuple. We also show that you can use pattern matching for assignment, too!"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "722539C191BC4E09B50334373DE61C7E"
+      },
+      "cell_type": "code",
+      "source": "val (a, (b1, (b21, b22)), c) = (\"A\", (\"B1\", (\"B21\", \"B22\")), \"C\")",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "288036612A4D4267890DC7DDA156C8CA"
+      },
+      "cell_type": "markdown",
+      "source": "## 5. Case Classes \nNow is a good time to introduce a convenient way to declare classes that encapsulate some state that is composed of some values, called _case classes_."
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "BFE7303C687B473885B74C2784C73B72"
+      },
+      "cell_type": "code",
+      "source": "case class Person(firstName: String, lastName: String, age: Int)",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "9901608E6BBA45CCBBAEC1F0EDDD8B99"
+      },
+      "cell_type": "markdown",
+      "source": "The `case` keyword tells the compiler to:\n* Make immutable instance fields out of the constructor arguments (the list after the name).\n* Add `equals`, `hashCode`, and `toString` methods (which you can explicitly define yourself, if you want).\n* Add a _companion object_ with the same name, which holds methods for constructing instances and \"destructuring\" instances through patterning matching.\n* Add `copy` (constructor-)methods with default values for each field being their current value (for `this` instance).\n* etc.\n\nCase classes are useful for implementing records in RDDs.\n\nLet's see case class pattern matching in action:"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "D3745DD75E024E7C97A653963381E756"
+      },
+      "cell_type": "code",
+      "source": "sparkSession.\n  createDataFrame(Seq(Person(\"Dean\", \"Wampler\", 39), Person(\"Andy\", \"Petrella\", 29))).\n  as[Person].\n  map { \n    case c@Person(first, last, a) => c.copy(age = a + 1)  // happy birthday\n  }",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "8758F66233004E7A9DDA3CF46A6D586D"
+      },
+      "cell_type": "markdown",
+      "source": "What about the other languages? \n* **Python:** Regular expression matching for strings is built in. Pattern matching as shown requires a third-party library with an idiomatic syntax. Nothing like case classes.\n* **R:** Only supports regular expression matching for strings. Nothing like case classes.\n* **Java:** Only supports regular expression matching for strings. Nothing like case classes."
+    },
+    {
+      "metadata": {
+        "id": "DB4A6293E81B4C748AE7C26E2B393EA2"
+      },
+      "cell_type": "markdown",
+      "source": "## 6. Type Inference\nMost languages associate a type with values, but they fall into two categories, crudely speaking, those which evaluate the type of expressions and variables at compile time (like Scala and Java) and those which do so at runtime (Python and R). This is called _static typing_ and _dynamic typing_, respectively.\n\nSo, languages with static typing either have to be told the type of every expression or variable, or they can _infer_ types in some or all cases. Scala can infer types most of the time, while Java can do so only in limited cases. Here are some examples for Scala. Note the results shown for each expression:"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "BB8E2DBE4DB649138913CFA2BE9016D5"
+      },
+      "cell_type": "code",
+      "source": "val i = 100       // <- infer that i is an integer\nval j = i*i % 27  // <- since i is an integer, j must be one, too.",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "E5A4DAF4682144A7B07B20E2B334B422"
+      },
+      "cell_type": "markdown",
+      "source": "Recall our previous Spark example, where we wrote nothing about types, but they were inferred: "
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "261F068BDF344DA6B96DC784AEB86F19"
+      },
+      "cell_type": "code",
+      "source": "sparkContext.parallelize(1 to 100).\n  map(i => (i, isPrime(i))).\n  groupBy{ case(_, primality) => primality }.                  // Syntax: { case pattern => body }\n  map{ case (primality, values) => (primality, values.size) }  // used here, too",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "B62A3D05041F4E24860434EE37D1AE81"
+      },
+      "cell_type": "markdown",
+      "source": "So this long expression (and it is a four-line expression - note the \".\"'s) returns an `RDD[(Boolean, Int)]`. Note that we can also express a tuple _type_ with the `(...)` syntax, just like for tuple _instances_. This type could also be written `RDD[Tuple2[Boolean, Int]]`.\n\nPut another way, we have an `RDD` where the records are key-value pairs of `Booleans` and `Ints`."
+    },
+    {
+      "metadata": {
+        "id": "D2DA2C79231F4685908D8F9A211FD8E2"
+      },
+      "cell_type": "markdown",
+      "source": "I really like the extra safety that static typing provides, without the hassle of writing the types for almost everything, compared to Java. Furthermore, when I'm using an API with the Scala interpreter or a notebook like this one, the return value's type is shown, as in the previous example, so I know exactly what \"kinds of things\" I have. That also means I don't have to know _in advance_ what a method will return, in order to explicit add a required type, as in Java."
+    },
+    {
+      "metadata": {
+        "id": "AF7FAC15A7984A878800DC544E1D663F"
+      },
+      "cell_type": "markdown",
+      "source": "What about the other languages? \n* **Python:** Uses dynamic typing, so no types are written explicitly, but you also don't get the feedback type inference provides, as in our `RDD[(Boolean, Int)]` example.\n* **R:** Also dynamically typed.\n* **Java:** Statically typed with explicit types required almost everywhere."
+    },
+    {
+      "metadata": {
+        "id": "115056A879A9452F97AECC2A32A2CEBA"
+      },
+      "cell_type": "markdown",
+      "source": "## 7. Unification of Primitives and Types\nIn Java, there is a clear distinction between primitives, which are nice for performance (you can put them in registers, you can pass them on the stack, you don't heap allocate them), and instances of classes, which give you the expressiveness of OOP, but with the overhead of heap allocation, etc.\n\nScala unifies the syntax, but in most cases, compiles optimal code. So, for example, `Float` acts like any other type, e.g., `String`, with methods you call, but the compiler uses JVM `float` primitives. `Float` and the other primitives are subtypes of `AnyVal` and include `Byte`, `Short`, `Int`, `Long`, `Float`, `Double`, `Char`, `Boolean`, and `Unit`.\n\nAnother benefit is that the uniformity extends to parameterized types, like collections. If you implement your own `Tree[T]` type, `T` can be `Float`, `String`, `MyMassiveClass`, whatever. There's no mental burden of explicitly boxing and unboxing primitives.\n\nHowever, the downside is that your primitives will be boxed when used in a context like this. Scala does have an annotation `@specialized(a,b,c)` that's used to tell the compiler to generate optimal implementations for the primitives listed for `a,b,c`, but it's not a perfect solution."
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "FE1190855EE24235B43678F98CA1D3FB"
+      },
+      "cell_type": "code",
+      "source": "val listString: List[String] = List(\"one\", \"two\", \"three\")\nval listInt:    List[Int]    = List(1, 2, 3)    // No need to use Integer.",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "37172DAD447A41DC8AB60C19A92B64E5"
+      },
+      "cell_type": "markdown",
+      "source": "See also **Value Classes** below."
+    },
+    {
+      "metadata": {
+        "id": "F9B2730EB3D54267B924086416959197"
+      },
+      "cell_type": "markdown",
+      "source": "## 8. Elegant Tools to Create \"Domain Specific Languages\"\nThe Spark [DataFrame](http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.DataFrame) API is a good example of DSL that mimics the original Python and R DataFrame APIs for single-node use. \n\nFirst, set up the API:"
+    },
+    {
+      "metadata": {
+        "id": "C4E214979E53400AA22437CAD15B8801"
+      },
+      "cell_type": "markdown",
+      "source": "Get the root directory of the notebooks:"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "B32809D4A5EE4F29846A6CCFD9B19BCE"
+      },
+      "cell_type": "code",
+      "source": "val root = sys.env(\"NOTEBOOKS_DIR\")",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "F57FBE6DCC34418B8AD158423F1A602C"
+      },
+      "cell_type": "markdown",
+      "source": "Load the airports data into a [DataFrame](http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.DataFrame). The cell returns Scala \"Unit\", `()`, which is sort of like `void`, to avoid an annoying bug in the output:"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "78D3E11A8F8F45EE86E884812BCE9564"
+      },
+      "cell_type": "code",
+      "source": "val airportsDF = sparkSession.read.json(s\"$root/notebooks/airports.json\")",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "6974DAF449AB43158E79982E35D3C100"
+      },
+      "cell_type": "markdown",
+      "source": "Note the \"schema\" is inferred from the JSON and shown by the REPL (by calling `DataFrame.toString`).\n\nWe cache the results, so Spark will keep the data in memory since we'll run a few queries over it. `DataFrame.show` is convenient for displaying the first `N` records (20 by default)."
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "C4943349BC644D468A72E623BE10F17A"
+      },
+      "cell_type": "code",
+      "source": "airportsDF.cache\nairportsDF",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "654B4596BCFE41FD99E64DCFDC9314C7"
+      },
+      "cell_type": "markdown",
+      "source": "Now we can show the idiomatic DataFrame API (DSL) in action:"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "2DF9D1306DAB41319E03DD8322721545"
+      },
+      "cell_type": "code",
+      "source": "val grouped = airportsDF.groupBy($\"state\", $\"country\").count.orderBy($\"count\".desc)\ngrouped.printSchema\ngrouped.limit(100)  // all 50 states + territories < 100",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "62D7351CF14F4C668DD1FA5AB4B2E600"
+      },
+      "cell_type": "markdown",
+      "source": "By the way, this DSL is essentially a programmatic version of SQL:"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "322C5E92AF6741E68445C244E43A5F20"
+      },
+      "cell_type": "code",
+      "source": "airportsDF.registerTempTable(\"airports\")\nval grouped2 = sparkSession.sqlContext.sql(\"\"\"\n  SELECT state, country, COUNT(*) AS cnt FROM airports\n  GROUP BY state, country\n  ORDER BY cnt DESC\n\"\"\")",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "D30F0C37ECDA4E7CBE020A874AC53E68"
+      },
+      "cell_type": "code",
+      "source": "grouped2.printSchema\ngrouped2",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "5B5B48609FAB4F18BA0AD49AE547F028"
+      },
+      "cell_type": "markdown",
+      "source": "What about the other languages? \n* **Python:** Dynamically-typed languages often have features that make idiomatic DSLs easy to define. The Spark DataFrame API is inspired by the [Pandas DataFrame](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html) API.\n* **R:** Less flexible for idiomatic DSLs, but syntax is designed for Mathematics. The Pandas DataFrame API is inspired by the [R Data Frame](http://www.r-tutor.com/r-introduction/data-frame) API.\n* **Java:** Limited to so-called _fluent_ APIs, similar to our collections and RDD examples above."
+    },
+    {
+      "metadata": {
+        "id": "D098E3AAA94942EDBEC629B643C53F4A"
+      },
+      "cell_type": "markdown",
+      "source": "## 9. And a Few Other Things...\nThere are many more Scala features that the other languages don't have or don't support as nicely. Some are actually quite significant for general programming tasks, but they are used less frequently in Spark code. Here they are, for completeness."
+    },
+    {
+      "metadata": {
+        "id": "563FAC0C5F894273839564136EFD4287"
+      },
+      "cell_type": "markdown",
+      "source": "### 9A. Singletons Are a Built-in Feature\nImplement the _Singleton Design Pattern_ without special logic to ensure there's only one instance."
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "D5EFC6E128DC4BD9840CAE8A94EE1DA7"
+      },
+      "cell_type": "code",
+      "source": "object Foo {\n  def main(args: Array[String]):Unit = {\n    args.foreach(arg => println(s\"arg = $arg\"))\n  }\n}\nFoo.main(Array(\"Scala\", \"is\", \"great!\"))",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "CF2FC2CC60AA4D1982EF940CDDF28A67"
+      },
+      "cell_type": "markdown",
+      "source": "### 9B. Named and Default Arguments\nDoes a method have a long argument list? Provide defaults for some of them. Name the arguments when calling the method to document what you're doing."
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "63781B531D29467EAA44AC81CF96E7DF"
+      },
+      "cell_type": "code",
+      "source": "val airportsRDD = grouped.select($\"count\", $\"state\").map(row => (row.getLong(0), row.getString(1))).rdd",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "4AB3F2B4D4DD4E70A20D31E4568CE074"
+      },
+      "cell_type": "code",
+      "source": "val rdd1 = airportsRDD.sortByKey() // defaults: ascending = true, numPartitions = <current # of partitions>\nval rdd2 = airportsRDD.sortByKey(ascending = false) // name the ascending argument explicitly\nval rdd3 = airportsRDD.sortByKey(numPartitions = 4) // name the numPartitions argument explicitly\nval rdd4 = airportsRDD.sortByKey(ascending = false, numPartitions = 4) // Okay to do both...",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "presentation": {
+          "tabs_state": "{\n  \"tab_id\": \"#tab1954373211-0\"\n}",
+          "pivot_chart_state": "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
+        },
+        "id": "5D959F19FE7E44588FDC45A18368A06C"
+      },
+      "cell_type": "code",
+      "source": "containerFluid(List(\n  List(rdd1, rdd2, rdd3, rdd4).map { rdd => \n    text(s\"#partitions = ${rdd.partitions.length}\") ++\n    TableChart(rdd.take(10), sizes=(150,150))//.foreach(println)\n  }.map(table => (table, 3))\n))",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "6F439C6371434BD39E75E6753164273A"
+      },
+      "cell_type": "markdown",
+      "source": "### 9C. String Interpolation\nYou've seen it used already:"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "6BEA262B490540E79A21B1A1282F54C3"
+      },
+      "cell_type": "code",
+      "source": "s\"RDD #partitions = ${rdd4.partitions.length}\"",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "17123565F5964C05A302350950C80E2A"
+      },
+      "cell_type": "markdown",
+      "source": "### 9D. Few Semicolons\nSemicolons are inferred, making your code just that much more concise. You can use them if you want to write more than one expression on a line:"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "BF39CCF4418042FCBDE25C3E3CFD7008"
+      },
+      "cell_type": "code",
+      "source": "val result = \"foo\" match {\n  case \"foo\" => println(\"Found foo!\"); true\n  case _ => false\n}",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "565ED52438AC46ADAC0BC8C82FDC8212"
+      },
+      "cell_type": "markdown",
+      "source": "### 9E. Tail Recursion Optimization\n\nRecursion isn't used much in user code for Spark, but for general programming it's a powerful technique. Unfortunately, most OO languages (like Java) do not optimize [tail call recursion](https://en.wikipedia.org/wiki/Tail_call) by converting the recursion into a loop. Without this optimization, use of recursion is risky, because of the risk of stack overflow. Scala's compiler implements this optimization. "
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "ECAEC625BFBD4B82957F5D81EE524341"
+      },
+      "cell_type": "code",
+      "source": "def printSeq[T](seq: Seq[T]): Unit = seq match {\n  case head +: tail => println(head); printSeq(tail)\n  case Nil => // done\n}\nprintSeq(Seq(1,2,3,4))",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "FAD283C29E41425E89594C7DBC3122E7"
+      },
+      "cell_type": "markdown",
+      "source": "### 9F. Everything Is an Expression\nSome constructs are _statements_ (meaning they return nothing) in some languages, like `if ... then ... else`, `for` loops, etc. Almost everything is an expression in Scala which means you can assign results of the `if` or `for` expression. The alternative in the other languages is that you have to declare a mutable variable, then set its value inside the statement."
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "EF9F87A5DF6A4589AE09E2F8FD05279E"
+      },
+      "cell_type": "code",
+      "source": "val worldRocked = if (true == false) \"yes!\" else \"no\"",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "presentation": {
+          "tabs_state": "{\n  \"tab_id\": \"#tab478386907-0\"\n}"
+        },
+        "id": "9351539BEF5F42369638265DCD40C0FD"
+      },
+      "cell_type": "code",
+      "source": "val primes = for {\n  i <- 0 until 100\n  if isPrime(i)\n} yield i",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "BA85DCC039794BFC804D47C1D0CBBFEF"
+      },
+      "cell_type": "markdown",
+      "source": "### 9G. Implicits\nOne of Scala's most powerful features is the _implicits_ mechanism. It's used (or misused) for several capabilities, but one of the most useful is the ability to \"add\" methods to existing types that don't already have the methods. What actually happens is the compiler invokes an _implicit conversion_ from an instance of the type to a wrapper type that has the desired method. \n\nFor example, suppose I want to add a `toJSON` method to my `Person` type above, but I don't want this added to the class itself. Maybe it's from a library that I can't modify. Maybe I only want this method in some contexts, but I don't want its baggage everywhere. Here's how to do it."
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "3A3561A859AB4205BABA7D1C2EE76CEF"
+      },
+      "cell_type": "code",
+      "source": "// repeat definition of Person: \ncase class Person(firstName: String, lastName: String, age: Int)\n\nimplicit class PersonToJSON(person: Person) {\n  // Just return a JSON-formatted string, for simplicity of the example:\n  def toJSON: String = \n    s\"\"\"{ \"firstName\": ${person.firstName}, \"lastName\": ${person.lastName}, \"age\": ${person.age} }\"\"\"\n}\n\nval p = Person(\"Dean\", \"Wampler\", 39)\np.toJSON   // Like magic!!",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "12E785FDCA514870A0DE2CFA8F739388"
+      },
+      "cell_type": "markdown",
+      "source": "The `implicit` keyword tells the compiler to consider `PersonToJSON` when I attempt to call `toJSON` on a `Person` instance. The compiler finds this implicit class and does the conversion implicitly, then calls the `toJSON` method.\n\nThere are many other uses for implicits. They are a powerful implementation tool for various design problems, but they have to be used wisely, because it can be difficult for the reader to know what's going on."
+    },
+    {
+      "metadata": {
+        "id": "43D51BE94F464AE8B794F673544EF5D3"
+      },
+      "cell_type": "markdown",
+      "source": "### 9H. Sealed Type Hierarchies\nAn important concept in modern languages is _sum types_, where there is a finite set of possible instances. Two examples from Scala are `Option[T]` and its allowed subtypes `Some[T]` and `None`, and `Either[L,R]` and its subtypes `Left[L]` and `Right`[R]`.\n\nNote that `Option[T]` represents two and only two possible states, either I have something, a `T` inside a `Some[T]`, or I don't anything, a `None`. There are no additional \"states\" that are logically possible for the `Option[T]` \"abstraction\". Similarly, `Either[L,R]` encapsulates a similar dichotomy, often used for \"failure\" (e.g., `Left[Throwable]` by convention) and \"successful result\" (`Right[T]` for some \"expected\" `T`).\n\nThe term _sum type_ comes from an analog between types and arithmetic. For `Option`, the number of allowed intances (ignoring the type parameter `T`) is just the sum, _two_. Similarly for `Either`.\n\nThere are also _product types_, like tuples, where combining types together _multiplies_ the number of instances. For example, a tuple of `(Option,Either)` would have 2*2 instances. A tuple `(Boolean,Option,HTTP_Commands)` has 2*2*7 possible instances (there are 7 HTTP 1.1 commands, like `GET`, `POST`, etc.)\n\nScala uses type hierarchies for sum types, where an abstract _sealed_ trait or class is used for the base type, e.g., `Option[T]` and `Either[L,R]`, and subtypes represent the concrete types. The `sealed` keyword is used on the base type and it is crucial; it tells the compiler to only allow subtypes to be defined in the same _file_, which means users can't add their own subtypes, breaking the logic of the type.\n\nSome other languages implement sum types using a variation of _enumerations_. Java has that, but it's a much more limited concept than true subtypes."
+    },
+    {
+      "metadata": {
+        "id": "ED60872A44504B0C8B3726352EBD3CD4"
+      },
+      "cell_type": "markdown",
+      "source": "Here's an example, sort of like `Either`, but oriented more towards the usage of encapsulating success or failure.\nHowever, we'll put \"success\" on the left instead of the right, which is the convention when using `Either`.\n\nWe'll have one type parameter `Result`; on `Success`, it will hold an instance of the type `Result`.\nOn Failure, it will hold no successful result, so we'll use the \"bottom\" type `Nothing` for the type parameter,\nand expect the error information to be returned in a `RuntimeException`."
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "7A40CA303C9443A3828EEAFBAC0186AA"
+      },
+      "cell_type": "code",
+      "source": "// The + means \"contravariant\"; we can use subtypes of the declared \"Result\". \n// See also the **Definition Site Invariance...** section below.\nsealed trait SuccessOrFailure[+Result]  \ncase class   Success[Result](result: Result)  extends SuccessOrFailure[Result]\ncase class   Failure(error: RuntimeException) extends SuccessOrFailure[Nothing]",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "BF40808FF5E5411A871EF3E75080DCF6"
+      },
+      "cell_type": "markdown",
+      "source": "The `sealed` keyword is actually less useful in the context of this notebook; we can keep on defining subclasses below. However, in library code, you would put the three declarations in a separate file and then the compiler would prevent anyone from defining a third subclass in a different location."
+    },
+    {
+      "metadata": {
+        "id": "A77A46BDA4A24B1ABA20F6CE9D824156"
+      },
+      "cell_type": "markdown",
+      "source": "Let's try it out."
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "674289AA57C64BF08E71F8EEF3F222D6"
+      },
+      "cell_type": "code",
+      "source": "def parseInt(string: String): SuccessOrFailure[Int] = try {\n  Success(Integer.parseInt(string))\n} catch {\n  case nfe: NumberFormatException => Failure(new RuntimeException(s\"\"\"Invalid integer string: \"$string\" \"\"\"))\n}",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "presentation": {
+          "tabs_state": "{\n  \"tab_id\": \"#tab1369006273-0\"\n}"
+        },
+        "id": "30C338D63C5641BC820C4E19C4FC74F0"
+      },
+      "cell_type": "code",
+      "source": "Seq(\"1\", \"202\", \"three\").map(parseInt)",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "EEA7210546F049D58D92A8C97F4A69E7"
+      },
+      "cell_type": "markdown",
+      "source": "### 9I. Option Type Broken in Java\nSpeaking of `Option[T]`, Java 8 introduced a similar type called `Optional`. (The name `Option` was already used for something else.) However, its design has some subtleties that make the behavior not straightforward when `nulls` are involved. For details, see [this blog post](https://developer.atlassian.com/blog/2015/08/optional-broken/)."
+    },
+    {
+      "metadata": {
+        "id": "7C1D0E4BCDD24C9287BF14D74FDFE97D"
+      },
+      "cell_type": "markdown",
+      "source": "### 9J: Definition-site Variance vs. Call-site Variance\nThis is a technical point. In Java, when you define a type with a type parameter, like our `SuccessOrFailure[T]` previously, to hold items of some type `T`, you can't specify in the declaration whether it's okay to substitute a subtype of `SuccessOrFailure` with a subtype of `T`. For example, is the following okay?:\n\n```java\n// Java\nSuccessOrFailure<Object> sof = null;\n...\nsof = new Success<String>(\"foo\");\n```\n\nThis substitutability is called _variance_, referring to the variance allowed in `T` if we use a subtype of the outer type, `SuccessOrFailure`. Notice that we want to assign a subclass of `SuccessOrFailure` _and_ a subtype of `Object`. In this case, we're doing _covariant substitution_, because the subtyping \"moves in the same direction\", from parent to child for both types. There's also _contravariant_, where the type parameter moves \"up\" while the outer type moves \"down\", and _invariant_ typing, where you can't change the type parameter. That is, in the invariant case, we could only assign `Success<Object>(...)` to `sof`.\n\nJava does not let the type _designer_ specify the correct behavior. This means Java forces the _user_ of the type to specify the variance at the _call site_:\n\n```java\nSuccessOrFailure<? extends Object> sof = null;\n...\nsof = new Success<String>(\"foo\");\n\n```\nThis is harder for the user, who has to understand what's okay in this case, both what the designer intended and some technical rules of type theory. \n\nIt's much better if the _designer_ of `SuccessOrFailure[T]`, who understands the desired behavior, defines the allowed variance behavior at the _definition site_, which Scala supports. Recall from above:\n\n```scala\n// Scala\nsealed trait SuccessOrFailure[+Result]  \ncase class   Success[Result](result: Result)  extends SuccessOrFailure[Result]\ncase class   Failure(error: RuntimeException) extends SuccessOrFailure[Nothing]\n\n...\n// usage:\nval sof: SuccessOrFailure[AnyRef] = new Success[String](\"Yea!\")\n```"
+    },
+    {
+      "metadata": {
+        "id": "069B350306444D689D66BE85E7C96B21"
+      },
+      "cell_type": "markdown",
+      "source": "### 9K: Value Classes\nScala's built-in _value types_ `Int`, `Long`, `Float`, `Double`, `Boolean`, and `Unit` are implemented with the corresponding JVM primitive values, eliminating the overhead of allocating an instance on the heap. What if you define a class that wraps _one_ of these values?\n```scala\nclass Celsius(value: Float) {\n  // methods\n}\n```\n  Unfortunately, instances are allocated on the heap, even though all instance \"state\" is held by a single primitive `Float`. Scala now has an `AnyVal` trait. If you use it as a parent of types like `Celsius`, they will enjoy the same optimization that the built-in value types enjoy. That is, the single primitive field (`value` here) will be pushed on the stack, etc., and no instance of `Celsius` will be heap allocated, _in most cases._\n```scala\nclass Celsius(value: Float) extends AnyVal {\n  // methods\n}\n```\n\nSo, why doesn't Scala make this optimization automatically? There are some limitations, which are described [here](http://docs.scala-lang.org/overviews/core/value-classes.html) and in [my book](http://shop.oreilly.com/product/0636920033073.do)."
+    },
+    {
+      "metadata": {
+        "id": "BF296220FD9B4E1987610CDFE7D86C91"
+      },
+      "cell_type": "markdown",
+      "source": "### 9L. Lazy Vals\nSometimes you don't want to initialize a value if doing so is expensive and you won't always need it. Or, sometimes you just want to delay the \"hit\" so you're up and running more quickly. For example, a database connection is expensive.\n```scala\nlazy val jdbcConnection = new JDBCConnection(...)\n```\nUse the `lazy` keyword to delay initialization until it's actually needed (if ever). This feature can also be used to solve some tricky \"order of initialization\" problems. It has one drawback; there will be extra overhead for every access to check if it has already been initialized, so don't do this if the value will be read a lot. A future version of Scala will remove this overhead."
+    },
+    {
+      "metadata": {
+        "id": "E1AC9A4F004249AAAD14813AF7AAC1BC"
+      },
+      "cell_type": "markdown",
+      "source": "What about the other languages? \n* **Python:** Offers equivalents for some these features.\n* **R:** Supports some of these features.\n* **Java:** Supports none of these features."
+    },
+    {
+      "metadata": {
+        "id": "455487BFC1784B8292289A40B70BFAA5"
+      },
+      "cell_type": "markdown",
+      "source": "# But Scala Has Some Disadvantages...\n\nAll of the advantages discussed above make Scala code quite concise, especially compared to Java code. There are lots of nifty features available to solve particular design problems.\n\nHowever, no language is perfect. You should know about the disadvantages of Scala, too."
+    },
+    {
+      "metadata": {
+        "id": "9EF11FF9CCDA43CE838105419BACAA0C"
+      },
+      "cell_type": "markdown",
+      "source": "Here, I'll briefly summarize some Scala and JVM issues, especially for Spark, but Dean's talk at [Strata San Jose](http://conferences.oreilly.com/strata/hadoop-big-data-ca/public/schedule/detail/47105) ([extended slides](http://deanwampler.github.io/polyglotprogramming/papers/ScalaJVMBigData-SparkLessons-extended.pdf)) goes into more details."
+    },
+    {
+      "metadata": {
+        "id": "D8DD3106FCBF435FAC27E3D75850AA16"
+      },
+      "cell_type": "markdown",
+      "source": "## 1. Data-centric Tools and Libraries\n\nThe R and Python communities have a much wider selection of data-centric tools and libraries. Python is great for general data science. R was developed by statisticians, so it has a very rich library of statistical algorithms and rich options for charting, like [ggplot2](http://ggplot2.org/)."
+    },
+    {
+      "metadata": {
+        "id": "E23284F1547540108DEC21B524BF8F3C"
+      },
+      "cell_type": "markdown",
+      "source": "## 2. The JVM Has Some Issues \nBig Data has pushed the limits of the JVM in interesting ways."
+    },
+    {
+      "metadata": {
+        "id": "AA07596741F84C4DBDBD223B5D47B02C"
+      },
+      "cell_type": "markdown",
+      "source": "### 2a. Integer indexing of arrays\n\nBecause Java has _signed_ integers only and because arrays are indexed by integers instead of longs, array sizes are limited to 2 billion elements. Therefore, _byte_ arrays, which are often used for holding serialized data, are limited to 2GB. This is in an era when _terabyte_ heaps (TB) are becoming viable!\n\nThere's no real workaround when you want the efficiency of arrays, except to implement logic that can split a large object into \"chunks\" and manage them accordingly."
+    },
+    {
+      "metadata": {
+        "id": "66A59310099B46E985F8B0761076E1E3"
+      },
+      "cell_type": "markdown",
+      "source": "### 2b. Inefficiency of the JVM Memory Model\nThe JVM has a very flexible, general-purpose model of organizing data into memory and managing garbage collection. However, for massive data sets of records with the same or nearly the same schema, the model is very inefficient. Spark's [Tungsten Project](https://databricks.com/blog/2015/04/28/project-tungsten-bringing-spark-closer-to-bare-metal.html) is addressing this problem by introducing custom object-layouts, managed memory, as well as code generation for other performance bottlenecks. "
+    },
+    {
+      "metadata": {
+        "id": "75724F7135BA48E985A5D39CB00CEB42"
+      },
+      "cell_type": "markdown",
+      "source": "Here is an example of is how Java typically lays out objects in memory. Note the references to small, discontiguous chunks of memory. Now imagine billions of these little bits of memory. That means a lot of garbage to manage. Also, the discontinuities cause poor CPU cache performance."
+    },
+    {
+      "metadata": {
+        "id": "64B3B23B30AF4BE78CF40AC489846064"
+      },
+      "cell_type": "markdown",
+      "source": "<img src='https://raw.githubusercontent.com/data-fellas/scala-for-data-science/master/notebooks/images/JavaMemory.jpg' alt='Typical Java Object Layout' height='414' width='818'></img>"
+    },
+    {
+      "metadata": {
+        "id": "283CC816BE0B4CA280FC20E2D2A7F412"
+      },
+      "cell_type": "markdown",
+      "source": "Instead, Tungsten uses a more efficient, cache-friendly encoding in a contiguous byte array. The first few bytes are bit flags to indicate which fields if any are null. Then comes 8 bytes/field for the non-null fields. If the field's value fits in 8 bytes (e.g., longs and doubles), then the value is inlined here. Otherwise, the value holds an offset to the final section, a variable-length sequence of bytes where longer objects, like ASCII strings, are stored."
+    },
+    {
+      "metadata": {
+        "id": "E42E5F36D8714FDBA039F6179D45DFA8"
+      },
+      "cell_type": "markdown",
+      "source": "<img src='https://raw.githubusercontent.com/data-fellas/scala-for-data-science/master/notebooks/images/TungstenMemory.jpg' alt='Tungsten Object Layout' height='264' width='818'></img>"
+    },
+    {
+      "metadata": {
+        "id": "9FFE7D0E67BF422C8D0995383E1F23BF"
+      },
+      "cell_type": "markdown",
+      "source": "## Scala REPL Weirdness\n\nThe way the Scala REPL (interpreter) compiles code leads to memory leaks, which cause problems when working with big data sets and long sessions. Imagine you write the following code in the REPL:\n```scala\nscala> val massiveArray = get8GBarray(...)\nscala> // do some work\nscala> massiveArray = getDifferent8GBarray(...)\n```\nYou might think that the first \"8GB array\" will be nicely garbage collected when you reassign `massiveArray`. Not so. Here's a simplified view of the code the REPL generates for the _last_ line to pass to the compiler.\n\n```scala\nclass LineN {\n  class LineN_minus_1 {\n    class LineN_minus_2 {\n      ...\n        class Line1 {\n          val massiveArray = get8GBarray(...)\n        }\n      ...\n    }\n  }\n  val massiveArray = getDifferent8GBarray(...)\n}\n```\nWhy? The JVM expects classes to be compiled into byte code, so the REPL synthesizes classes for each line you evaluate (or group of lines when you use the `:paste ... ^D` feature).\n\nNote that the overridden `massiveArray` shadows the original one, which is the trick the REPL uses to let you redefine variables, which would be prohibited by the compiler otherwise. Unfortunately, that leaves the shadowed reference attached to old data, so it can't be garbage collected, even though the REPL provides no way to ever refer to it again!"
+    }
+  ],
+  "nbformat": 4
 }

@@ -1,939 +1,1066 @@
 {
-  "metadata" : {
-    "name" : "Why Spark Notebook",
-    "user_save_timestamp" : "1970-01-01T01:00:00.000Z",
-    "auto_save_timestamp" : "1970-01-01T01:00:00.000Z",
-    "language_info" : {
-      "name" : "scala",
-      "file_extension" : "scala",
-      "codemirror_mode" : "text/x-scala"
+  "metadata": {
+    "name": "Why Spark Notebook",
+    "user_save_timestamp": "1970-01-01T01:00:00.000Z",
+    "auto_save_timestamp": "1970-01-01T01:00:00.000Z",
+    "language_info": {
+      "name": "scala",
+      "file_extension": "scala",
+      "codemirror_mode": "text/x-scala"
     },
-    "trusted" : true,
-    "customLocalRepo" : "/tmp/repo",
-    "customRepos" : null,
-    "customDeps" : [ "org.apache.spark %% spark-streaming-kafka-0-8 % _", "com.datastax.spark %% spark-cassandra-connector-java % 1.6.0-M1", "- org.scala-lang % _ % _" ],
-    "customImports" : null,
-    "customArgs" : null,
-    "customSparkConf" : {
-      "spark.default.parallelism" : "4"
+    "trusted": true,
+    "customLocalRepo": "/tmp/repo",
+    "customRepos": null,
+    "customDeps": [
+      "org.apache.spark %% spark-streaming-kafka-0-8 % _",
+      "com.datastax.spark %% spark-cassandra-connector-java % 1.6.0-M1",
+      "- org.scala-lang % _ % _"
+    ],
+    "customImports": null,
+    "customArgs": null,
+    "customSparkConf": {
+      "spark.default.parallelism": "4"
     }
   },
-  "cells" : [ {
-    "metadata" : {
-      "id" : "7EDB55950A0C4BA585619E38C5D106FB"
-    },
-    "cell_type" : "markdown",
-    "source" : "# Spark Notebook fills the gap"
-  }, {
-    "metadata" : {
-      "id" : "FD1F7891FDCA4BF9898E243432930B07"
-    },
-    "cell_type" : "markdown",
-    "source" : "The Spark Notebook is the open source notebook focusing on productive and enterprise environments.\n\nFor that, it is only based on JVM components and has no other dependencies.\n\nScala is the only supported language for the reasons mentioned above, and if the language would still miss some features to do data science efficiently, the Spark Notebook is there to help, hereafter you'll be presented what is available."
-  }, {
-    "metadata" : {
-      "id" : "9D4B9FB7CE8547AF8E22DEFB2F004560"
-    },
-    "cell_type" : "markdown",
-    "source" : "Before getting started, the Spark Notebook is also famous for \n* its great community out of its 1300+ stars on GitHub,\n* its very active [gitter](https://gitter.im/andypetrella/spark-notebook) channel: \n  * 460+ participants and \n  * 750+ messages per month.\n\n<small>(1st June 2016)</small>"
-  }, {
-    "metadata" : {
-      "id" : "816B3C0AC858439AB425EE1BBCF3F553"
-    },
-    "cell_type" : "markdown",
-    "source" : "<a href=\"https://gitter.im/andypetrella/spark-notebook?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge\"><img src=\"https://camo.githubusercontent.com/da2edb525cde1455a622c58c0effc3a90b9a181c/68747470733a2f2f6261646765732e6769747465722e696d2f4a6f696e253230436861742e737667\" alt=\"Gitter\" data-canonical-src=\"https://badges.gitter.im/Join%20Chat.svg\" style=\"max-width:100%;\"></a>"
-  }, {
-    "metadata" : {
-      "id" : "4FB943930C654421BF949217B72BC5CE"
-    },
-    "cell_type" : "markdown",
-    "source" : "---\n## Skin to control the flow visually"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "E11445B1CCCE465B83A27E374CCF5BED"
-    },
-    "cell_type" : "code",
-    "source" : ":html\n<style>h2{color: coral; } hr{height: 3px; background-color: cornflowerblue !important; }</style>",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "ADA0BB6570A04F9A832BC2A4A1827441"
-    },
-    "cell_type" : "markdown",
-    "source" : "---\n## Multiple Spark Contexts"
-  }, {
-    "metadata" : {
-      "id" : "24F6BEA80211494580BE0C17D62C995E"
-    },
-    "cell_type" : "markdown",
-    "source" : "One of the top most useful feature brought by the spark notebook is its separation of the running notebooks.\n\nIndeed, each started notebook will spawn a new JVM with its own `SparkSession` instance. This allows a maximal flexibility for:\n* dependencies without clashes\n* access different clusters\n* tune differently each notebook\n* external scheduling (on the roadmap)"
-  }, {
-    "metadata" : {
-      "id" : "E092B8282D04469697399B855136522D"
-    },
-    "cell_type" : "markdown",
-    "source" : "You can recognize easily the spawned processes using `ps` (*unix* only) and search for the main class `ChildProcessMain` and verify that the process contains the name of the started notebooks."
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "presentation" : {
-        "tabs_state" : "{\n  \"tab_id\": \"#tab1728769988-0\"\n}",
-        "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
+  "cells": [
+    {
+      "metadata": {
+        "id": "7EDB55950A0C4BA585619E38C5D106FB"
       },
-      "id" : "8BCC90AE74CF4C00811E64FD82287703"
+      "cell_type": "markdown",
+      "source": "# Spark Notebook fills the gap"
     },
-    "cell_type" : "code",
-    "source" : "import sys.process._\nimport scala.language.postfixOps\n\"ps aux\" #| \"grep ChildProcessMain\" lines_!",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "3638F8A33FBB4FD28408513DCBA49F75"
-    },
-    "cell_type" : "markdown",
-    "source" : "So this notebook declares the variables `sparkSession` and `sparkContext` (with its alias `sc`)."
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "presentation" : {
-        "tabs_state" : "{\n  \"tab_id\": \"#tab53254654-0\"\n}",
-        "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
+    {
+      "metadata": {
+        "id": "FD1F7891FDCA4BF9898E243432930B07"
       },
-      "id" : "22D8EFAF7D8C4463A064B8C90F720F63"
+      "cell_type": "markdown",
+      "source": "The Spark Notebook is the open source notebook focusing on productive and enterprise environments.\n\nFor that, it is only based on JVM components and has no other dependencies.\n\nScala is the only supported language for the reasons mentioned above, and if the language would still miss some features to do data science efficiently, the Spark Notebook is there to help, hereafter you'll be presented what is available."
     },
-    "cell_type" : "code",
-    "source" : "val context = (sparkSession, sparkContext, sc)",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "6D96AEA2A64E48E383FCEF609B635966"
-    },
-    "cell_type" : "markdown",
-    "source" : "---\n## Metadata"
-  }, {
-    "metadata" : {
-      "id" : "1B7ACC1DDB8348688F7FF4D7895727B3"
-    },
-    "cell_type" : "markdown",
-    "source" : "A notebook has a context enricheded via its metadata, here are a few important ones."
-  }, {
-    "metadata" : {
-      "id" : "22E00CB49C524B559F3D04E871023582"
-    },
-    "cell_type" : "markdown",
-    "source" : "### Spark Configuration"
-  }, {
-    "metadata" : {
-      "id" : "E12EF4FE0D6B4BED84C15ADEAA087968"
-    },
-    "cell_type" : "markdown",
-    "source" : "The metadata can define a JSON object (String to String!) to declare extra configuration for spark."
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "D96B3008B9E440408F5200F325A4FADA"
-    },
-    "cell_type" : "code",
-    "source" : ":javascript \nalert(JSON.stringify(IPython.notebook.metadata.customSparkConf, null, 2))",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "79A7AA0CF09B446B883FB07360684127"
-    },
-    "cell_type" : "code",
-    "source" : "sparkSession.conf.get(\"spark.default.parallelism\")",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "99E5DFFCBA0A4110AE870FE3482667FD"
-    },
-    "cell_type" : "markdown",
-    "source" : "### Dependencies"
-  }, {
-    "metadata" : {
-      "id" : "286794277F8848CB8CFF763AD90DBD84"
-    },
-    "cell_type" : "markdown",
-    "source" : "This notebook has injected a few dependencies from the [datastax cassandra connector](https://github.com/datastax/spark-cassandra-connector/)."
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "215600D86BCB41669835C288F4FFC9CB"
-    },
-    "cell_type" : "code",
-    "source" : ":javascript \nalert(JSON.stringify(IPython.notebook.metadata.customDeps, null, 2))",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "113E0EC89B7E40198DF7AE174D067328"
-    },
-    "cell_type" : "markdown",
-    "source" : "Hence, this code compiles."
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "1BE83A0B7B6744FF83D8513BECC55DB9"
-    },
-    "cell_type" : "code",
-    "source" : "import com.datastax.spark.connector._                                    ",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "14FF64D0BFD44D00816058D236828C39"
-    },
-    "cell_type" : "markdown",
-    "source" : "Also it includes the kafka external modules for the current scala version (using `%%`) and the current spark version (using `_`)"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "E5CABC64B14B442D8A824994EC18C4EA"
-    },
-    "cell_type" : "code",
-    "source" : "import org.apache.spark.streaming.kafka",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "15A133EFC2AF4EE0A3E160E468961066"
-    },
-    "cell_type" : "markdown",
-    "source" : "We can also see that we can remove dependencies by prepending `-` to the definition. So we avoid downloading any extra libraries from the scala language."
-  }, {
-    "metadata" : {
-      "id" : "A7EABF28DB654A27800804D88C1DC546"
-    },
-    "cell_type" : "markdown",
-    "source" : "### Change the metadata"
-  }, {
-    "metadata" : {
-      "id" : "82F81FDC8E9B473D94A7B3479E7BB550"
-    },
-    "cell_type" : "markdown",
-    "source" : "There are a few metadata available and you can configure them from the editor in the menu: _Edit > Edit Notebook Metadata_."
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "75D9790EC99F4F23ADE7434CE9DC72EC"
-    },
-    "cell_type" : "code",
-    "source" : ":javascript \nIPython.notebook.edit_metadata()",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "7F3F63814584413E817A6AE5B56C0FAD"
-    },
-    "cell_type" : "markdown",
-    "source" : "---\n## Logs"
-  }, {
-    "metadata" : {
-      "id" : "D4B5803CA95D4E6B9497CA86DE6C866F"
-    },
-    "cell_type" : "markdown",
-    "source" : "Checking logs is always painful when using a notebook since this is simply a web client on the remote REPL in the server. \n\nHence the logs are quite far, or even worse inaccessible!\n\nSo, the spark notebook will forwards **all logs using slf4j** to the browser console → go check it, use the `F12` key and open the _console_ tab!"
-  }, {
-    "metadata" : {
-      "id" : "A187C1B705A644B794DDEDB33AE7B223"
-    },
-    "cell_type" : "markdown",
-    "source" : "---\n## Side pane"
-  }, {
-    "metadata" : {
-      "id" : "9870E3C823B048CC8D558F2B538CC83F"
-    },
-    "cell_type" : "markdown",
-    "source" : "In the **View** menu, you'll can open the side pane which contains many interesting panels:\n* `terms` : a table listing the defined _functions_, _variables_ and _types_ !\n* `error logs` : displaying and bringing back any errors thrown in the server\n* `chat room` : a fancy chat room available for the current notebook (see below in the synchronized section)"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "90AF0CFA143E4F6283502273EF5DB351"
-    },
-    "cell_type" : "code",
-    "source" : ":javascript\njQuery('a#toggle-sidebar').click()",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "3F098E2A54C446E486EE544C75C756F9"
-    },
-    "cell_type" : "markdown",
-    "source" : "---\n## Plotting"
-  }, {
-    "metadata" : {
-      "id" : "39F23F6B83C6465D8DE2CD5BD18C2C41"
-    },
-    "cell_type" : "markdown",
-    "source" : "There exist many predefined `Chart` that you can use directly on any kind of **Scala** container that can be iterated."
-  }, {
-    "metadata" : {
-      "id" : "099B21AF5E2B468E8C7A65C4DD2AAC66"
-    },
-    "cell_type" : "markdown",
-    "source" : "If the last statement of a cell isn't an assignment or a definition, then the spark notebook will try to plot it the best way it can automatically."
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "3B03DFAD401D44B08D0C8592C5246AF0"
-    },
-    "cell_type" : "code",
-    "source" : "case class Example(id:Int, category:String, value:Long, advanced:Boolean)\nimport scala.util.Random._\n\nval categories = List.fill(5)(List.fill(10)(nextPrintableChar).mkString)\ndef category:String = shuffle(categories).head\nval examples = List.fill(100)(Example(nextInt(2000), category, nextLong, nextBoolean))",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "9B375D9DBD51403E8BE8E838F1734300"
-    },
-    "cell_type" : "markdown",
-    "source" : "The above cell doesn't plot anything since it terminates with a assignement."
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "presentation" : {
-        "tabs_state" : "{\n  \"tab_id\": \"#tab1623821063-0\"\n}",
-        "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
+    {
+      "metadata": {
+        "id": "9D4B9FB7CE8547AF8E22DEFB2F004560"
       },
-      "id" : "2E61401D7F6B4DCEA0D5F52DE96FB973"
+      "cell_type": "markdown",
+      "source": "Before getting started, the Spark Notebook is also famous for \n* its great community out of its ~1500 <i class=\"fa fa-star-o\" ></i> on GitHub,\n* its very active [gitter](https://gitter.im/andypetrella/spark-notebook) channel: \n  * 540+ participants and \n  * 750+ messages per month.\n\n<small>(17st August 2016)</small>"
     },
-    "cell_type" : "code",
-    "source" : "examples",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "0B51A8C208074B7C9ABADED8494A61F5"
-    },
-    "cell_type" : "markdown",
-    "source" : "Now we have a `TableChart` and a `PivotChart` tabs for the data, which we can use to have a better feeling of the data."
-  }, {
-    "metadata" : {
-      "id" : "9588CA4E38C74D1C8BD20F16CB218D55"
-    },
-    "cell_type" : "markdown",
-    "source" : "We can of course create them ourselves:"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "presentation" : {
-        "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
+    {
+      "metadata": {
+        "id": "816B3C0AC858439AB425EE1BBCF3F553"
       },
-      "id" : "595E9615FC9A410AA16F64B33FF80912"
+      "cell_type": "markdown",
+      "source": "<a href=\"https://gitter.im/andypetrella/spark-notebook?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge\"><img src=\"https://camo.githubusercontent.com/da2edb525cde1455a622c58c0effc3a90b9a181c/68747470733a2f2f6261646765732e6769747465722e696d2f4a6f696e253230436861742e737667\" alt=\"Gitter\" data-canonical-src=\"https://badges.gitter.im/Join%20Chat.svg\" style=\"max-width:100%;\"></a>"
     },
-    "cell_type" : "code",
-    "source" : "TableChart(examples)",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "670BE2E3168D47298CC6B17A30A4FF41"
-    },
-    "cell_type" : "markdown",
-    "source" : "### Grouping plots"
-  }, {
-    "metadata" : {
-      "id" : "D2895E0887E14A588731F1FAB389B875"
-    },
-    "cell_type" : "markdown",
-    "source" : "Among available charts, you have for instance the pretty common ones like:\n* `LineChart`\n* `ScatterChart`\n* `BarChart`\n\nWhich accept at least two other parameters: \n* `fields`: the two field names to use to plot \n* `groupField`: the field used to group the data"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "A993AFEA7F2945A184B760EE6251EBAE"
-    },
-    "cell_type" : "code",
-    "source" : "LineChart(examples, fields=Some((\"id\", \"value\")), groupField=Some(\"advanced\"))",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "A993AFEA7F2945A184B760EE6251EBAE"
-    },
-    "cell_type" : "code",
-    "source" : "ScatterChart(examples, fields=Some((\"id\", \"value\")), groupField=Some(\"advanced\"))",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "A993AFEA7F2945A184B760EE6251EBAE"
-    },
-    "cell_type" : "code",
-    "source" : "BarChart(examples, fields=Some((\"id\", \"value\")), groupField=Some(\"advanced\"))",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "4153FEFD93464E86A0F7FF113FB1139F"
-    },
-    "cell_type" : "markdown",
-    "source" : "---\n## Graphs"
-  }, {
-    "metadata" : {
-      "id" : "F91D80C4BFD0408DA915051BC3AEE740"
-    },
-    "cell_type" : "markdown",
-    "source" : "Graph is generally a common way to represent data where connections matter. Hence the Spark Notebook defines an API easing the definition of `Node` and `Edge`.\n\n* `Graph[T]`: abstract class defining a graph component with an id of type `T`, a value of type `Any` and a color\n* `Node[T]`: defines a node as a circle which can be specified a radius and its position ($x$, $y$) (initial or static if it's fixed)\n* `Edge[T]`: defines an edge using the ids of both ends"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "presentation" : {
-        "tabs_state" : "{\n  \"tab_id\": \"#tab114424344-0\"\n}",
-        "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
+    {
+      "metadata": {
+        "id": "4FB943930C654421BF949217B72BC5CE"
       },
-      "id" : "02D765FD970D465A85E21D4AF127C70C"
+      "cell_type": "markdown",
+      "source": "---\n## Skin to control the flow visually"
     },
-    "cell_type" : "code",
-    "source" : "val catCol = categories.zip(List(\"#000\", \"#478\", \"#127\", \"#984\", \"#F5A\")).toMap",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "E31A5ACA4F8D442383289F17C620C5B4"
-    },
-    "cell_type" : "code",
-    "source" : "val nodes = examples.map(e => Node(e.id, e, catCol(e.category), 5))\n\n\nval clusters = examples.groupBy(_.category)\nval connectedClusters = clusters.toList.flatMap { case (c, cl) => \n                                      for {\n                                        a <- cl\n                                        b <- cl if a != b\n                                      } yield Edge(2000+a.id+b.id, (a.id, b.id), \"yellow\")\n                                     }\n\n\nval singleConnections = {\n  val s = clusters.toList.map(_._2).map(x => shuffle(x).head)\n  \n  for (a <- s; b <- s if a != b) \n    yield Edge(4000+a.id+b.id, (a.id, b.id), \"green\")\n}\n\nval all = nodes ::: connectedClusters ::: singleConnections",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "presentation" : {
-        "tabs_state" : "{\n  \"tab_id\": \"#tab1249479791-0\"\n}",
-        "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "E11445B1CCCE465B83A27E374CCF5BED"
       },
-      "id" : "1F073EEB99CE4B1781AD74C59E208805"
+      "cell_type": "code",
+      "source": ":html\n<style>h2{color: coral; } hr{height: 3px; background-color: cornflowerblue !important; }</style>",
+      "outputs": []
     },
-    "cell_type" : "code",
-    "source" : "GraphChart(all, maxPoints = all.size)",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "E14D74FA3B164544A79D22800BB84BDD"
-    },
-    "cell_type" : "markdown",
-    "source" : "---\n## Geo charts"
-  }, {
-    "metadata" : {
-      "id" : "E78EF394884248DF87A887AFE627B13F"
-    },
-    "cell_type" : "markdown",
-    "source" : "There are two types of geo charts:\n* `GeoPointsChart` for simple points lat long points\n* `GeoChart` for _GeoJSON_ or _opengis_ data\n"
-  }, {
-    "metadata" : {
-      "id" : "41C5ABBEC5754FC58AD56ADD7E799E5C"
-    },
-    "cell_type" : "markdown",
-    "source" : "### GeoPointsChart"
-  }, {
-    "metadata" : {
-      "id" : "BB38DC199B5E4DAA9ECFFBF4FBD9B3AB"
-    },
-    "cell_type" : "markdown",
-    "source" : "Let's load some airports data with latitude and longitude coordinates"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "B23EDAF0D8204B7D845248EE24E20F30"
-    },
-    "cell_type" : "code",
-    "source" : "val root = sys.env(\"NOTEBOOKS_DIR\")\nval airportsDF = sparkSession.read.json(s\"$root/airports.json\")\nairportsDF.cache\nairportsDF",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "presentation" : {
-        "tabs_state" : "{\n  \"tab_id\": \"#tab1529529486-0\"\n}",
-        "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
+    {
+      "metadata": {
+        "id": "ADA0BB6570A04F9A832BC2A4A1827441"
       },
-      "id" : "1707B838D5494D1F8476AADCA120EFC5"
+      "cell_type": "markdown",
+      "source": "---\n## Multiple Spark Contexts"
     },
-    "cell_type" : "code",
-    "source" : "val statsDF = airportsDF.groupBy(\"state\").count.orderBy($\"count\".desc).limit(5)",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "0A7F973B66494A349A505FAE9A4454ED"
-    },
-    "cell_type" : "markdown",
-    "source" : "Convert to Dataset (for the fun)."
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "88DD55147E984B7F98349BFA935C2572"
-    },
-    "cell_type" : "code",
-    "source" : "case class StateStat(state:String, count:Long)",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "575DBAFD9887415EB6BBD0D1D63B8194"
-    },
-    "cell_type" : "code",
-    "source" : "statsDF.as[StateStat]",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "335F1C282CE94D4B88DD6A2D3D5C3651"
-    },
-    "cell_type" : "markdown",
-    "source" : "Plot the dataframe with dedicated colors for each state"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "FF8F94DA1063463A8A38978BABA5A782"
-    },
-    "cell_type" : "code",
-    "source" : "import org.apache.spark.sql.functions._",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "6B6635CEBAC349EC87BAC809E5F21F78"
-    },
-    "cell_type" : "code",
-    "source" : "val airportsDFWithStyles = airportsDF.withColumn(\"r\", when($\"state\" === \"AK\", 10).when($\"state\" === \"TX\", 9).when($\"state\" === \"CA\", 8).when($\"state\" === \"OK\", 7).when($\"state\" === \"OH\", 6)\n                                                       .otherwise(1))\n                                     .withColumn(\"c\", when($\"state\" === \"AK\", \"red\").when($\"state\" === \"TX\", \"orange\").when($\"state\" === \"CA\", \"blue\").when($\"state\" === \"OK\", \"green\").when($\"state\" === \"OH\", \"yellow\")\n                                                       .otherwise(\"white\"))\nGeoPointsChart(airportsDFWithStyles, latLonFields=Some((\"lat\", \"long\")), rField = Some(\"r\"), colorField = Some(\"c\"))",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "B4273E6F1E8A4ADA8866AB9A067533E4"
-    },
-    "cell_type" : "markdown",
-    "source" : "---\n## GeoChart"
-  }, {
-    "metadata" : {
-      "id" : "0E6BA873EB35476B8A6CC133F42ACDF4"
-    },
-    "cell_type" : "markdown",
-    "source" : "Fetch some data on the web about parks and gardens"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "ACD54EC9C7414EE98C568AD260A377ED"
-    },
-    "cell_type" : "code",
-    "source" : ":sh wget http://data.cyc.opendata.arcgis.com/datasets/57fa576e5e8149b0b744f768e01e5ce1_0.geojson -O Parks_and_Gardens.geojson",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "7C6FD417F57A47098A685A3E4DDC721C"
-    },
-    "cell_type" : "markdown",
-    "source" : "Parse it as GeoJSON using provided `widgets.parseGeoJSON`"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "750EC1E117C24C28851D00C89298F5A8"
-    },
-    "cell_type" : "code",
-    "source" : "val geoJSONRepr = widgets.parseGeoJSON(scala.io.Source.fromFile(\"Parks_and_Gardens.geojson\").getLines.mkString(\"\"))",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "A4544FA65C0F480EB4FFAF28E27F5DBB"
-    },
-    "cell_type" : "markdown",
-    "source" : "Fetch some more vectorial information of the same area."
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "012789D6569C4DC6A15579070B0B17B6"
-    },
-    "cell_type" : "code",
-    "source" : ":sh wget http://data.cyc.opendata.arcgis.com/datasets/9b212b7af275438ca9088ff868bda139_9.geojson -O airqual.geojson",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "86A9DEA8BDD843B08DC2985638799232"
-    },
-    "cell_type" : "markdown",
-    "source" : "And parse it..."
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "E5314FF973454E0B96877C2A6690B914"
-    },
-    "cell_type" : "code",
-    "source" : "val ng = widgets.parseGeoJSON(scala.io.Source.fromFile(\"airqual.geojson\").getLines.mkString(\"\"))",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "9F1F3B348DEA40BFA087795342006AEE"
-    },
-    "cell_type" : "markdown",
-    "source" : "Create a `GeoChart` instance on `GeoJSON` representation of the first dataset."
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "273E8A681B4942838D2E0DB37C215F9E"
-    },
-    "cell_type" : "code",
-    "source" : "val gc = GeoChart(Seq(geoJSONRepr))\ngc",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "898788F161C94A898F20FD85328526C8"
-    },
-    "cell_type" : "markdown",
-    "source" : "We can now add the linear features into the same chart using the helpful function `addAndApply` which adds information to the existing chart."
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "1E08A11C501C4E618FDFD7E97F340D79"
-    },
-    "cell_type" : "code",
-    "source" : "gc.addAndApply(Seq(ng))",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "2DDE82591B3E4DE1B09C71CC9292E148"
-    },
-    "cell_type" : "markdown",
-    "source" : "---\n## Fancy charts"
-  }, {
-    "metadata" : {
-      "id" : "415502CC4E5E44D7BF7F08978A4C80BD"
-    },
-    "cell_type" : "markdown",
-    "source" : "### Radar"
-  }, {
-    "metadata" : {
-      "id" : "F164A3ACA35A46638B4E82313A59E88E"
-    },
-    "cell_type" : "markdown",
-    "source" : "Let's grab some data from http://www.basketball-reference.com/teams/SAS/2016.html (31st May 2016)."
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "DA236FFF7873453397F47AED00A55C87"
-    },
-    "cell_type" : "code",
-    "source" : "case class TeamMember(Player:String, Age:Int, FG_pc:Double, _3P_pc:Double, _2P_pc:Double, eFG_pc:Double, FT_pc:Double)\nval team = \n      s\"\"\"\n        1\tKawhi Leonard\t24\t72\t72\t2380\t551\t1090\t.506\t129\t291\t.443\t422\t799\t.528\t.565\t292\t334\t.874\t95\t398\t493\t186\t128\t71\t105\t133\t1523\n        2\tLaMarcus Aldridge\t30\t74\t74\t2261\t536\t1045\t.513\t0\t16\t.000\t536\t1029\t.521\t.513\t259\t302\t.858\t176\t456\t632\t110\t38\t81\t99\t151\t1331\n        3\tDanny Green\t28\t79\t79\t2062\t211\t561\t.376\t116\t349\t.332\t95\t212\t.448\t.480\t34\t46\t.739\t48\t255\t303\t141\t79\t64\t75\t141\t572\n        4\tTony Parker\t33\t72\t72\t1980\t350\t710\t.493\t27\t65\t.415\t323\t645\t.501\t.512\t130\t171\t.760\t17\t159\t176\t379\t54\t11\t131\t114\t857\n        5\tPatrick Mills\t27\t81\t3\t1662\t260\t612\t.425\t123\t320\t.384\t137\t292\t.469\t.525\t47\t58\t.810\t27\t131\t158\t226\t59\t6\t76\t102\t690\n        6\tTim Duncan\t39\t61\t60\t1536\t215\t441\t.488\t0\t2\t.000\t215\t439\t.490\t.488\t92\t131\t.702\t115\t332\t447\t163\t47\t78\t90\t125\t522\n        7\tDavid West\t35\t78\t19\t1404\t244\t448\t.545\t3\t7\t.429\t241\t441\t.546\t.548\t63\t80\t.788\t72\t237\t309\t143\t44\t55\t68\t142\t554\n        8\tBoris Diaw\t33\t76\t4\t1386\t202\t383\t.527\t25\t69\t.362\t177\t314\t.564\t.560\t56\t76\t.737\t58\t175\t233\t176\t26\t21\t97\t102\t485\n        9\tKyle Anderson\t22\t78\t11\t1245\t138\t295\t.468\t12\t37\t.324\t126\t258\t.488\t.488\t62\t83\t.747\t25\t219\t244\t123\t60\t29\t59\t97\t350\n        10\tManu Ginobili\t38\t58\t0\t1134\t197\t435\t.453\t70\t179\t.391\t127\t256\t.496\t.533\t91\t112\t.813\t26\t120\t146\t177\t66\t11\t99\t99\t555\n        11\tJonathon Simmons\t26\t55\t2\t813\t122\t242\t.504\t18\t47\t.383\t104\t195\t.533\t.541\t69\t92\t.750\t16\t80\t96\t58\t24\t5\t53\t103\t331\n        12\tBoban Marjanovic\t27\t54\t4\t508\t105\t174\t.603\t0\t0\t.0\t105\t174\t.603\t.603\t87\t114\t.763\t73\t121\t194\t21\t12\t23\t29\t54\t297\n        13\tRasual Butler\t36\t46\t0\t432\t49\t104\t.471\t15\t49\t.306\t34\t55\t.618\t.543\t11\t16\t.688\t3\t53\t56\t24\t13\t23\t8\t11\t124\n        14\tKevin Martin\t32\t16\t1\t261\t30\t85\t.353\t11\t33\t.333\t19\t52\t.365\t.418\t28\t30\t.933\t4\t25\t29\t12\t9\t2\t13\t15\t99\n        15\tRay McCallum\t24\t31\t3\t256\t27\t67\t.403\t5\t16\t.313\t22\t51\t.431\t.440\t9\t10\t.900\t6\t25\t31\t33\t5\t4\t11\t14\t68\n        16\tMatt Bonner\t35\t30\t2\t206\t29\t57\t.509\t15\t34\t.441\t14\t23\t.609\t.640\t3\t4\t.750\t3\t24\t27\t9\t6\t1\t3\t16\t76\n        17\tAndre Miller\t39\t13\t4\t181\t23\t48\t.479\t1\t4\t.250\t22\t44\t.500\t.490\t9\t13\t.692\t6\t21\t27\t29\t7\t0\t12\t14\t56\n     \"\"\".trim.split(\"\\n\").map(s => s.trim.split(\"\\t\").drop(1).toList).map(x => (x.head, x(1).trim.toInt) → x.drop(2).filter(_.startsWith(\".\"))\n                                                                     .map(_.trim.toDouble * 100)).map { case ((p, a), stats)  =>\n        TeamMember(p, a, stats(0), stats(1), stats(2), stats(3), stats(4))\n      }",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "CAC0438C302A4C5388A9B71E5C246FD8"
-    },
-    "cell_type" : "code",
-    "source" : "RadarChart(shuffle(team.toList).take(5), labelField=Some(\"Player\"), sizes=(800, 600))",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "75EF85B5D6534BCF873488D9D092F54A"
-    },
-    "cell_type" : "markdown",
-    "source" : "### Pivot"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "presentation" : {
-        "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [\n    \"_2P_pc\",\n    \"_3P_pc\"\n  ],\n  \"rows\": [\n    \"Player\"\n  ],\n  \"vals\": [\n    \"_3P_pc\"\n  ],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Sum\",\n  \"rendererName\": \"Line Chart\"\n}"
+    {
+      "metadata": {
+        "id": "24F6BEA80211494580BE0C17D62C995E"
       },
-      "id" : "259688ADDF334ACE85203BF5AE070ED7"
+      "cell_type": "markdown",
+      "source": "One of the top most useful feature brought by the spark notebook is its separation of the running notebooks.\n\nIndeed, each started notebook will spawn a new JVM with its own `SparkSession` instance. This allows a maximal flexibility for:\n* dependencies without clashes\n* access different clusters\n* tune differently each notebook\n* external scheduling (on the roadmap)"
     },
-    "cell_type" : "code",
-    "source" : "PivotChart(team)",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "77F0A0B2C4AB4A5B8AB689EB14AF40D8"
+    {
+      "metadata": {
+        "id": "E092B8282D04469697399B855136522D"
+      },
+      "cell_type": "markdown",
+      "source": "You can recognize easily the spawned processes using `ps` (*unix* only) and search for the main class `ChildProcessMain` and verify that the process contains the name of the started notebooks."
     },
-    "cell_type" : "markdown",
-    "source" : "### Parallel coordinates"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "536D63D7B3A64281BD62B95E7FBB4E76"
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "presentation": {
+          "tabs_state": "{\n  \"tab_id\": \"#tab1592853846-0\"\n}",
+          "pivot_chart_state": "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
+        },
+        "id": "8BCC90AE74CF4C00811E64FD82287703"
+      },
+      "cell_type": "code",
+      "source": "import sys.process._\nimport scala.language.postfixOps\n\"ps aux\" #| \"grep ChildProcessMain\" lines_!",
+      "outputs": []
     },
-    "cell_type" : "code",
-    "source" : "ParallelCoordChart(team, sizes=(800, 500))",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "CD0C49DF563340A38E82471242EF4F32"
+    {
+      "metadata": {
+        "id": "3638F8A33FBB4FD28408513DCBA49F75"
+      },
+      "cell_type": "markdown",
+      "source": "So this notebook declares the variables `sparkSession` and `sparkContext` (with its alias `sc`)."
     },
-    "cell_type" : "markdown",
-    "source" : "### Timeseries"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "76CC0E2ED70D458689FF7F75297D8E77"
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "presentation": {
+          "tabs_state": "{\n  \"tab_id\": \"#tab53254654-0\"\n}",
+          "pivot_chart_state": "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
+        },
+        "id": "22D8EFAF7D8C4463A064B8C90F720F63"
+      },
+      "cell_type": "code",
+      "source": "val context = (sparkSession, sparkContext, sc)",
+      "outputs": []
     },
-    "cell_type" : "code",
-    "source" : ":sh wget http://www.ncdc.noaa.gov/cag/time-series/global/globe/land_ocean/p12/12/1880-2015.csv -O /tmp/1880-2015.csv",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "2B91343B09F041B19FD683E0C04F99D8"
+    {
+      "metadata": {
+        "id": "6D96AEA2A64E48E383FCEF609B635966"
+      },
+      "cell_type": "markdown",
+      "source": "---\n## Metadata"
     },
-    "cell_type" : "code",
-    "source" : "import java.util.Calendar\nimport java.util.Calendar._\nval cal = Calendar.getInstance\ncal.set(DAY_OF_MONTH, 0)\ncal.set(HOUR, 0)\ncal.set(MINUTE, 0)\ncal.set(SECOND, 0)\ncal.set(MILLISECOND, 0)\nval ts = scala.io.Source.fromFile(new File(\"/tmp/1880-2015.csv\"))\n                .getLines.drop(4)\n                .map(_.split(\",\").toList.map(_.trim))\n                .map{case List(y,c) => (y.take(4).toInt, y.drop(4).take(2).dropWhile(_ == '0').toInt-1, c.toDouble)}\n                .map{ case (y, m, c) => \n                  cal.set(YEAR, y)\n                  cal.set(MONTH, m)\n                  cal.getTime → c\n                }.toList\nval tc = TimeseriesChart(ts)\ntc",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "7C30152109AD4727827599D6949592F0"
+    {
+      "metadata": {
+        "id": "1B7ACC1DDB8348688F7FF4D7895727B3"
+      },
+      "cell_type": "markdown",
+      "source": "A notebook has a context enricheded via its metadata, here are a few important ones."
     },
-    "cell_type" : "markdown",
-    "source" : "---\n## Everything is Dynamic and Reactive"
-  }, {
-    "metadata" : {
-      "id" : "3AADA3697ABE44BF85FFB47209E06036"
+    {
+      "metadata": {
+        "id": "22E00CB49C524B559F3D04E871023582"
+      },
+      "cell_type": "markdown",
+      "source": "### Spark Configuration"
     },
-    "cell_type" : "markdown",
-    "source" : "Since data can come live in a system or you want to log vizualy some events or perhaps you need to have two visual components to interact... what you don't want to do is to write the html, js, server code and who knows what else you'll need to master...\n\nFor that, the spark notebook comes with dynamicity of charts and most (if not all) components can be listened and react to events."
-  }, {
-    "metadata" : {
-      "id" : "83B7B4F029324AADA94E34497C395F35"
+    {
+      "metadata": {
+        "id": "E12EF4FE0D6B4BED84C15ADEAA087968"
+      },
+      "cell_type": "markdown",
+      "source": "The metadata can define a JSON object (String to String!) to declare extra configuration for spark."
     },
-    "cell_type" : "markdown",
-    "source" : "### Dynamic Line Chart"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "CE563B405582434AAFA53E4C4AE8C893"
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "D96B3008B9E440408F5200F325A4FADA"
+      },
+      "cell_type": "code",
+      "source": ":javascript \nalert(JSON.stringify(IPython.notebook.metadata.customSparkConf, null, 2))",
+      "outputs": []
     },
-    "cell_type" : "code",
-    "source" : "val tsH :: tsS = ts.sliding(100, 100).toList\nval dynTC = TimeseriesChart(tsH, maxPoints = ts.size)\ndynTC",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "FA0E02EBBD7D467385D7C17B4708DFBB"
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "79A7AA0CF09B446B883FB07360684127"
+      },
+      "cell_type": "code",
+      "source": "sparkSession.conf.get(\"spark.default.parallelism\")",
+      "outputs": []
     },
-    "cell_type" : "code",
-    "source" : "var cont = true\nnew Thread() {\n  override def run = \n    tsS.foreach { l =>\n    if (cont) {\n      Thread.sleep(1000)\n      dynTC.addAndApply(l)\n    }\n  }\n}.start",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "9BD0C8C4788049C78D4C6E90059E3A83"
+    {
+      "metadata": {
+        "id": "99E5DFFCBA0A4110AE870FE3482667FD"
+      },
+      "cell_type": "markdown",
+      "source": "### Dependencies"
     },
-    "cell_type" : "markdown",
-    "source" : "### Components"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "C3A5386580284B5D9C8D4BE907F6FA8C"
+    {
+      "metadata": {
+        "id": "286794277F8848CB8CFF763AD90DBD84"
+      },
+      "cell_type": "markdown",
+      "source": "This notebook has injected a few dependencies from the [datastax cassandra connector](https://github.com/datastax/spark-cassandra-connector/)."
     },
-    "cell_type" : "code",
-    "source" : "val rteam = shuffle(team.toList).take(5)\nval dd = new DropDown(\"All\" :: rteam.map(_.Player))\nval rc = RadarChart(rteam, labelField=Some(\"Player\"), sizes=(800, 600))\nval bout = out\n\ndd.selected --> Connection.fromObserver { p =>\n  bout(p + \" is selected\")\n  rc.applyOn(rc.originalData.filter(_.Player == p || p == \"All\"))\n}\n\ndd ++ bout ++ rc",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "42D57AE9A76F4FA1A114BA95C2E1FADB"
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "215600D86BCB41669835C288F4FFC9CB"
+      },
+      "cell_type": "code",
+      "source": ":javascript \nalert(JSON.stringify(IPython.notebook.metadata.customDeps, null, 2))",
+      "outputs": []
     },
-    "cell_type" : "markdown",
-    "source" : "---\n## Synchronization"
-  }, {
-    "metadata" : {
-      "id" : "7460856EFF64425A83DD0DD4B5814360"
+    {
+      "metadata": {
+        "id": "113E0EC89B7E40198DF7AE174D067328"
+      },
+      "cell_type": "markdown",
+      "source": "Hence, this code compiles."
     },
-    "cell_type" : "markdown",
-    "source" : "Oh... notebooks are synchronized!\n\nOpen another browser window and relaunch the timeseries example."
-  }, {
-    "metadata" : {
-      "id" : "593AD5B17B854593B20EA88F8B18E338"
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "1BE83A0B7B6744FF83D8513BECC55DB9"
+      },
+      "cell_type": "code",
+      "source": "import com.datastax.spark.connector._                                    ",
+      "outputs": []
     },
-    "cell_type" : "markdown",
-    "source" : "---\n## Create new chart type... live"
-  }, {
-    "metadata" : {
-      "id" : "E51CB610568E4936ADA024549386E8E3"
+    {
+      "metadata": {
+        "id": "14FF64D0BFD44D00816058D236828C39"
+      },
+      "cell_type": "markdown",
+      "source": "Also it includes the kafka external modules for the current scala version (using `%%`) and the current spark version (using `_`)"
     },
-    "cell_type" : "markdown",
-    "source" : "If you want/need to exerce your js fu, you can always use the `Chart` (for instance) API to create new dynamic widgets types.\n\nIn the following, we'll create a widget that can plot duration bars based for given operations (only a name):\n* a `js` string which is the javascript to execute for the new chart. It:\n  * has to be a function with 3 params\n    * `dataO` a knockout observable wich can be listened for new incoming data, see the `subscribe` call\n    * `container` is the div element where you can add new elements\n    * `options` is an extra object passed to the widget which defines additional configuration options (like width or a specific color or whatever)\n  * has a `this` object containing:\n    * `dataInit` this is the JSON representation of the Scala data as an array of objects having the same schema as the Scala type\n    * `genId` a unique id that you can use for a high level element for instance"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "81349F9C871E416093E496CEA8A9F534"
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "E5CABC64B14B442D8A824994EC18C4EA"
+      },
+      "cell_type": "code",
+      "source": "import org.apache.spark.streaming.kafka",
+      "outputs": []
     },
-    "cell_type" : "code",
-    "source" : "val js = \"\"\"\nfunction progressgraph (dataO, container, options) {\n  var css = 'div.prog {position: relative; overflow: hidden; } span.pp {display: inline-block; position: absolute; height: 16px;} span.prog {display: inline-block; position: absolute; height: 16px; }' +\n            '.progs {border: solid 1px #ccc; background: #eee; } .progs .pv {background: #3182bd; }',\n      head = document.head || document.getElementsByTagName('head')[0],\n      style = document.createElement('style');\n\n  style.type = 'text/css';\n  if (style.styleSheet){\n    style.styleSheet.cssText = css;\n  } else {\n    style.appendChild(document.createTextNode(css));\n  }\n\n  head.appendChild(style);\n\n\n  var width = options.width||600\n  var height = options.height||400\n  \n  function create(name, duration) {\n    var div =  d3.select(container).append(\"div\").attr(\"class\", \"prog\");\n\n    div.append(\"span\").attr(\"class\", \"pp prog\")\n        .style(\"width\", \"74px\")\n        .style(\"text-align\", \"right\")\n        .style(\"z-index\", \"2000\")\n        .text(name);\n\n    div.append(\"span\")\n        .attr(\"class\", \"progs\")\n        .style(\"width\", \"240px\")\n        .style(\"left\", \"80px\")\n      .append(\"span\")\n        .attr(\"class\", \"pp pv\")\n      .transition()\n        .duration(duration)\n        .ease(\"linear\")\n        .style(\"width\", \"350px\");\n\n    div.transition()\n        .style(\"height\", \"20px\")\n      .transition()\n        .delay(duration)\n        .style(\"height\", \"0px\")\n        .remove();\n\n  }\n\n  function onData(data) {\n    _.each(data, function(d) {\n      create(d[options.name], 5000 + d[options.duration])\n    });\n  }\n\n  onData(this.dataInit);\n  dataO.subscribe(onData);\n}\n\"\"\".trim",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "D652E9BA1D884CDB98B8DF06D77DEB35"
+    {
+      "metadata": {
+        "id": "15A133EFC2AF4EE0A3E160E468961066"
+      },
+      "cell_type": "markdown",
+      "source": "We can also see that we can remove dependencies by prepending `-` to the definition. So we avoid downloading any extra libraries from the scala language."
     },
-    "cell_type" : "markdown",
-    "source" : "Now we can create the widget extending `notebook.front.widgets.charts.Chart[C]`, where `C` is any Scala type, it'll be converted to JS using the implicit instance of `ToPoints`.\n\nIt has to declare the original dataset which needs to be a wrapper (`List`, `Array`, ...) of the `C` instances we want to plot. But it can also define other things like below:\n* `sizes` are the $w \\times h$ dimension of the chart\n* `maxPoints` the number of points to plot, the way to select them is defined in the implicitly available instance of `Sampler`.\n* `scripts` a list of references to existing javascript scripts\n* `snippets` a list of string that represent snippets to execute in JS, they take the form of a JSON object with\n  * `f` the function to call when the snippet will be executed\n  * `o` a JSON object that will be provided to the above function at execution time. Here we define which field has to be used for the name and duration."
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "FA51FED8558140FEB37478F0594DAB4E"
+    {
+      "metadata": {
+        "id": "A7EABF28DB654A27800804D88C1DC546"
+      },
+      "cell_type": "markdown",
+      "source": "### Change the metadata"
     },
-    "cell_type" : "code",
-    "source" : "import notebook.front.widgets._\nimport notebook.front.widgets.magic._\nimport notebook.front.widgets.magic.Implicits._\nimport notebook.front.widgets.magic.SamplerImplicits._\ncase class ProgChart[C:ToPoints:Sampler](\n  originalData:C,\n  override val sizes:(Int, Int)=(600, 400),\n  maxPoints:Int = 1000,\n  name:String,\n  duration:String\n) extends notebook.front.widgets.charts.Chart[C](originalData, maxPoints) {\n  def mToSeq(t:MagicRenderPoint):Seq[(String, Any)] = t.data.toSeq\n\n\n  override val snippets = List(s\"\"\"|{\n                                   |  \"f\": $js, \n                                   |  \"o\": {\n                                   |    \"name\": \"$name\",\n                                   |    \"duration\": \"$duration\"\n                                   |  }\n                                   |}\n                                  \"\"\".stripMargin)\n  \n  override val scripts = Nil\n}",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "1A5FD93B14BD42E99F49806BDEB16AC5"
+    {
+      "metadata": {
+        "id": "82F81FDC8E9B473D94A7B3479E7BB550"
+      },
+      "cell_type": "markdown",
+      "source": "There are a few metadata available and you can configure them from the editor in the menu: _Edit > Edit Notebook Metadata_."
     },
-    "cell_type" : "markdown",
-    "source" : "We can define the type of data we'll use for this example"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "4A344133173D40158A4091AAC56F8AD2"
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "75D9790EC99F4F23ADE7434CE9DC72EC"
+      },
+      "cell_type": "code",
+      "source": ":javascript \nIPython.notebook.edit_metadata()",
+      "outputs": []
     },
-    "cell_type" : "code",
-    "source" : "case class ProgData(n:String, v:Int)",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "9DA8C6053A214FB2A01FBCE9C25EBE7F"
+    {
+      "metadata": {
+        "id": "7F3F63814584413E817A6AE5B56C0FAD"
+      },
+      "cell_type": "markdown",
+      "source": "---\n## Logs"
     },
-    "cell_type" : "markdown",
-    "source" : "Here we generate a bunch of data bucketized by 10, and we create an instance of the new widget giving it the first bucket of data and specifying the right field names for `name` and `duration`."
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "4BB2C6EA4B634DFC97B7D5D9845DF0AD"
+    {
+      "metadata": {
+        "id": "D4B5803CA95D4E6B9497CA86DE6C866F"
+      },
+      "cell_type": "markdown",
+      "source": "Checking logs is always painful when using a notebook since this is simply a web client on the remote REPL in the server. \n\nHence the logs are quite far, or even worse inaccessible!\n\nSo, the spark notebook will forwards **all logs using slf4j** to the browser console → go check it, use the `F12` key and open the _console_ tab!"
     },
-    "cell_type" : "code",
-    "source" : "val pdata = for {\n  c1 <- 'a' to 'e'\n  c2 <- 'a' to 'e'\n} yield ProgData(\"\"+c1+c2, (nextDouble * 10000).toInt)\nval pdataH :: pdataS = pdata.toList.sliding(10, 10).toList\n\nval pc = ProgChart(pdataH, name = \"n\", duration = \"v\")\npc",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "35435A5C31AF4F67BF4508910220FA92"
+    {
+      "metadata": {
+        "id": "A187C1B705A644B794DDEDB33AE7B223"
+      },
+      "cell_type": "markdown",
+      "source": "---\n## Side pane"
     },
-    "cell_type" : "markdown",
-    "source" : "We update the chart by passing the value using the `addAndApply` approach."
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "15392CC271B04DA5842904489A447B1C"
+    {
+      "metadata": {
+        "id": "9870E3C823B048CC8D558F2B538CC83F"
+      },
+      "cell_type": "markdown",
+      "source": "In the **View** menu, you'll can open the side pane which contains many interesting panels:\n* `terms` : a table listing the defined _functions_, _variables_ and _types_ !\n* `error logs` : displaying and bringing back any errors thrown in the server\n* `chat room` : a fancy chat room available for the current notebook (see below in the synchronized section)"
     },
-    "cell_type" : "code",
-    "source" : "var pcont = true\nnew Thread() {\n  override def run = \n    pdataS.foreach { l =>\n    if (pcont) {\n      Thread.sleep(9000)\n      pc.addAndApply(l, true)\n    }\n  }\n}.start",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "id" : "787984960C10439D81F5DA7FBD00505A"
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "90AF0CFA143E4F6283502273EF5DB351"
+      },
+      "cell_type": "code",
+      "source": ":javascript\njQuery('a#toggle-sidebar').click()",
+      "outputs": []
     },
-    "cell_type" : "markdown",
-    "source" : "---\n## Contexts with interpolation"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "09F41F85FD34409C837320D904108BE6"
+    {
+      "metadata": {
+        "id": "3F098E2A54C446E486EE544C75C756F9"
+      },
+      "cell_type": "markdown",
+      "source": "---\n## Plotting"
     },
-    "cell_type" : "code",
-    "source" : ":sh ls ${sys.env(\"NOTEBOOKS_DIR\")}",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "C924A6AA52B94822B64718240069CFB0"
+    {
+      "metadata": {
+        "id": "39F23F6B83C6465D8DE2CD5BD18C2C41"
+      },
+      "cell_type": "markdown",
+      "source": "There exist many predefined `Chart` that you can use directly on any kind of **Scala** container that can be iterated."
     },
-    "cell_type" : "code",
-    "source" : "val ok = \"$\\\\LaTeX$ interpolated in Scala is $\\\\Re$\"",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "416D1E2D54154AE7845CE8FC14ECF334"
+    {
+      "metadata": {
+        "id": "099B21AF5E2B468E8C7A65C4DD2AAC66"
+      },
+      "cell_type": "markdown",
+      "source": "If the last statement of a cell isn't an assignment or a definition, then the spark notebook will try to plot it the best way it can automatically."
     },
-    "cell_type" : "code",
-    "source" : ":markdown \nYup, **$ok** in Spark Notebook",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "7B10ABEE96784E458F34447A8C9E7C46"
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "3B03DFAD401D44B08D0C8592C5246AF0"
+      },
+      "cell_type": "code",
+      "source": "case class Example(id:Int, category:String, value:Long, advanced:Boolean)\nimport scala.util.Random._\n\nval categories = List.fill(5)(List.fill(10)(nextPrintableChar).mkString)\ndef category:String = shuffle(categories).head\nval examples = List.fill(100)(Example(nextInt(2000), category, nextLong, nextBoolean))",
+      "outputs": []
     },
-    "cell_type" : "code",
-    "source" : ":javascript\nalert(\"I am ${(\"whoami\".!!).trim}\")",
-    "outputs" : [ ]
-  } ],
-  "nbformat" : 4
+    {
+      "metadata": {
+        "id": "9B375D9DBD51403E8BE8E838F1734300"
+      },
+      "cell_type": "markdown",
+      "source": "The above cell doesn't plot anything since it terminates with a assignement."
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": true,
+        "presentation": {
+          "tabs_state": "{\n  \"tab_id\": \"#tab1337288181-1\"\n}",
+          "pivot_chart_state": "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [\n    \"category\"\n  ],\n  \"rows\": [\n    \"id\"\n  ],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
+        },
+        "id": "2E61401D7F6B4DCEA0D5F52DE96FB973"
+      },
+      "cell_type": "code",
+      "source": "examples",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "0B51A8C208074B7C9ABADED8494A61F5"
+      },
+      "cell_type": "markdown",
+      "source": "Now we have a `TableChart` and a `PivotChart` tabs for the data, which we can use to have a better feeling of the data."
+    },
+    {
+      "metadata": {
+        "id": "9588CA4E38C74D1C8BD20F16CB218D55"
+      },
+      "cell_type": "markdown",
+      "source": "We can of course create them ourselves:"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "presentation": {
+          "pivot_chart_state": "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
+        },
+        "id": "595E9615FC9A410AA16F64B33FF80912"
+      },
+      "cell_type": "code",
+      "source": "TableChart(examples)",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "670BE2E3168D47298CC6B17A30A4FF41"
+      },
+      "cell_type": "markdown",
+      "source": "### Grouping plots"
+    },
+    {
+      "metadata": {
+        "id": "D2895E0887E14A588731F1FAB389B875"
+      },
+      "cell_type": "markdown",
+      "source": "Among available charts, you have for instance the pretty common ones like:\n* `LineChart`\n* `ScatterChart`\n* `BarChart`\n\nWhich accept at least two other parameters: \n* `fields`: the two field names to use to plot \n* `groupField`: the field used to group the data"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "A993AFEA7F2945A184B760EE6251EBAE"
+      },
+      "cell_type": "code",
+      "source": "LineChart(examples, fields=Some((\"id\", \"value\")), groupField=Some(\"advanced\"))",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "A993AFEA7F2945A184B760EE6251EBAE"
+      },
+      "cell_type": "code",
+      "source": "ScatterChart(examples, fields=Some((\"id\", \"value\")), groupField=Some(\"advanced\"))",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "A993AFEA7F2945A184B760EE6251EBAE"
+      },
+      "cell_type": "code",
+      "source": "BarChart(examples, fields=Some((\"id\", \"value\")), groupField=Some(\"advanced\"))",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "4153FEFD93464E86A0F7FF113FB1139F"
+      },
+      "cell_type": "markdown",
+      "source": "---\n## Graphs"
+    },
+    {
+      "metadata": {
+        "id": "F91D80C4BFD0408DA915051BC3AEE740"
+      },
+      "cell_type": "markdown",
+      "source": "Graph is generally a common way to represent data where connections matter. Hence the Spark Notebook defines an API easing the definition of `Node` and `Edge`.\n\n* `Graph[T]`: abstract class defining a graph component with an id of type `T`, a value of type `Any` and a color\n* `Node[T]`: defines a node as a circle which can be specified a radius and its position ($x$, $y$) (initial or static if it's fixed)\n* `Edge[T]`: defines an edge using the ids of both ends"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "5B96F1C40FA74E55ADBB6071A1B2FB0C"
+      },
+      "cell_type": "code",
+      "source": "case class GraphExample(id:Int, cluster:Char, value:Long)\nval clusters = ('A' to 'D').toList\nval cluCol = clusters.zip(List(\"#000\", \"#478\", \"#127\", \"#984\", \"#F5A\")).toMap\nval gexamples = List.tabulate(10, 4)((i,j) => GraphExample(i*4+j, clusters(j), nextLong)).flatten\n\nval nodes = gexamples.map(e => notebook.front.widgets.magic.Node(e.id, e, cluCol(e.cluster), 5))\n\nval clustered = gexamples.groupBy(_.cluster).toList\nval connectedClusters = clustered.flatMap { case (c, cl) => \n                                       for {\n                                         a <- cl\n                                         b <- cl if a != b\n                                       } yield notebook.front.widgets.magic.Edge[Int](400+nextInt(400)+a.id+b.id, (a.id, b.id), \"intra\", \"red\")\n                                     }",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "E31A5ACA4F8D442383289F17C620C5B4"
+      },
+      "cell_type": "code",
+      "source": "val singleConnections = {\n  val s = gexamples.take(4)\n  \n  for (a <- s; b <- s if a != b) \n    yield Edge(800+nextInt(400)+a.id+b.id, (a.id, b.id), \"inter\", \"green\")\n}\n\nval all = nodes ::: connectedClusters ::: singleConnections",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "presentation": {
+          "tabs_state": "{\n  \"tab_id\": \"#tab1249479791-0\"\n}",
+          "pivot_chart_state": "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
+        },
+        "id": "1F073EEB99CE4B1781AD74C59E208805"
+      },
+      "cell_type": "code",
+      "source": "GraphChart(all, maxPoints = 1000, sizes=(600, 600))",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "E14D74FA3B164544A79D22800BB84BDD"
+      },
+      "cell_type": "markdown",
+      "source": "---\n## Geo charts"
+    },
+    {
+      "metadata": {
+        "id": "E78EF394884248DF87A887AFE627B13F"
+      },
+      "cell_type": "markdown",
+      "source": "There are two types of geo charts:\n* `GeoPointsChart` for simple points lat long points\n* `GeoChart` for _GeoJSON_ or _opengis_ data\n"
+    },
+    {
+      "metadata": {
+        "id": "41C5ABBEC5754FC58AD56ADD7E799E5C"
+      },
+      "cell_type": "markdown",
+      "source": "### GeoPointsChart"
+    },
+    {
+      "metadata": {
+        "id": "BB38DC199B5E4DAA9ECFFBF4FBD9B3AB"
+      },
+      "cell_type": "markdown",
+      "source": "Let's load some airports data with latitude and longitude coordinates"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "B23EDAF0D8204B7D845248EE24E20F30"
+      },
+      "cell_type": "code",
+      "source": "val root = sys.env(\"NOTEBOOKS_DIR\")\nval airportsDF = sparkSession.read.json(s\"$root/notebooks/airports.json\")\nairportsDF.cache\nairportsDF",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "presentation": {
+          "tabs_state": "{\n  \"tab_id\": \"#tab1529529486-0\"\n}",
+          "pivot_chart_state": "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
+        },
+        "id": "1707B838D5494D1F8476AADCA120EFC5"
+      },
+      "cell_type": "code",
+      "source": "val statsDF = airportsDF.groupBy(\"state\").count.orderBy($\"count\".desc).limit(5)",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "0A7F973B66494A349A505FAE9A4454ED"
+      },
+      "cell_type": "markdown",
+      "source": "Convert to Dataset (for the fun)."
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "88DD55147E984B7F98349BFA935C2572"
+      },
+      "cell_type": "code",
+      "source": "case class StateStat(state:String, count:Long)",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "575DBAFD9887415EB6BBD0D1D63B8194"
+      },
+      "cell_type": "code",
+      "source": "statsDF.as[StateStat]",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "335F1C282CE94D4B88DD6A2D3D5C3651"
+      },
+      "cell_type": "markdown",
+      "source": "Plot the dataframe with dedicated colors for each state"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "FF8F94DA1063463A8A38978BABA5A782"
+      },
+      "cell_type": "code",
+      "source": "import org.apache.spark.sql.functions._",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "6B6635CEBAC349EC87BAC809E5F21F78"
+      },
+      "cell_type": "code",
+      "source": "def forStates[A](xs:List[A]) = when($\"state\" === \"AK\", xs(0))\n                               .when($\"state\" === \"TX\", xs(1))\n                               .when($\"state\" === \"CA\", xs(2))\n                               .when($\"state\" === \"OK\", xs(3))\n                               .when($\"state\" === \"OH\", xs(4))\n                               .otherwise(xs(5))\nval airportsDFWithStyles = airportsDF.withColumn(\"r\", forStates(List(10,9,8,7,6,1)))\n                                     .withColumn(\"c\", forStates(List(\"red\",\"orange\",\"blue\",\"green\",\"yellow\",\"white\")))\nGeoPointsChart(airportsDFWithStyles, latLonFields=Some((\"lat\", \"long\")), rField = Some(\"r\"), colorField = Some(\"c\"))",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "B4273E6F1E8A4ADA8866AB9A067533E4"
+      },
+      "cell_type": "markdown",
+      "source": "---\n## GeoChart"
+    },
+    {
+      "metadata": {
+        "id": "0E6BA873EB35476B8A6CC133F42ACDF4"
+      },
+      "cell_type": "markdown",
+      "source": "Fetch some data on the web about parks and gardens"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "ACD54EC9C7414EE98C568AD260A377ED"
+      },
+      "cell_type": "code",
+      "source": ":sh wget http://data.cyc.opendata.arcgis.com/datasets/57fa576e5e8149b0b744f768e01e5ce1_0.geojson -O Parks_and_Gardens.geojson",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "7C6FD417F57A47098A685A3E4DDC721C"
+      },
+      "cell_type": "markdown",
+      "source": "Parse it as GeoJSON using provided `widgets.parseGeoJSON`"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "750EC1E117C24C28851D00C89298F5A8"
+      },
+      "cell_type": "code",
+      "source": "val geoJSONRepr = widgets.parseGeoJSON(scala.io.Source.fromFile(\"Parks_and_Gardens.geojson\").getLines.mkString(\"\"))",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "A4544FA65C0F480EB4FFAF28E27F5DBB"
+      },
+      "cell_type": "markdown",
+      "source": "Fetch some more vectorial information of the same area."
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "012789D6569C4DC6A15579070B0B17B6"
+      },
+      "cell_type": "code",
+      "source": ":sh wget http://data.cyc.opendata.arcgis.com/datasets/9b212b7af275438ca9088ff868bda139_9.geojson -O airqual.geojson",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "86A9DEA8BDD843B08DC2985638799232"
+      },
+      "cell_type": "markdown",
+      "source": "And parse it..."
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "E5314FF973454E0B96877C2A6690B914"
+      },
+      "cell_type": "code",
+      "source": "val ng = widgets.parseGeoJSON(scala.io.Source.fromFile(\"airqual.geojson\").getLines.mkString(\"\"))",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "9F1F3B348DEA40BFA087795342006AEE"
+      },
+      "cell_type": "markdown",
+      "source": "Create a `GeoChart` instance on `GeoJSON` representation of the first dataset."
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "273E8A681B4942838D2E0DB37C215F9E"
+      },
+      "cell_type": "code",
+      "source": "val gc = GeoChart(Seq(geoJSONRepr), sizes=(800, 800))\ngc",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "898788F161C94A898F20FD85328526C8"
+      },
+      "cell_type": "markdown",
+      "source": "We can now add the linear features into the same chart using the helpful function `addAndApply` which adds information to the existing chart."
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "1E08A11C501C4E618FDFD7E97F340D79"
+      },
+      "cell_type": "code",
+      "source": "gc.addAndApply(Seq(ng))",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "2DDE82591B3E4DE1B09C71CC9292E148"
+      },
+      "cell_type": "markdown",
+      "source": "---\n## Fancy charts"
+    },
+    {
+      "metadata": {
+        "id": "415502CC4E5E44D7BF7F08978A4C80BD"
+      },
+      "cell_type": "markdown",
+      "source": "### Radar"
+    },
+    {
+      "metadata": {
+        "id": "F164A3ACA35A46638B4E82313A59E88E"
+      },
+      "cell_type": "markdown",
+      "source": "Let's grab some data from http://www.basketball-reference.com/teams/SAS/2016.html (31st May 2016)."
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "DA236FFF7873453397F47AED00A55C87"
+      },
+      "cell_type": "code",
+      "source": "case class TeamMember(Player:String, Age:Int, FG_pc:Double, _3P_pc:Double, _2P_pc:Double, eFG_pc:Double, FT_pc:Double)\nval team = \n      s\"\"\"\n        1\tKawhi Leonard\t24\t72\t72\t2380\t551\t1090\t.506\t129\t291\t.443\t422\t799\t.528\t.565\t292\t334\t.874\t95\t398\t493\t186\t128\t71\t105\t133\t1523\n        2\tLaMarcus Aldridge\t30\t74\t74\t2261\t536\t1045\t.513\t0\t16\t.000\t536\t1029\t.521\t.513\t259\t302\t.858\t176\t456\t632\t110\t38\t81\t99\t151\t1331\n        3\tDanny Green\t28\t79\t79\t2062\t211\t561\t.376\t116\t349\t.332\t95\t212\t.448\t.480\t34\t46\t.739\t48\t255\t303\t141\t79\t64\t75\t141\t572\n        4\tTony Parker\t33\t72\t72\t1980\t350\t710\t.493\t27\t65\t.415\t323\t645\t.501\t.512\t130\t171\t.760\t17\t159\t176\t379\t54\t11\t131\t114\t857\n        5\tPatrick Mills\t27\t81\t3\t1662\t260\t612\t.425\t123\t320\t.384\t137\t292\t.469\t.525\t47\t58\t.810\t27\t131\t158\t226\t59\t6\t76\t102\t690\n        6\tTim Duncan\t39\t61\t60\t1536\t215\t441\t.488\t0\t2\t.000\t215\t439\t.490\t.488\t92\t131\t.702\t115\t332\t447\t163\t47\t78\t90\t125\t522\n        7\tDavid West\t35\t78\t19\t1404\t244\t448\t.545\t3\t7\t.429\t241\t441\t.546\t.548\t63\t80\t.788\t72\t237\t309\t143\t44\t55\t68\t142\t554\n        8\tBoris Diaw\t33\t76\t4\t1386\t202\t383\t.527\t25\t69\t.362\t177\t314\t.564\t.560\t56\t76\t.737\t58\t175\t233\t176\t26\t21\t97\t102\t485\n        9\tKyle Anderson\t22\t78\t11\t1245\t138\t295\t.468\t12\t37\t.324\t126\t258\t.488\t.488\t62\t83\t.747\t25\t219\t244\t123\t60\t29\t59\t97\t350\n        10\tManu Ginobili\t38\t58\t0\t1134\t197\t435\t.453\t70\t179\t.391\t127\t256\t.496\t.533\t91\t112\t.813\t26\t120\t146\t177\t66\t11\t99\t99\t555\n        11\tJonathon Simmons\t26\t55\t2\t813\t122\t242\t.504\t18\t47\t.383\t104\t195\t.533\t.541\t69\t92\t.750\t16\t80\t96\t58\t24\t5\t53\t103\t331\n        12\tBoban Marjanovic\t27\t54\t4\t508\t105\t174\t.603\t0\t0\t.0\t105\t174\t.603\t.603\t87\t114\t.763\t73\t121\t194\t21\t12\t23\t29\t54\t297\n        13\tRasual Butler\t36\t46\t0\t432\t49\t104\t.471\t15\t49\t.306\t34\t55\t.618\t.543\t11\t16\t.688\t3\t53\t56\t24\t13\t23\t8\t11\t124\n        14\tKevin Martin\t32\t16\t1\t261\t30\t85\t.353\t11\t33\t.333\t19\t52\t.365\t.418\t28\t30\t.933\t4\t25\t29\t12\t9\t2\t13\t15\t99\n        15\tRay McCallum\t24\t31\t3\t256\t27\t67\t.403\t5\t16\t.313\t22\t51\t.431\t.440\t9\t10\t.900\t6\t25\t31\t33\t5\t4\t11\t14\t68\n        16\tMatt Bonner\t35\t30\t2\t206\t29\t57\t.509\t15\t34\t.441\t14\t23\t.609\t.640\t3\t4\t.750\t3\t24\t27\t9\t6\t1\t3\t16\t76\n        17\tAndre Miller\t39\t13\t4\t181\t23\t48\t.479\t1\t4\t.250\t22\t44\t.500\t.490\t9\t13\t.692\t6\t21\t27\t29\t7\t0\t12\t14\t56\n     \"\"\".trim.split(\"\\n\").map(s => s.trim.split(\"\\t\").drop(1).toList).map(x => (x.head, x(1).trim.toInt) → x.drop(2).filter(_.startsWith(\".\"))\n                                                                     .map(_.trim.toDouble * 100)).map { case ((p, a), stats)  =>\n        TeamMember(p, a, stats(0), stats(1), stats(2), stats(3), stats(4))\n      }",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "CAC0438C302A4C5388A9B71E5C246FD8"
+      },
+      "cell_type": "code",
+      "source": "RadarChart(shuffle(team.toList).take(5), labelField=Some(\"Player\"), sizes=(800, 600))",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "75EF85B5D6534BCF873488D9D092F54A"
+      },
+      "cell_type": "markdown",
+      "source": "### Pivot"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "presentation": {
+          "pivot_chart_state": "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [\n    \"_2P_pc\",\n    \"_3P_pc\"\n  ],\n  \"rows\": [\n    \"Player\"\n  ],\n  \"vals\": [\n    \"_3P_pc\"\n  ],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Sum\",\n  \"rendererName\": \"Line Chart\"\n}"
+        },
+        "id": "259688ADDF334ACE85203BF5AE070ED7"
+      },
+      "cell_type": "code",
+      "source": "PivotChart(team)",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "77F0A0B2C4AB4A5B8AB689EB14AF40D8"
+      },
+      "cell_type": "markdown",
+      "source": "### Parallel coordinates"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "536D63D7B3A64281BD62B95E7FBB4E76"
+      },
+      "cell_type": "code",
+      "source": "ParallelCoordChart(team, sizes=(800, 500))",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "CD0C49DF563340A38E82471242EF4F32"
+      },
+      "cell_type": "markdown",
+      "source": "### Timeseries"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "76CC0E2ED70D458689FF7F75297D8E77"
+      },
+      "cell_type": "code",
+      "source": ":sh wget http://www.ncdc.noaa.gov/cag/time-series/global/globe/land_ocean/p12/12/1880-2015.csv -O /tmp/1880-2015.csv",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "52DBD8124E374C25A4F336A6A26D245C"
+      },
+      "cell_type": "code",
+      "source": "import java.util.Calendar\nimport java.util.Calendar._\nval cal = Calendar.getInstance\ncal.set(DAY_OF_MONTH, 0)\ncal.set(HOUR, 0)\ncal.set(MINUTE, 0)\ncal.set(SECOND, 0)\ncal.set(MILLISECOND, 0)\nval ts = scala.io.Source.fromFile(new File(\"/tmp/1880-2015.csv\")).getLines.drop(4)\n                .map(_.split(\",\").toList.map(_.trim))\n                .map{case List(y,c) => (y.take(4).toInt, y.drop(4).take(2).dropWhile(_ == '0').toInt-1, c.toDouble)}\n                .map{ case (y, m, c) => \n                  cal.set(YEAR, y)\n                  cal.set(MONTH, m)\n                  cal.getTime → c\n                }.toList",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "2B91343B09F041B19FD683E0C04F99D8"
+      },
+      "cell_type": "code",
+      "source": "val tc = TimeseriesChart(ts)\ntc",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "7C30152109AD4727827599D6949592F0"
+      },
+      "cell_type": "markdown",
+      "source": "---\n## Everything is Dynamic and Reactive"
+    },
+    {
+      "metadata": {
+        "id": "3AADA3697ABE44BF85FFB47209E06036"
+      },
+      "cell_type": "markdown",
+      "source": "Since data can come live in a system or you want to log vizualy some events or perhaps you need to have two visual components to interact... what you don't want to do is to write the html, js, server code and who knows what else you'll need to master...\n\nFor that, the spark notebook comes with dynamicity of charts and most (if not all) components can be listened and react to events."
+    },
+    {
+      "metadata": {
+        "id": "83B7B4F029324AADA94E34497C395F35"
+      },
+      "cell_type": "markdown",
+      "source": "### Dynamic Line Chart"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": false,
+        "id": "CE563B405582434AAFA53E4C4AE8C893"
+      },
+      "cell_type": "code",
+      "source": "val tsH :: tsS = ts.sliding(100, 100).toList\nval dynTC = TimeseriesChart(tsH, maxPoints = ts.size)\ndynTC",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": true,
+        "id": "FA0E02EBBD7D467385D7C17B4708DFBB"
+      },
+      "cell_type": "code",
+      "source": "var cont = true\nnew Thread() {\n  override def run = \n    tsS.foreach { l =>\n    if (cont) {\n      Thread.sleep(1000)\n      dynTC.addAndApply(l)\n    }\n  }\n}.start",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "9BD0C8C4788049C78D4C6E90059E3A83"
+      },
+      "cell_type": "markdown",
+      "source": "### Components"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": true,
+        "id": "C3A5386580284B5D9C8D4BE907F6FA8C"
+      },
+      "cell_type": "code",
+      "source": "val rteam = shuffle(team.toList).take(5)\nval dd = new DropDown(\"All\" :: rteam.map(_.Player))\nval rc = RadarChart(rteam, labelField=Some(\"Player\"), sizes=(800, 600))\nval bout = out\n\ndd.selected --> Connection.fromObserver { p =>\n  bout(p + \" is selected\")\n  rc.applyOn(rc.originalData.filter(_.Player == p || p == \"All\"))\n}\n\ndd ++ bout ++ rc",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "42D57AE9A76F4FA1A114BA95C2E1FADB"
+      },
+      "cell_type": "markdown",
+      "source": "---\n## Synchronization"
+    },
+    {
+      "metadata": {
+        "id": "7460856EFF64425A83DD0DD4B5814360"
+      },
+      "cell_type": "markdown",
+      "source": "Oh... notebooks are synchronized!\n\nOpen another browser window and relaunch the timeseries example."
+    },
+    {
+      "metadata": {
+        "id": "593AD5B17B854593B20EA88F8B18E338"
+      },
+      "cell_type": "markdown",
+      "source": "---\n## Create new chart type... live"
+    },
+    {
+      "metadata": {
+        "id": "E51CB610568E4936ADA024549386E8E3"
+      },
+      "cell_type": "markdown",
+      "source": "If you want/need to exerce your js fu, you can always use the `Chart` (for instance) API to create new dynamic widgets types.\n\nIn the following, we'll create a widget that can plot duration bars based for given operations (only a name):\n* a `js` string which is the javascript to execute for the new chart. It:\n  * has to be a function with 3 params\n    * `dataO` a knockout observable wich can be listened for new incoming data, see the `subscribe` call\n    * `container` is the div element where you can add new elements\n    * `options` is an extra object passed to the widget which defines additional configuration options (like width or a specific color or whatever)\n  * has a `this` object containing:\n    * `dataInit` this is the JSON representation of the Scala data as an array of objects having the same schema as the Scala type\n    * `genId` a unique id that you can use for a high level element for instance"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": true,
+        "id": "81349F9C871E416093E496CEA8A9F534"
+      },
+      "cell_type": "code",
+      "source": "val js = \"\"\"\nfunction progressgraph (dataO, container, options) {\n  var css = 'div.prog {position: relative; overflow: hidden; } span.pp {display: inline-block; position: absolute; height: 16px;} span.prog {display: inline-block; position: absolute; height: 16px; }' +\n            '.progs {border: solid 1px #ccc; background: #eee; } .progs .pv {background: #3182bd; }',\n      head = document.head || document.getElementsByTagName('head')[0],\n      style = document.createElement('style');\n\n  style.type = 'text/css';\n  if (style.styleSheet){\n    style.styleSheet.cssText = css;\n  } else {\n    style.appendChild(document.createTextNode(css));\n  }\n\n  head.appendChild(style);\n\n\n  var width = options.width||600\n  var height = options.height||400\n  \n  function create(name, duration) {\n    var div =  d3.select(container).append(\"div\").attr(\"class\", \"prog\");\n\n    div.append(\"span\").attr(\"class\", \"pp prog\")\n        .style(\"width\", \"74px\")\n        .style(\"text-align\", \"right\")\n        .style(\"z-index\", \"2000\")\n        .text(name);\n\n    div.append(\"span\")\n        .attr(\"class\", \"progs\")\n        .style(\"width\", \"240px\")\n        .style(\"left\", \"80px\")\n      .append(\"span\")\n        .attr(\"class\", \"pp pv\")\n      .transition()\n        .duration(duration)\n        .ease(\"linear\")\n        .style(\"width\", \"350px\");\n\n    div.transition()\n        .style(\"height\", \"20px\")\n      .transition()\n        .delay(duration)\n        .style(\"height\", \"0px\")\n        .remove();\n\n  }\n\n  function onData(data) {\n    _.each(data, function(d) {\n      create(d[options.name], 5000 + d[options.duration])\n    });\n  }\n\n  onData(this.dataInit);\n  dataO.subscribe(onData);\n}\n\"\"\".trim",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "D652E9BA1D884CDB98B8DF06D77DEB35"
+      },
+      "cell_type": "markdown",
+      "source": "Now we can create the widget extending `notebook.front.widgets.charts.Chart[C]`, where `C` is any Scala type, it'll be converted to JS using the implicit instance of `ToPoints`.\n\nIt has to declare the original dataset which needs to be a wrapper (`List`, `Array`, ...) of the `C` instances we want to plot. But it can also define other things like below:\n* `sizes` are the $w \\times h$ dimension of the chart\n* `maxPoints` the number of points to plot, the way to select them is defined in the implicitly available instance of `Sampler`.\n* `scripts` a list of references to existing javascript scripts\n* `snippets` a list of string that represent snippets to execute in JS, they take the form of a JSON object with\n  * `f` the function to call when the snippet will be executed\n  * `o` a JSON object that will be provided to the above function at execution time. Here we define which field has to be used for the name and duration."
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": true,
+        "id": "FA51FED8558140FEB37478F0594DAB4E"
+      },
+      "cell_type": "code",
+      "source": "import notebook.front.widgets._\nimport notebook.front.widgets.magic._\nimport notebook.front.widgets.magic.Implicits._\nimport notebook.front.widgets.magic.SamplerImplicits._\ncase class ProgChart[C:ToPoints:Sampler](\n  originalData:C,\n  override val sizes:(Int, Int)=(600, 400),\n  maxPoints:Int = 1000,\n  name:String,\n  duration:String\n) extends notebook.front.widgets.charts.Chart[C](originalData, maxPoints) {\n  def mToSeq(t:MagicRenderPoint):Seq[(String, Any)] = t.data.toSeq\n\n\n  override val snippets = List(s\"\"\"|{\n                                   |  \"f\": $js, \n                                   |  \"o\": {\n                                   |    \"name\": \"$name\",\n                                   |    \"duration\": \"$duration\"\n                                   |  }\n                                   |}\n                                  \"\"\".stripMargin)\n  \n  override val scripts = Nil\n}",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "1A5FD93B14BD42E99F49806BDEB16AC5"
+      },
+      "cell_type": "markdown",
+      "source": "We can define the type of data we'll use for this example"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": true,
+        "id": "4A344133173D40158A4091AAC56F8AD2"
+      },
+      "cell_type": "code",
+      "source": "case class ProgData(n:String, v:Int)",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "9DA8C6053A214FB2A01FBCE9C25EBE7F"
+      },
+      "cell_type": "markdown",
+      "source": "Here we generate a bunch of data bucketized by 10, and we create an instance of the new widget giving it the first bucket of data and specifying the right field names for `name` and `duration`."
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": true,
+        "id": "4BB2C6EA4B634DFC97B7D5D9845DF0AD"
+      },
+      "cell_type": "code",
+      "source": "val pdata = for {\n  c1 <- 'a' to 'e'\n  c2 <- 'a' to 'e'\n} yield ProgData(\"\"+c1+c2, (nextDouble * 10000).toInt)\nval pdataH :: pdataS = pdata.toList.sliding(10, 10).toList\n\nval pc = ProgChart(pdataH, name = \"n\", duration = \"v\")\npc",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "35435A5C31AF4F67BF4508910220FA92"
+      },
+      "cell_type": "markdown",
+      "source": "We update the chart by passing the value using the `addAndApply` approach."
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": true,
+        "id": "15392CC271B04DA5842904489A447B1C"
+      },
+      "cell_type": "code",
+      "source": "var pcont = true\nnew Thread() {\n  override def run = \n    pdataS.foreach { l =>\n    if (pcont) {\n      Thread.sleep(9000)\n      pc.addAndApply(l, true)\n    }\n  }\n}.start",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "id": "787984960C10439D81F5DA7FBD00505A"
+      },
+      "cell_type": "markdown",
+      "source": "---\n## Contexts with interpolation"
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": true,
+        "id": "09F41F85FD34409C837320D904108BE6"
+      },
+      "cell_type": "code",
+      "source": ":sh ls ${sys.env(\"NOTEBOOKS_DIR\")}",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": true,
+        "id": "C924A6AA52B94822B64718240069CFB0"
+      },
+      "cell_type": "code",
+      "source": "val ok = \"$\\\\LaTeX$ interpolated in Scala is $\\\\Re$\"",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": true,
+        "id": "416D1E2D54154AE7845CE8FC14ECF334"
+      },
+      "cell_type": "code",
+      "source": ":markdown \nYup, **$ok** in Spark Notebook",
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "input_collapsed": false,
+        "collapsed": true,
+        "id": "7B10ABEE96784E458F34447A8C9E7C46"
+      },
+      "cell_type": "code",
+      "source": ":javascript\nalert(\"I am ${(\"whoami\".!!).trim}\")",
+      "outputs": []
+    }
+  ],
+  "nbformat": 4
 }
