@@ -29,7 +29,7 @@ Scala is a _multi-paradigm_ language. Code can look a lot like traditional Java 
 1. **Immutable values:** Mutability is a common source of bugs.
 1. **Functions with no _side effects_:** All the information they need is passed in and all the "work" is returned. No external state is modified.
 1. **Referential transparency:** You can replace a function call with a cached value that was returned from a previous invocation with the same arguments. (This is a benefit enabled by functions without side effects.)
-1. **Higher-order functions:** Functions that take other functions as arguments are return functions as results.
+1. **Higher-order functions:** Functions that take other functions as arguments or return functions as results.
 1. **Structure separated from operations:** A core set of collections meets most needs. An operation applicable to one data structure is applicable to all.
 
 However, objects are still useful as an _encapsulation_ mechanism. This is valuable for projects with large teams and code bases. 
